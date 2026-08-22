@@ -42,12 +42,27 @@
     <div class="signup-msg" id="signupMsg"></div>
   </form>
 </div>
+<iframe name="wfFrame" style="display:none"></iframe>
+<form id="wfForm" action="https://api.web3forms.com/submit" method="POST" target="wfFrame" style="display:none"></form>
 <script>
 /* 双通道接收：Web3Forms(邮件) + Server 酱(微信)。微信已配置，邮件占位待替换。 */
 const WEB3_KEY="6b8bb1a5-1e02-40dc-94bd-d27c22cad550";
 const SERVERCHAN_KEY="SCT402824TMWdPt9Bbfe4VRiBC7F0G9S9x";
 function openSignup(){document.getElementById('signupMask').classList.add('open');document.getElementById('signupModal').style.display='block';}
 function closeSignup(){document.getElementById('signupMask').classList.remove('open');document.getElementById('signupModal').style.display='none';}
+function postToWeb3Forms(d, text){
+  const f=document.getElementById('wfForm');
+  f.innerHTML='';
+  const add=(name,val)=>{const i=document.createElement('input');i.type='hidden';i.name=name;i.value=val;f.appendChild(i);};
+  add('access_key', WEB3_KEY);
+  add('subject', '广佛择校榜新报名');
+  add('from_name', '择校榜报名');
+  add('name', d.parent);
+  add('email', 'kaiwen1899@163.com');
+  add('message', text);
+  add('city', d.city); add('school', d.school||'未填'); add('phone', d.phone); add('wechat', d.wechat||'未填'); add('note', d.note||'无');
+  f.submit();
+}
 async function submitSignup(e){
   e.preventDefault();
   const d=Object.fromEntries(new FormData(e.target).entries());
@@ -61,15 +76,14 @@ async function submitSignup(e){
   msg.className='signup-msg'; msg.textContent='提交中…';
   try{
     const jobs=[];
-    // 邮件通道（已拿到 key 时才启用）
-    if(WEB3_KEY.indexOf('REPLACE')!==0){
-      const mailBody=`【广佛择校榜 · 新报名】\n家长：${d.parent}\n孩子：${d.child}（${d.age}岁）\n城市：${d.city}\n意向学校：${d.school||'未填'}\n电话：${d.phone}\n微信：${d.wechat||'未填'}\n备注：${d.note||'无'}`;
-      jobs.push(fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:WEB3_KEY,subject:'广佛择校榜新报名',from_name:'择校榜报名',name:d.parent,email:'kaiwen1899@163.com',message:mailBody,parent:d.parent,child:d.child,age:d.age,city:d.city,school:d.school,phone:d.phone,wechat:d.wechat,note:d.note})}));
-    }
-    // 微信通道：Server 酱
+    // 微信通道：Server 酱（fetch，已验证可用）
     if(SERVERCHAN_KEY.indexOf('REPLACE')!==0){
       const body=new URLSearchParams({title:'广佛择校榜 · 新报名', desp:text});
       jobs.push(fetch('https://sctapi.ftqq.com/'+SERVERCHAN_KEY+'.send',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}));
+    }
+    // 邮件通道：Web3Forms 用真实表单 POST（避免被 Cloudflare 拦截 fetch）
+    if(WEB3_KEY.indexOf('REPLACE')!==0){
+      postToWeb3Forms(d, text);
     }
     await Promise.all(jobs);
     msg.className='signup-msg ok'; msg.textContent='✅ 提交成功！我们会尽快通过邮件和微信联系你。';
