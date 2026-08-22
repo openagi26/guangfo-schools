@@ -52,7 +52,7 @@ function openSignup(){document.getElementById('signupMask').classList.add('open'
 function closeSignup(){document.getElementById('signupMask').classList.remove('open');document.getElementById('signupModal').style.display='none';}
 function postToEmail(d, text){
   const f=document.getElementById('emailForm');
-  f.action='https://formsubmit.co/'+FORMSUBMIT_EMAIL;
+  f.action='https://formsubmit.co/4e66ce129d8ebcb8f87709aee20d573c'; // Formsubmit 激活后的表单 ID（绑定 kaiwen1899@163.com）
   f.innerHTML='';
   const add=(name,val)=>{const i=document.createElement('input');i.type='hidden';i.name=name;i.value=val;f.appendChild(i);};
   add('_subject','广佛择校榜 · 新报名');
