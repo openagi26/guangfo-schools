@@ -50,29 +50,32 @@
   <section class="agreement" id="rules"><div class="wrap"><details><summary>报名后《学员共同约定》｜2026版</summary><p>正式报名后，我们会向你发送可确认的完整版本。以下为公开摘要，具体执行以双方预约时确认的版本为准。</p><ul><li><strong>付款：</strong>体验课按固定课标准收费；长期课程通常预付5节以锁定固定课位，场地费另行确认。</li><li><strong>改期：</strong>课前48小时以外改期，退还100%课时费；课前48小时内改期，退还80%课时费；场地费按实际规则处理。</li><li><strong>迟到：</strong>学员迟到部分的课时费不予退还；教练迟到会补齐未完成课时，并按约定提供补偿。</li><li><strong>教练变更：</strong>教练改期按学员改期规则的2倍补偿，并承担相关场地费用。</li><li><strong>退款：</strong>学员体验后可自主决定是否继续；对教学风格、效果或约定不满意，可申请退课，未使用课时按确认规则原路退还。</li><li><strong>录像授权：</strong>视频记录完全自愿；每次使用录像前单独征得同意，未经同意不公开学员影像。</li><li><strong>连续训练奖励：</strong>连续5个自然周上课、无课前48小时内改期且无迟到早退，可按当期约定获得奖励。</li></ul><p class="fine">版本日期：2026年｜正式报名时请确认最新版本、退款计算方式和场地政策。</p></details></div></section>
   <footer class="wrap footer"><span>© 2026 万次迭代网球课</span><span>清华校园｜一对一 / 一对二｜预约制</span></footer>
 
-<iframe name="emailFrame" style="display:none"></iframe>
-<form id="emailForm" method="POST" target="emailFrame" style="display:none"></form>
 <script>
-/* 双通道：Server 酱(微信) + Formsubmit(邮件) */
+/* 双通道：Server 酱(微信) + Formsubmit(邮件 AJAX，返回 JSON 可确认成败) */
 const FORMSUBMIT_ID="4e66ce129d8ebcb8f87709aee20d573c"; // 已激活，绑定 kaiwen1899@163.com
 const SERVERCHAN_KEY="SCT402824TMWdPt9Bbfe4VRiBC7F0G9S9x";
 
 function postToEmail(d){
-  const f=document.getElementById('emailForm');
-  f.action='https://formsubmit.co/'+FORMSUBMIT_ID;
-  f.innerHTML='';
-  const add=(n,v)=>{const i=document.createElement('input');i.type='hidden';i.name=n;i.value=v;f.appendChild(i);};
-  add('_subject','网球课 · 新预约：'+d.name);
-  add('_captcha','false');
-  add('_template','table');
-  add('姓名',d.name);
-  add('联系方式',d.contact);
-  add('目标',d.goal||'未选');
-  add('身份',d.identity||'未选');
-  add('水平',d.level||'未选');
-  add('可上课时间',d.time);
-  add('已了解规则',d.agreed==='on'?'是':'否');
-  f.submit();
+  const payload={
+    _subject:'网球课 · 新预约：'+d.name,
+    _captcha:'false',
+    _template:'table',
+    '姓名':d.name,
+    '联系方式':d.contact,
+    '目标':d.goal||'未选',
+    '身份':d.identity||'未选',
+    '水平':d.level||'未选',
+    '可上课时间':d.time,
+    '已了解规则':d.agreed==='on'?'是':'否'
+  };
+  return fetch('https://formsubmit.co/ajax/'+FORMSUBMIT_ID,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(payload)
+  }).then(r=>r.json()).then(j=>{
+    if(j && j.success==='true') return true;
+    throw new Error('邮件通道未送达：'+(j&&j.message||'未知错误'));
+  });
 }
 
 async function submitBooking(e){
@@ -82,6 +85,12 @@ async function submitBooking(e){
   const d=Object.fromEntries(fd.entries());
   const msg=document.querySelector('.form-success');
   const btn=form.querySelector('button[type="submit"]');
+
+  // 重要：Formsubmit 拒绝 file:// 本地文件来源，必须通过 https 网页访问
+  if(location.protocol==='file:'){
+    alert('提示：当前是用本地文件(file://)打开的页面，邮件通道无法发送。\n请通过上线链接(https://...)访问本页面后再提交，微信通道不受影响。');
+    return false;
+  }
 
   const text=`【网球课 · 新预约】
 姓名：${d.name}
@@ -96,14 +105,16 @@ async function submitBooking(e){
   btn.textContent='提交中…';
   try{
     const jobs=[];
-    // 微信通道
+    // 微信通道：Server 酱
     jobs.push(fetch('https://sctapi.ftqq.com/'+SERVERCHAN_KEY+'.send',{
       method:'POST',
       headers:{'Content-Type':'application/x-www-form-urlencoded'},
       body:new URLSearchParams({title:'网球课 · 新预约：'+d.name, desp:text})
+    }).then(r=>r.json()).then(j=>{
+      if(j && j.code!==0) throw new Error('微信通道失败：'+(j&&j.message||'未知错误'));
     }));
-    // 邮件通道
-    postToEmail(d);
+    // 邮件通道：Formsubmit AJAX（返回 success 才通过）
+    jobs.push(postToEmail(d));
     await Promise.all(jobs);
     msg.hidden=false;
     btn.textContent='已提交，等待教练确认';
