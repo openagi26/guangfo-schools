@@ -25,7 +25,7 @@
 <div class="signup-mask" id="signupMask" onclick="if(event.target===this)closeSignup()"></div>
 <div class="signup-modal" id="signupModal" role="dialog" aria-modal="true">
   <h3>报名 / 择校咨询</h3>
-  <p class="sub">填写后，我们会通过<b>邮件 + 微信</b>同时收到你的信息 ✅</p>
+  <p class="sub">填写后，我们会通过<b>微信</b>收到你的信息；邮件通道待接入 ✅</p>
   <form id="signupForm" onsubmit="return submitSignup(event)">
     <label>家长称呼 *</label><input name="parent" required placeholder="如：亚历山大妈妈">
     <div class="row"><div><label>孩子姓名 *</label><input name="child" required placeholder="孩子名字"></div><div><label>孩子年龄</label><input name="age" type="number" min="1" max="12" value="5"></div></div>
@@ -43,27 +43,35 @@
   </form>
 </div>
 <script>
-/* 双通道接收：Web3Forms(邮件) + 企业微信机器人(微信)。占位待替换。 */
+/* 双通道接收：Web3Forms(邮件) + Server 酱(微信)。微信已配置，邮件占位待替换。 */
 const WEB3_KEY="REPLACE_WITH_YOUR_WEB3FORMS_KEY";
-const WX_WEBHOOK="REPLACE_WITH_YOUR_WECHAT_WEBHOOK";
+const SERVERCHAN_KEY="SCT402824TMWdPt9Bbfe4VRiBC7F0G9S9x";
 function openSignup(){document.getElementById('signupMask').classList.add('open');document.getElementById('signupModal').style.display='block';}
 function closeSignup(){document.getElementById('signupMask').classList.remove('open');document.getElementById('signupModal').style.display='none';}
 async function submitSignup(e){
   e.preventDefault();
   const d=Object.fromEntries(new FormData(e.target).entries());
   const msg=document.getElementById('signupMsg');
-  if(WEB3_KEY.indexOf('REPLACE')===0||WX_WEBHOOK.indexOf('REPLACE')===0){
+  if(WEB3_KEY.indexOf('REPLACE')===0&&SERVERCHAN_KEY.indexOf('REPLACE')===0){
     msg.className='signup-msg err';
-    msg.textContent='演示模式：接收服务尚未配置，请提供「接收邮箱」与「企业微信 webhook」后由管理员接入。';
+    msg.textContent='演示模式：接收服务尚未配置，请提供 Web3Forms Key 或 Server 酱 SendKey。';
     return false;
   }
-  const text=`**【广佛择校榜 · 新报名】**\n> 家长：${d.parent}\n> 孩子：${d.child}（${d.age}岁）\n> 城市：${d.city}\n> 意向学校：${d.school||'未填'}\n> 电话：${d.phone}\n> 微信：${d.wechat||'未填'}\n> 备注：${d.note||'无'}`;
+  const text=`【广佛择校榜 · 新报名】\n家长：${d.parent}\n孩子：${d.child}（${d.age}岁）\n城市：${d.city}\n意向学校：${d.school||'未填'}\n电话：${d.phone}\n微信：${d.wechat||'未填'}\n备注：${d.note||'无'}`;
   msg.className='signup-msg'; msg.textContent='提交中…';
   try{
-    const p1=fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:WEB3_KEY,subject:'广佛择校榜新报名',from_name:'择校榜报名',email:(d.phone+'@no.reply'),parent:d.parent,child:d.child,age:d.age,city:d.city,school:d.school,phone:d.phone,wechat:d.wechat,note:d.note})});
-    const p2=fetch(WX_WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({msgtype:'markdown',markdown:{content:text}})});
-    await Promise.all([p1,p2]);
-    msg.className='signup-msg ok'; msg.textContent='✅ 提交成功！我们会尽快通过邮件和微信联系你。';
+    const jobs=[];
+    // 邮件通道（已拿到 key 时才启用）
+    if(WEB3_KEY.indexOf('REPLACE')!==0){
+      jobs.push(fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({access_key:WEB3_KEY,subject:'广佛择校榜新报名',from_name:'择校榜报名',email:'kaiwen1899@163.com',parent:d.parent,child:d.child,age:d.age,city:d.city,school:d.school,phone:d.phone,wechat:d.wechat,note:d.note})}));
+    }
+    // 微信通道：Server 酱
+    if(SERVERCHAN_KEY.indexOf('REPLACE')!==0){
+      const body=new URLSearchParams({title:'广佛择校榜 · 新报名', desp:text});
+      jobs.push(fetch('https://sctapi.ftqq.com/'+SERVERCHAN_KEY+'.send',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:body}));
+    }
+    await Promise.all(jobs);
+    msg.className='signup-msg ok'; msg.textContent='✅ 提交成功！我们会尽快通过微信联系你。';
     e.target.reset();
   }catch(err){ msg.className='signup-msg err'; msg.textContent='提交失败：'+err.message; }
   return false;
