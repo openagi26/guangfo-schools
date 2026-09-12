@@ -1,131 +1,974 @@
+<!--pnid:IRdCS5E2dqGz2zwBz8Ei9a--><!--
+================================================================================
+ 万次迭代网球课 · V3 改造版（模型：HY4 / WorkBuddy）
+ 依据：《网站分析与升级建议综合报告 V3》
+ 硬约束：#booking-form 全部字段 id/name/value 与 <script> 提交逻辑逐字节未改动
+        （Server 酱微信推送 + FormSubmit 邮件双通道完整保留）
+ 校名口径：默认采用中性表述（公网安全）。详见文件内「D-13 校名口径开关」注释块。
+================================================================================
+-->
 <!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<script src="/page/page_comm/inject.js"></script>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1" name="viewport">
-  <meta content="万次迭代网球课：面向清华本科生、研究生和零基础成年人，从第一次挥拍到稳定对打与参加比赛。" name="description">
-  <title>万次迭代网球课｜从第一次挥拍，到能够稳定对打</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600;700;900&family=Space+Grotesk:wght@500;600;700&display=swap');
-    :root{--ink:#10251f;--deep:#163b31;--court:#285c4e;--lime:#d9f16d;--ball:#f5cf3e;--paper:#f5f1e7;--muted:#6d746d;--line:#d8d8cb;--white:#fffdf7;--shadow:0 24px 70px rgba(16,37,31,.13)}
-    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif SC",serif;line-height:1.72} a{color:inherit;text-decoration:none}
-    .wrap{max-width:1180px;margin:0 auto;padding:0 28px}.topbar{height:74px;display:flex;align-items:center;justify-content:space-between;font-family:"Space Grotesk",sans-serif;border-bottom:1px solid rgba(16,37,31,.12)}
-    .brand{display:flex;gap:12px;align-items:center;font-weight:700;letter-spacing:.02em}.brand-mark{width:30px;height:30px;border:2px solid var(--ink);border-radius:50%;position:relative}.brand-mark:after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--ball)}nav{display:flex;gap:25px;font-size:13px;color:#4b5d54}nav a:hover{color:var(--court)}
-    .hero{position:relative;min-height:680px;padding:85px 0 74px;overflow:hidden}.hero:before{content:"";position:absolute;right:-150px;top:-50px;width:620px;height:620px;border:1px solid rgba(40,92,78,.22);border-radius:50%;box-shadow:0 0 0 42px rgba(40,92,78,.06),0 0 0 84px rgba(40,92,78,.04)}.hero-grid{display:grid;grid-template-columns:1.07fr .93fr;gap:70px;align-items:center;position:relative}.eyebrow{font:700 12px "Space Grotesk",sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--court);margin-bottom:24px}.hero h1{font-size:clamp(46px,6.3vw,84px);line-height:1.08;letter-spacing:-.06em;margin:0 0 26px;font-weight:900}.hero h1 em{font-style:normal;color:var(--court);position:relative}.hero h1 em:after{content:"";position:absolute;left:0;right:8%;bottom:-7px;height:8px;background:var(--lime);z-index:-1;transform:skewX(-15deg)}.hero p{font-size:18px;color:#53625a;max-width:570px;margin:0 0 34px}.actions{display:flex;gap:13px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 20px;border-radius:100px;font-weight:700;font-size:14px;border:1px solid var(--ink);transition:.2s}.btn.primary{background:var(--ink);color:var(--white);box-shadow:5px 5px 0 var(--ball)}.btn.primary:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ball)}.btn.ghost{background:transparent}.btn.ghost:hover{background:#e7e3d7}.hero-card{background:var(--deep);color:var(--white);padding:32px;border-radius:4px;box-shadow:var(--shadow);transform:rotate(2deg);position:relative}.hero-card:before{content:"训练记录 / 01";font:600 11px "Space Grotesk",sans-serif;letter-spacing:.15em;color:var(--lime)}.hero-card h3{font-size:28px;line-height:1.3;margin:27px 0 22px}.hero-card ul{list-style:none;padding:0;margin:0}.hero-card li{border-top:1px solid rgba(255,255,255,.18);padding:14px 0;font-size:14px;display:flex;justify-content:space-between;gap:14px}.hero-card li span{color:var(--lime);font:700 12px "Space Grotesk",sans-serif}.note{font-size:12px;color:#bac5bb;margin-top:18px}.strip{background:var(--lime);padding:17px 0;font:700 13px "Space Grotesk",sans-serif;letter-spacing:.04em}.strip .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-    section{padding:100px 0}.section-head{display:flex;justify-content:space-between;gap:35px;align-items:end;margin-bottom:45px}.section-kicker{font:700 12px "Space Grotesk",sans-serif;color:var(--court);letter-spacing:.16em}.section-head h2{font-size:clamp(32px,4vw,53px);line-height:1.16;letter-spacing:-.05em;margin:12px 0 0;max-width:650px}.section-head p{max-width:335px;color:var(--muted);margin:0;font-size:14px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--white);padding:28px;min-height:265px;border:1px solid var(--line);position:relative}.card:nth-child(2){transform:translateY(22px);background:var(--deep);color:var(--white);border-color:var(--deep)}.card:nth-child(2) p,.card:nth-child(2) small{color:#c2d0c8}.card-num{font:700 12px "Space Grotesk",sans-serif;color:var(--court)}.card:nth-child(2) .card-num{color:var(--lime)}.card h3{font-size:25px;margin:45px 0 10px;line-height:1.25}.card p{color:var(--muted);font-size:14px;margin:0 0 18px}.card small{color:var(--court);font-weight:700}
-    .experience{background:var(--deep);color:var(--white)}.experience .section-kicker{color:var(--lime)}.experience .section-head p{color:#c2d0c8}.steps{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.25)}.step{padding:25px 18px 0 0;border-right:1px solid rgba(255,255,255,.25);margin-right:18px}.step:last-child{border:0}.step b{font:700 28px "Space Grotesk",sans-serif;color:var(--lime)}.step h3{font-size:17px;margin:20px 0 8px}.step p{color:#c2d0c8;font-size:13px;margin:0}
-    .path{background:#e7e5d8}.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}.path-visual{position:relative;min-height:420px;border:1px solid rgba(16,37,31,.2);padding:28px;background:linear-gradient(135deg,#2b6554,#15382e);color:var(--white);overflow:hidden}.path-visual:after{content:"";position:absolute;width:430px;height:430px;border:1px solid rgba(217,241,109,.6);border-radius:50%;right:-190px;bottom:-190px}.path-title{font:700 12px "Space Grotesk",sans-serif;letter-spacing:.15em;color:var(--lime)}.path-visual h3{font-size:38px;line-height:1.2;max-width:270px;margin-top:80px}.path-visual .vertical{position:absolute;right:32px;top:30px;bottom:30px;border-left:1px dashed rgba(255,255,255,.45)}.path-visual .vertical:after{content:"";position:absolute;bottom:0;left:-7px;width:13px;height:13px;border-radius:50%;background:var(--ball)}.timeline{display:grid;gap:22px}.timeline-item{display:grid;grid-template-columns:58px 1fr;gap:16px;align-items:start}.timeline-item .num{font:700 26px "Space Grotesk",sans-serif;color:var(--court)}.timeline-item h3{margin:0 0 3px;font-size:18px}.timeline-item p{margin:0;color:var(--muted);font-size:14px}
-    .proof{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px;align-items:start}.quote{font-size:25px;line-height:1.5;margin:18px 0 20px}.quote-mark{font:900 70px Georgia;color:var(--ball);height:46px}.case-list{display:grid;gap:12px}.case{background:var(--white);border:1px solid var(--line);padding:23px 26px;display:grid;grid-template-columns:120px 1fr;gap:20px}.case strong{font-size:15px}.case p{margin:0;color:var(--muted);font-size:14px}.case b{color:var(--court)}
-    .pricing{background:var(--white)}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.price{border:1px solid var(--line);padding:27px}.price.featured{background:var(--deep);color:var(--white);transform:translateY(-12px);box-shadow:var(--shadow)}.price h3{font-size:20px;margin:0 0 5px}.price .who{font-size:12px;color:var(--muted)}.price.featured .who{color:#c2d0c8}.amount{font:700 37px "Space Grotesk",sans-serif;margin:27px 0 12px}.amount small{font:500 13px "Noto Serif SC",serif}.price ul{padding:0;margin:0;list-style:none;font-size:13px;color:var(--muted)}.price.featured ul{color:#c2d0c8}.price li{padding:8px 0;border-top:1px solid var(--line)}.price.featured li{border-color:rgba(255,255,255,.2)}.fine{font-size:12px;color:var(--muted);margin-top:24px}
-    .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.faq{border-top:1px solid var(--line);padding:19px 0}.faq summary{cursor:pointer;font-weight:700;list-style:none}.faq summary::-webkit-details-marker{display:none}.faq summary:after{content:"+";float:right;font:700 20px "Space Grotesk",sans-serif;color:var(--court)}.faq[open] summary:after{content:"−"}.faq p{font-size:14px;color:var(--muted);max-width:480px;margin:12px 0 0}
-    .booking{background:#dfe8d8}.booking-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;align-items:start}.booking-intro h2{font-size:clamp(34px,4vw,54px);line-height:1.15;letter-spacing:-.05em;margin:12px 0 20px}.booking-intro p{color:var(--muted);font-size:14px}.booking-form{background:var(--white);padding:30px;border:1px solid var(--line);box-shadow:0 16px 45px rgba(16,37,31,.08)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin-bottom:16px}.field label{display:block;font-size:13px;font-weight:700;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid #c9cec2;background:#fffef9;border-radius:3px;padding:12px;font:inherit;font-size:14px;color:var(--ink)}.field textarea{min-height:80px;resize:vertical}.choice-group{display:flex;flex-wrap:wrap;gap:8px}.choice-group label{font-size:13px;font-weight:500;border:1px solid #c9cec2;background:#fffef9;padding:9px 12px;border-radius:100px;cursor:pointer}.choice-group input{accent-color:var(--court);margin-right:5px}.form-note{font-size:12px;color:var(--muted);margin:12px 0 18px}.booking-form .btn{cursor:pointer;width:100%}
-    .route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.route{background:var(--white);border:1px solid var(--line);padding:25px}.route h3{font-size:22px;margin:30px 0 8px}.route p{font-size:14px;color:var(--muted);margin:0 0 15px}.route ul{list-style:none;padding:0;margin:0;font-size:13px;color:var(--court)}.route li{padding:7px 0;border-top:1px solid var(--line)}.route li strong{color:var(--ink)}
-    .visuals{background:var(--deep);color:var(--white)}.visuals .section-kicker{color:var(--lime)}.visuals .section-head p{color:#c2d0c8}.image-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:14px}.image-tile{min-height:390px;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.18);background:#1d4639}.image-tile img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.08)}.image-tile:first-child{min-height:500px}.image-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(5,20,15,.78))}.image-label{position:absolute;z-index:1;left:20px;right:20px;bottom:18px}.image-label b{display:block;font-size:20px}.image-label span{font:600 11px "Space Grotesk",sans-serif;letter-spacing:.12em;color:var(--lime)}
-    .motion-wall{margin-top:16px;position:relative;display:grid;grid-template-columns:1.35fr .65fr;gap:14px;min-height:330px}.motion-stage{position:relative;min-height:330px;overflow:hidden;background:#0e2b23;border:1px solid rgba(255,255,255,.2)}.motion-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:motionCrossfade 15s infinite;filter:saturate(1.12) contrast(1.03)}.motion-stage img:nth-child(1){animation-delay:0s}.motion-stage img:nth-child(2){animation-delay:5s}.motion-stage img:nth-child(3){animation-delay:10s}.motion-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,20,15,.58),transparent 65%),linear-gradient(0deg,rgba(5,20,15,.7),transparent 55%);pointer-events:none}.motion-copy{position:absolute;z-index:2;left:26px;bottom:24px}.motion-copy span{font:700 11px "Space Grotesk",sans-serif;letter-spacing:.16em;color:var(--lime)}.motion-copy h3{font-size:28px;margin:8px 0 0;line-height:1.2}.motion-orbit{position:relative;overflow:hidden;background:var(--lime);color:var(--ink);padding:26px;display:flex;flex-direction:column;justify-content:space-between}.motion-orbit h3{font-size:24px;line-height:1.25;margin:0;max-width:180px}.orbit-ball{width:28px;height:28px;border-radius:50%;background:var(--ball);box-shadow:inset -6px -5px 0 rgba(16,37,31,.16),0 0 0 7px rgba(255,255,255,.35);animation:ballOrbit 4s ease-in-out infinite}.motion-orbit:before,.motion-orbit:after{content:"";position:absolute;border:1px solid rgba(16,37,31,.4);border-radius:50%;width:260px;height:110px;right:-80px;bottom:54px;transform:rotate(-18deg)}.motion-orbit:after{width:300px;height:130px;right:-100px;bottom:42px}.motion-orbit small{font:700 11px "Space Grotesk",sans-serif;letter-spacing:.1em}.motion-note{font-size:12px;color:#53624f;max-width:170px}.motion-marquee{overflow:hidden;margin-top:12px;border-top:1px solid rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.25);padding:12px 0;white-space:nowrap;font:700 11px "Space Grotesk",sans-serif;letter-spacing:.12em;color:var(--lime)}.motion-marquee span{display:inline-block;padding-right:35px;animation:marquee 18s linear infinite}@keyframes motionCrossfade{0%,28%{opacity:1;transform:scale(1)}33%,95%{opacity:0;transform:scale(1.08)}100%{opacity:0}}@keyframes ballOrbit{0%,100%{transform:translate(0,0) rotate(0)}45%{transform:translate(105px,-74px) rotate(180deg)}75%{transform:translate(195px,-8px) rotate(300deg)}}@keyframes marquee{to{transform:translateX(-50%)}}
-    .venue{background:#f0eee4}.venue-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px}.venue-list{display:grid;gap:12px}.venue-card{background:var(--white);border:1px solid var(--line);padding:20px 23px;display:grid;grid-template-columns:35px 1fr;gap:15px}.venue-card .pin{font:700 18px "Space Grotesk",sans-serif;color:var(--court)}.venue-card h3{margin:0;font-size:17px}.venue-card p{margin:3px 0 0;color:var(--muted);font-size:13px}.trust-box{background:var(--deep);color:var(--white);padding:28px}.trust-box h3{font-size:24px;margin:0 0 16px}.trust-box p{font-size:14px;color:#c2d0c8}.trust-box ul{padding-left:18px;color:#c2d0c8;font-size:13px}.trust-box li{margin:7px 0}.rules-box{background:var(--white);border:1px solid var(--line);padding:24px;margin-top:18px}.rules-box h3{margin:0 0 10px;font-size:18px}.rules-box p{font-size:13px;color:var(--muted);margin:0}
-    .cta{background:var(--ball);padding:80px 0}.cta-grid{display:flex;justify-content:space-between;gap:30px;align-items:end}.cta h2{font-size:clamp(34px,5vw,62px);line-height:1.1;letter-spacing:-.06em;margin:12px 0 0;max-width:700px}.cta p{max-width:380px;color:#554d29;margin:0}.footer{padding:28px 0 45px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.agreement{border-top:1px solid var(--line);padding:35px 0 65px}.agreement summary{font-weight:700;cursor:pointer}.agreement p{font-size:13px;color:var(--muted);max-width:760px}.agreement ul{font-size:13px;color:var(--muted);max-width:760px}
-    @media(max-width:820px){nav{display:none}.hero{padding:55px 0}.hero-grid,.path-grid,.proof,.booking-grid,.venue-grid,.motion-wall{grid-template-columns:1fr;gap:42px}.hero-card{transform:none}.cards,.price-grid,.route-grid,.image-grid{grid-template-columns:1fr}.card:nth-child(2),.price.featured{transform:none}.steps{grid-template-columns:1fr 1fr;gap:25px}.step{border-right:0;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:20px;margin:0}.section-head{display:block}.section-head p{margin-top:20px}.case{grid-template-columns:1fr;gap:7px}.faq-grid{grid-template-columns:1fr}.cta-grid{display:block}.cta p{margin-top:22px}.cta .btn{margin-top:24px}.image-tile,.image-tile:first-child,.motion-stage{min-height:370px}.motion-orbit{min-height:250px}.motion-orbit:before,.motion-orbit:after{right:-130px}}
-    @media(max-width:500px){.wrap{padding:0 20px}.hero h1{font-size:46px}.hero p{font-size:16px}.steps{grid-template-columns:1fr}.path-visual{min-height:330px}.path-visual h3{margin-top:65px;font-size:32px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.motion-stage img,.orbit-ball,.motion-marquee span{animation:none}.motion-stage img:first-child{opacity:1}.motion-stage img:not(:first-child){opacity:0}.btn{transition:none}}
-  </style>
+<html data-page-node-id="1JmfXzQ0VDlvb9FFj0WRSz" lang="zh-CN">
+<head data-page-node-id="txE1KZvdptdHt0bKql6gkv">
+<meta data-page-node-id="QnvxJKNVxPg9S35d9l3Ayl" charset="utf-8">
+  <meta data-page-node-id="sBv8UoDH0sksEMb0cERVUj" content="width=device-width,initial-scale=1" name="viewport">
+  <meta data-page-node-id="iEScPt6xfZ0h4yJEBXUuoi" content="万次迭代网球课：从第一次挥拍到稳定对打、参加比赛。先评估，再确定适合您的训练路径。" name="description">
+  <meta data-page-node-id="rXvlNdbb3tcNqzr40cgLno" content="#0a261e" name="theme-color">
+  <title data-page-node-id="5uzydOfAkLMl3eUR4BKPi6" data-pnid-children="QXIlxUddnucWW3TxnBNhTG">万次迭代网球课｜从第一次挥拍到稳定对打</title>
+  <link data-page-node-id="BqUcZ1vv6rDbUPXiO6S78s" href="https://fonts.googleapis.com" rel="preconnect">
+  <link data-page-node-id="iWp697L1N0zhrfS1FzrJES" crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link data-page-node-id="YCJFSOfuWzRPYMuzA2crvD" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style data-page-node-id="h21oXiZIl7s5YOudE1mTRh" data-pnid-children="jej0KXKrHRyO3LSuye6zZm">
+    :root{--ink:#102820;--pine:#0a261e;--pine-2:#143f32;--moss:#285445;--paper:#f5f0e6;--cream:#fffdf7;--line:#d7d0c2;--tennis:#d9f53a;--ball:#e8ff45;--coral:#ff725e;--muted:#65736c;--display:"Bebas Neue","Noto Sans SC",sans-serif;--body:"Noto Sans SC",sans-serif;--mono:"DM Mono",monospace}
+    *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.55} a{color:inherit;text-decoration:none} button,input,select{font:inherit} button{cursor:pointer} :focus-visible{outline:3px solid var(--coral);outline-offset:4px}
+    .skip{position:absolute;left:-999px;top:8px;background:var(--tennis);padding:10px 14px;z-index:99;font-weight:800}.skip:focus{left:8px}.wrap{width:min(1180px,calc(100% - 48px));margin:auto}.eyebrow{font:500 11px var(--mono);letter-spacing:.13em;text-transform:uppercase}.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid currentColor;border-radius:99px;padding:6px 11px;font:500 11px var(--mono);letter-spacing:.08em}.dot{width:7px;height:7px;background:var(--tennis);border-radius:50%;box-shadow:0 0 0 4px rgba(217,245,58,.18)}
+    .site-header{height:64px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:1px solid var(--line);box-shadow:0 5px 18px rgba(10,38,30,.06)}.brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em;white-space:nowrap}.brand-mark{width:27px;height:27px;border-radius:50%;background:var(--tennis);position:relative;overflow:hidden}.brand-mark:before,.brand-mark:after{content:"";position:absolute;border:1px solid var(--pine);width:30px;height:45px;border-radius:50%;left:-9px;top:-9px;transform:rotate(31deg)}.brand-mark:after{left:6px;top:-9px;transform:rotate(-31deg)}.site-nav{display:flex;align-items:center;gap:14px;font-size:12px;font-weight:800}.site-nav a{position:relative;white-space:nowrap}.site-nav a:after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:2px;background:var(--moss);transition:right .2s}.site-nav a:hover:after,.site-nav a[aria-current="page"]:after{right:0}.nav-cta,.button{display:inline-flex;justify-content:center;align-items:center;gap:10px;border:0;min-height:40px;padding:0 16px;background:var(--tennis);color:var(--pine);font-weight:900;font-size:13px;transition:transform .18s,box-shadow .18s}.nav-cta:hover,.button:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--coral)}.menu-toggle{display:none;background:none;border:0;width:42px;height:42px}.menu-toggle span{display:block;width:25px;height:2px;background:currentColor;margin:5px auto}
+    .hero{background:#f2e8d3 url(assets/tennis/federer-volley-logo.png) no-repeat 30% center;background-size:contain;color:var(--pine);overflow:hidden;position:relative;min-height:720px}.hero:before{content:"";position:absolute;inset:0;background:transparent;z-index:0}.hero:after{content:"";position:absolute;width:64vw;height:2px;background:var(--tennis);right:-10vw;bottom:119px;transform:rotate(-13deg);box-shadow:0 17px 0 rgba(217,245,58,.22),0 34px 0 rgba(217,245,58,.12)}.hero .wrap{position:relative;z-index:1}.hero-main{padding:78px 0 0;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(310px,.85fr);gap:50px}.hero .eyebrow{color:var(--pine);margin-bottom:22px}.hero h1{margin:0;font-family:var(--display);font-size:clamp(72px,10.5vw,156px);font-weight:400;line-height:.82;letter-spacing:.015em;max-width:800px}.hero h1 em{font-family:var(--body);font-size:.38em;font-style:normal;display:block;letter-spacing:-.08em;line-height:1.05;margin:18px 0 0}.hero-lede{max-width:610px;margin:29px 0 0;color:var(--pine);font-size:17px}
+/* ===== 首屏主文案三层结构（第六轮设计 · 面板背景透明） ===== */
+.t-hero-lede{position:relative;color:var(--pine)!important;font-size:28px!important;font-weight:500!important;max-width:620px;line-height:1.9;letter-spacing:.01em}
+.lede-title{display:inline-block;max-width:100%;font:900 clamp(34px,5vw,44px) var(--display);line-height:1.06;letter-spacing:-.01em;margin-bottom:.35em;color:var(--pine);background:rgba(255,253,247,.92);padding:.18em .38em;border-radius:.24em;border:1px solid rgba(255,255,255,.75);box-shadow:0 4px 20px -12px rgba(10,38,30,.45)}
+.lede-sub{display:inline-block;max-width:100%;font-size:19px;line-height:1.95;color:var(--pine);margin:.7em 0 0;font-weight:400;background:rgba(255,253,247,.85);padding:.35em .7em;border-radius:12px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.25)}
+.lede-value{display:inline-block;max-width:100%;font-size:19px;line-height:1.95;color:var(--pine);margin:.7em 0 0;font-weight:600;background:rgba(255,253,247,.85);padding:.35em .7em;border-radius:12px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.25)}
+.hl{background:linear-gradient(120deg,var(--coral),var(--tennis));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;font-weight:700;padding:0 .04em}
+.lede-badge{display:inline-block;background:var(--tennis);color:var(--pine);font-weight:800;padding:.04em .5em;border-radius:.45em;box-shadow:0 2px 0 rgba(0,0,0,.12);transform:translateY(-1px)}
+.lede-deco{position:absolute;top:-6px;right:2px;width:168px;height:138px;z-index:2;pointer-events:none}
+.lede-progress{position:relative;height:6px;margin-top:18px;border-radius:99px;background:rgba(255,253,247,.8);padding:0 2px;overflow:hidden}
+.lede-progress-fill{position:absolute;left:0;top:0;height:100%;width:0;background:linear-gradient(90deg,var(--moss),var(--coral));border-radius:99px;transition:width .15s linear}
+@keyframes ledeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.lede-title{animation:ledeUp .6s ease both}
+.lede-sub{animation:ledeUp .6s ease both .1s}
+.lede-value{animation:ledeUp .6s ease both .2s}
+.lede-deco{animation:ledeUp .8s ease both}
+@media(prefers-reduced-motion:reduce){.lede-title,.lede-sub,.lede-value,.lede-deco{animation:none}.lede-progress-fill{transition:none}}
+@media(max-width:900px){.t-hero-lede{font-size:24px!important;line-height:1.85}.lede-title{font-size:clamp(30px,7vw,38px)}.lede-sub,.lede-value{font-size:18px}}
+@media(max-width:600px){.t-hero-lede{font-size:22px!important;line-height:1.82;max-width:100%}.lede-title{font-size:clamp(28px,9vw,34px)}.lede-sub,.lede-value{font-size:17px}.lede-deco{width:120px;height:100px;top:-4px;right:-2px}}.hero-actions{margin-top:32px;display:flex;gap:13px;flex-wrap:wrap}.button.secondary{background:transparent;color:var(--pine);border:1px solid rgba(16,40,32,.42)}.button.secondary:hover{box-shadow:4px 4px 0 var(--moss);color:var(--moss)}.hero-card{align-self:end;background:rgba(255,253,247,.82);color:var(--pine);padding:25px;border:1px solid rgba(255,255,255,.6);border-radius:14px;transform:none;box-shadow:0 16px 44px -26px rgba(10,38,30,.5);margin-bottom:20px;backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px)}.hero-card .card-label{font:500 10px var(--mono);letter-spacing:.12em;color:var(--moss)}.hero-card h2{font-size:28px;line-height:1.14;letter-spacing:-.06em;margin:13px 0}.hero-card p{font-size:13px;color:var(--muted);margin:0}.scoreboard{margin-top:22px;border-top:1px solid var(--line)}.scoreboard div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line);font-size:12px}.scoreboard b{font:500 11px var(--mono)}.hero-footer{display:flex;justify-content:space-between;gap:20px;padding:52px 0 23px;font:500 10px var(--mono);letter-spacing:.1em;color:var(--moss)}.hero-footer strong{color:var(--moss);font-weight:500}
+    .marquee{overflow:hidden;background:var(--coral);color:var(--pine);white-space:nowrap;font:500 12px var(--mono);letter-spacing:.12em}.marquee div{display:inline-block;padding:12px 0;animation:move 22s linear infinite}@keyframes move{to{transform:translateX(-50%)}}
+    section{scroll-margin-top:70px}.section{padding:112px 0}.section-head{display:grid;grid-template-columns:1fr minmax(240px,.55fr);gap:50px;align-items:end;margin-bottom:48px}.section-head h2{margin:11px 0 0;font-size:clamp(40px,5vw,72px);letter-spacing:-.085em;line-height:1.02}.section-head p{margin:0;color:var(--muted);font-size:15px}.start .section-head p{display:block;margin-top:18px;color:var(--muted);font-size:15px}.section-kicker{font:500 11px var(--mono);letter-spacing:.13em;color:var(--moss)}
+    .start{background:url("assets/tennis/start-bg-no-watermark.png") center top/cover no-repeat;position:relative}.start::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,253,247,.88) 0%,rgba(255,253,247,.55) 45%,rgba(255,253,247,.82) 100%);pointer-events:none;z-index:0}.start>.wrap{position:relative;z-index:1}.goal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.goal-card{min-height:355px;padding:24px;border:1px solid rgba(255,255,255,.72);display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .2s,background .2s;border-radius:18px;background:rgba(255,253,247,.72);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);box-shadow:0 16px 44px -26px rgba(10,38,30,.45)}.goal-card:hover{transform:translateY(-7px);background:rgba(40,84,69,.88);color:var(--cream);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%)}.goal-card:hover p,.goal-card:hover .goal-note{color:#b8c9c0}.goal-card:hover .goal-number{color:var(--tennis)}.goal-number{display:inline-flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:rgba(255,253,247,.88);border:1px solid rgba(255,255,255,.65);box-shadow:0 4px 12px -6px rgba(10,38,30,.25);font:400 44px var(--display);color:var(--moss)}.goal-card h3{display:inline-block;font-size:28px;line-height:1.24;letter-spacing:-.04em;margin:37px 0 12px;color:var(--pine);background:rgba(255,253,247,.88);padding:.25em .45em;border-radius:12px;border:1px solid rgba(255,255,255,.6);box-shadow:0 3px 14px -8px rgba(10,38,30,.25);font-weight:400;font-family:"Ma Shan Zheng","Noto Sans SC",sans-serif}.goal-card p{display:inline-block;font-size:14px;color:var(--muted);margin:0 0 12px;background:rgba(255,253,247,.82);padding:.4em .6em;border-radius:10px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.2)}.goal-note{display:inline-block;font-size:12px;color:var(--moss);margin-top:auto;padding:.45em .8em;border-radius:999px;background:rgba(255,253,247,.85);border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.18)}.goal-orbit{position:absolute;right:-36px;bottom:-37px;width:130px;height:130px;border:1px solid currentColor;border-radius:50%;opacity:.18}.goal-orbit:after{content:"";position:absolute;inset:17px;border:1px solid currentColor;border-radius:50%}
+    .method{background:url("assets/tennis/method-bg-no-watermark.png") center top/cover no-repeat;position:relative;overflow:hidden}.method:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,253,247,.86) 0%,rgba(255,253,247,.52) 42%,rgba(255,253,247,.82) 100%);pointer-events:none;z-index:0}.method-grid{position:relative;z-index:1;display:grid;grid-template-columns:.86fr 1.14fr;gap:64px}.method-copy{position:relative;z-index:2;height:max-content;background:rgba(255,253,247,.78);-webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);border-radius:22px;padding:30px 32px;border:1px solid rgba(255,255,255,.75);box-shadow:0 20px 50px -30px rgba(10,38,30,.45)}.method-copy h2{font-size:clamp(40px,5vw,64px);line-height:1.06;letter-spacing:-.02em;margin:12px 0 22px;font-weight:400;font-family:"Ma Shan Zheng","Noto Sans SC",sans-serif;color:var(--pine);display:inline-block;background:rgba(255,253,247,.82);padding:.12em .22em;border-radius:12px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.2)}.method-copy p{color:var(--muted);max-width:420px;display:inline-block;background:rgba(255,253,247,.82);padding:.5em .9em;border-radius:12px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.2)}.principles{display:flex;flex-direction:column;gap:18px;border-top:0}.principle{display:grid;grid-template-columns:64px 1fr auto;align-items:center;gap:18px;padding:24px 26px;border-radius:18px;border:1px solid rgba(255,255,255,.7);background:rgba(255,253,247,.74);-webkit-backdrop-filter:blur(10px) saturate(140%);backdrop-filter:blur(10px) saturate(140%);box-shadow:0 16px 44px -26px rgba(10,38,30,.45);position:relative;overflow:hidden}.principle-no{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;font:400 34px var(--display);color:var(--moss);background:rgba(255,253,247,.9);border:1px solid rgba(255,255,255,.65);border-radius:50%;box-shadow:0 4px 12px -6px rgba(10,38,30,.25)}.principle h3{font-size:25px;letter-spacing:-.04em;margin:0;display:inline-block;color:var(--pine);background:rgba(255,253,247,.9);padding:.18em .4em;border-radius:10px;border:1px solid rgba(255,255,255,.6);box-shadow:0 3px 14px -8px rgba(10,38,30,.25);font-weight:400;font-family:"Ma Shan Zheng","Noto Sans SC",sans-serif}.principle p{font-size:13px;color:var(--muted);margin:10px 0 0;display:inline-block;background:rgba(255,253,247,.82);padding:.35em .6em;border-radius:10px;border:1px solid rgba(255,255,255,.55);box-shadow:0 2px 10px -6px rgba(10,38,30,.2)}.principle-icon{width:38px;height:38px;border:1px solid var(--pine);border-radius:50%;display:grid;place-items:center;font:500 14px var(--mono);background:rgba(255,253,247,.92);box-shadow:0 3px 10px -6px rgba(10,38,30,.25)}
+    .experience{background:var(--paper)}.session-board{display:grid;grid-template-columns:.8fr 1.2fr;border:1px solid var(--line);background:var(--cream)}.session-intro{padding:36px;background:var(--pine);color:var(--cream)}.session-intro h3{font-size:34px;line-height:1.08;letter-spacing:-.07em;margin:18px 0}.session-intro p{font-size:13px;color:#b9cbc1}.session-price{display:flex;align-items:baseline;gap:7px;margin-top:46px;color:var(--tennis)}.session-price b{font:400 72px var(--display);line-height:.8}.session-price span{font-size:12px}.session-details{display:grid;grid-template-columns:repeat(2,1fr);padding:0}.session-detail{padding:30px;border-bottom:1px solid var(--line)}.session-detail:nth-child(odd){border-right:1px solid var(--line)}.session-detail b{display:block;font:500 10px var(--mono);letter-spacing:.1em;color:var(--moss)}.session-detail strong{display:block;margin-top:12px;font-size:18px;letter-spacing:-.04em}.session-detail p{font-size:12px;color:var(--muted);margin:7px 0 0}.session-note{grid-column:1/-1;padding:19px 30px;font-size:12px;background:#f3eee1;color:var(--muted)}
+    .routes{background:var(--pine);color:var(--cream)}.routes .section-kicker{color:var(--tennis)}.routes .section-head p{color:#b7c9bf}.route-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.route{border:1px solid rgba(255,255,255,.25);padding:28px;min-height:435px;position:relative;display:flex;flex-direction:column}.route.featured{background:var(--tennis);color:var(--pine);border-color:var(--tennis);transform:translateY(-16px)}.route-tag{font:500 10px var(--mono);letter-spacing:.12em;color:var(--tennis)}.route.featured .route-tag{color:var(--moss)}.route h3{font-size:34px;letter-spacing:-.065em;line-height:1.02;margin:25px 0 9px}.route>p{margin:0;color:#b7c9bf;font-size:13px}.route.featured>p{color:var(--moss)}.route ul{list-style:none;padding:0;margin:30px 0 0;border-top:1px solid currentColor;font-size:13px}.route li{display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid currentColor}.route li span{opacity:.65}.route .button{margin-top:auto;align-self:flex-start;background:transparent;color:inherit;border:1px solid currentColor}.route.featured .button{background:var(--pine);color:var(--tennis);border-color:var(--pine)}
+    .proof{background:var(--cream)}.proof-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px}.coach-panel{background:var(--pine);color:var(--cream);padding:42px;position:relative;overflow:hidden}.coach-panel:after{content:"12";position:absolute;right:-15px;bottom:-59px;font:400 220px var(--display);color:rgba(217,245,58,.11)}.coach-panel h3{font-size:46px;line-height:.94;letter-spacing:-.075em;margin:17px 0;position:relative}.coach-panel p{color:#b8cbc0;font-size:14px;max-width:420px;position:relative}.coach-facts{display:flex;gap:22px;border-top:1px solid rgba(255,255,255,.25);padding-top:20px;margin-top:31px;position:relative}.coach-facts b{display:block;font:400 38px var(--display);color:var(--tennis)}.coach-facts span{font:500 10px var(--mono);letter-spacing:.1em}.proof-stack{display:grid;gap:14px}.proof-card{border:1px solid var(--line);padding:26px;background:var(--paper)}.proof-card h4{font-size:20px;letter-spacing:-.05em;margin:0 0 12px}.proof-card p{font-size:13px;color:var(--muted);margin:0}.proof-card a{display:inline-block;margin-top:17px;font:500 11px var(--mono);letter-spacing:.08em;border-bottom:1px solid currentColor}.venue-list{margin-top:10px}.venue-item{display:grid;grid-template-columns:28px 1fr;gap:13px;padding:13px 0;border-top:1px solid var(--line)}.venue-item b{font:500 11px var(--mono);color:var(--moss)}.venue-item strong{display:block;font-size:14px}.venue-item span{font-size:12px;color:var(--muted)}
+    .stories{background:#e7ddd0}.story-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.story-main{min-height:485px;position:relative;overflow:hidden;background:var(--pine)}.story-main img{width:100%;height:100%;object-fit:cover;opacity:.92;filter:saturate(.98) contrast(1.04) brightness(1.02)}.story-main:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,27,20,.86),transparent 70%)}.story-caption{position:absolute;z-index:1;left:31px;right:31px;bottom:27px;color:var(--cream)}.story-caption .eyebrow{color:var(--tennis)}.story-caption h3{font-size:32px;line-height:1.05;letter-spacing:-.07em;margin:10px 0}.story-caption p{margin:0;font-size:13px;color:#d3e0d9;max-width:480px}.story-side{display:grid;gap:15px}.case{background:var(--cream);padding:27px;border-left:5px solid var(--moss)}.case b{font:500 10px var(--mono);letter-spacing:.1em;color:var(--moss)}.case h3{font-size:23px;letter-spacing:-.06em;margin:13px 0 7px}.case p{font-size:13px;color:var(--muted);margin:0}.case small{display:block;margin-top:17px;font-size:11px;color:var(--moss)}
+    .pricing{background:var(--paper)}.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.price{border:1px solid var(--line);padding:28px;background:var(--cream);position:relative}.price.recommended{background:var(--pine);color:var(--cream);border-color:var(--pine)}.price .pill{font-size:9px;color:var(--moss)}.price.recommended .pill{color:var(--tennis)}.price h3{font-size:23px;letter-spacing:-.06em;margin:20px 0 6px}.price>p{font-size:12px;color:var(--muted);margin:0}.price.recommended>p{color:#c4d4cc}.amount{font:400 70px var(--display);letter-spacing:.02em;line-height:.9;margin:32px 0 15px}.amount small{font:500 12px var(--mono);letter-spacing:0}.price ul{list-style:none;padding:0;margin:0;border-top:1px solid currentColor;font-size:12px}.price li{padding:10px 0;border-bottom:1px solid currentColor}.price-fine{margin:23px 0 0;font-size:12px;color:var(--muted)}
+    .faq{background:var(--cream)}.faq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 46px}.faq details{border-top:1px solid var(--line);padding:18px 0}.faq summary{cursor:pointer;font-size:15px;font-weight:800;list-style:none;display:flex;justify-content:space-between;gap:20px}.faq summary:after{content:"＋";color:var(--moss);font:400 24px var(--display);line-height:.75}.faq details[open] summary:after{content:"—"}.faq details p{font-size:13px;color:var(--muted);max-width:490px;margin:12px 30px 0 0}
+    .booking{background:var(--tennis);padding:104px 0}.booking-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:64px}.booking-copy h2{font-size:clamp(48px,6vw,82px);line-height:.95;letter-spacing:-.08em;margin:15px 0 22px}.booking-copy p{font-size:14px;max-width:350px;color:#40502e}.booking-flow{margin-top:38px;border-top:1px solid rgba(16,40,32,.36)}.booking-flow div{display:grid;grid-template-columns:28px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid rgba(16,40,32,.36);font-size:12px}.booking-flow b{font:500 10px var(--mono)}.booking-form{background:var(--cream);padding:31px;box-shadow:10px 10px 0 var(--pine)}.form-title{display:flex;justify-content:space-between;gap:12px;align-items:start;margin-bottom:24px}.form-title h3{font-size:25px;letter-spacing:-.06em;margin:0}.form-title span{font:500 10px var(--mono);color:var(--moss);text-align:right}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:grid;gap:7px;margin-bottom:15px}.field.full{grid-column:1/-1}.field label,.choice-label{font-size:12px;font-weight:800}.field input,.field select{width:100%;border:1px solid var(--line);background:#fffefa;border-radius:0;padding:12px 13px;min-height:45px;color:var(--ink)}.field input:focus,.field select:focus{border-color:var(--moss);outline:none;box-shadow:0 0 0 3px rgba(40,84,69,.14)}.choice-row{display:flex;flex-wrap:wrap;gap:7px}.choice-row label{font-size:12px;border:1px solid var(--line);padding:9px 11px;cursor:pointer}.choice-row input{accent-color:var(--moss);margin:0 6px 0 0}.time-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:end}.time-row button{height:45px;border:1px solid var(--line);background:transparent;padding:0 11px;color:var(--moss)}.add-time{border:0;background:none;color:var(--moss);font:700 12px var(--body);padding:0}.agree{font-size:11px;color:var(--muted);display:grid;grid-template-columns:17px 1fr;gap:8px;margin:13px 0}.agree input{accent-color:var(--moss);margin:3px 0}.agree a{text-decoration:underline}.form-message{margin:16px 0 0;padding:13px 14px;font-size:12px;display:none}.form-message.success{display:block;background:#e8f6c3;color:#244020}.form-message.error{display:block;background:#ffe2dc;color:#7a2419}.form-message.info{display:block;background:#ecf0ed;color:var(--moss)}.form-message strong{display:block;margin-bottom:3px}.submit{width:100%;margin-top:4px}.submit:disabled{opacity:.62;cursor:wait;transform:none;box-shadow:none}
+    .footer{background:var(--pine);color:#b8c9c0;padding:46px 0 22px}.footer-top{display:flex;justify-content:space-between;gap:30px;padding-bottom:34px;border-bottom:1px solid rgba(255,255,255,.17)}.footer .brand{color:var(--cream)}.footer p{font-size:12px;max-width:440px;margin:12px 0 0}.footer-nav{display:flex;gap:17px;align-items:start;font-size:12px}.footer-bottom{display:flex;justify-content:center;align-items:center;text-align:center;gap:20px;padding-top:18px;font:500 10px var(--mono);letter-spacing:.08em}.footer-bottom strong{color:var(--tennis)}
+    @media(max-width:900px){.site-nav{position:absolute;left:0;right:0;top:64px;background:var(--cream);padding:15px 24px 20px;display:none;z-index:20;box-shadow:0 12px 25px rgba(0,0,0,.12);flex-direction:column;align-items:stretch}.site-nav.open{display:flex}.site-nav a{padding:9px 0}.site-nav .nav-cta{display:inline-flex;margin-top:7px;align-self:flex-start}.menu-toggle{display:block}.hero-main,.method-grid,.booking-grid{grid-template-columns:1fr}.method-grid{gap:28px}.hero-main{gap:16px}.hero-card{max-width:480px;margin-left:auto;transform:none}.method-copy{position:static}.proof-grid,.story-grid{grid-template-columns:1fr}.story-side{grid-template-columns:1fr 1fr}.route-grid,.goal-grid,.price-grid{grid-template-columns:1fr}.route.featured{transform:none}.section-head{grid-template-columns:1fr;gap:19px}.section-head p{max-width:560px}.session-board{grid-template-columns:1fr}.session-intro{padding:30px}.section{padding:82px 0}}
+    @media(max-width:600px){.wrap{width:min(100% - 32px,1180px)}.site-header{height:60px}.site-nav{top:60px}.hero{background-position:center center;min-height:unset}.hero-main{padding-top:52px}.hero h1{font-size:78px}.hero h1 em{font-size:.35em}.hero-lede{font-size:15px}.hero-card{margin:12px 0 0;padding:20px}.hero-footer{font-size:8px;gap:10px}.hero-footer span:last-child{display:none}.section{padding:67px 0}.section-head h2{font-size:45px}.goal-card{min-height:260px}.method-copy h2{font-size:clamp(36px,9vw,52px)}.principle{grid-template-columns:50px 1fr 26px;gap:12px;padding:18px 16px}.principle h3{font-size:21px}.principle p{font-size:12px}.principle-no{font-size:33px}.session-details{grid-template-columns:1fr}.session-detail:nth-child(odd){border-right:0}.session-detail{padding:23px}.session-note{padding:17px 23px}.story-main{min-height:390px}.story-side{grid-template-columns:1fr}.price-grid{gap:10px}.faq-grid{grid-template-columns:1fr}.booking{padding:67px 0}.booking-grid{gap:36px}.booking-form{padding:21px;box-shadow:6px 6px 0 var(--pine)}.form-grid{grid-template-columns:1fr}.time-row{grid-template-columns:1fr 1fr}.time-row select:last-of-type{grid-column:1/3}.time-row button{grid-column:1/3}.footer-top,.footer-bottom{flex-direction:column;align-items:center}.footer-nav{flex-wrap:wrap}.hero:after{bottom:75px}.marquee div{animation-duration:14s}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+    @media(max-width:900px){.hero:before{background:transparent}}
+  
+.start-title{margin:0;font-size:clamp(34px,4.2vw,52px);letter-spacing:-.02em;line-height:1.22;color:var(--pine);font-weight:400;font-family:"Ma Shan Zheng","Noto Sans SC",sans-serif}
+.start-title-line{display:inline}
+.start .section-head{display:block;max-width:900px;margin:0 auto 48px;background:rgba(255,253,247,.78);-webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);border-radius:22px;padding:30px 34px;border:1px solid rgba(255,255,255,.75);box-shadow:0 20px 50px -30px rgba(10,38,30,.45);position:relative}.start .section-head .section-kicker{margin-bottom:8px}.start-deco{position:absolute;z-index:2;pointer-events:none}
+.start-deco-boy{width:130px;right:-22px;bottom:-36px;transform:rotate(-8deg);filter:drop-shadow(0 10px 20px rgba(10,38,30,.25))}
+.start-deco-girl{width:120px;left:-16px;bottom:-28px;transform:rotate(6deg);filter:drop-shadow(0 10px 20px rgba(10,38,30,.25))}
+@media (max-width:900px){.start .section-head{padding:22px 24px}.start-deco-boy{width:100px;right:-14px;bottom:-26px}.start-deco-girl{width:90px;left:-10px;bottom:-20px}}
+@media (max-width:640px){.start-deco{display:none}}
+
+.method-deco{position:absolute;z-index:2;pointer-events:none}
+.method-deco-boy{width:124px;right:-22px;top:-50px;transform:rotate(-10deg);filter:drop-shadow(0 10px 20px rgba(10,38,30,.25))}
+.method-deco-girl{width:112px;left:-18px;bottom:-38px;transform:rotate(8deg);filter:drop-shadow(0 10px 20px rgba(10,38,30,.25))}
+@media (max-width:900px){.method .method-copy{padding:24px}.method-deco-boy{width:96px;right:-14px;top:-34px}.method-deco-girl{width:84px;left:-12px;bottom:-24px}}
+@media (max-width:640px){.method-deco{display:none}}
+</style>
+  <style data-page-node-id="rotTijvRbFVJL6dU1n8IId" data-pnid-children="DXTCtXzajXqpLVBonXUTVB">
+    .training-map{background:#e8e4d9}.training-map-grid{display:grid;grid-template-columns:.82fr 1.18fr;gap:54px;align-items:start}.training-map-copy{position:sticky;top:94px}.training-map-copy h2{font-size:clamp(44px,5.7vw,76px);letter-spacing:-.09em;line-height:1;margin:12px 0 17px}.training-map-copy p{font-size:14px;color:var(--muted);max-width:360px}.phase-list{border-top:2px solid var(--pine)}.phase{display:grid;grid-template-columns:58px 1fr;gap:17px;padding:20px 0;border-bottom:1px solid var(--line)}.phase-no{font:400 38px var(--display);color:var(--moss)}.phase h3{margin:0;font-size:21px;letter-spacing:-.055em}.phase p{font-size:13px;color:var(--muted);margin:4px 0 9px}.phase small{display:inline-block;padding:4px 8px;background:var(--tennis);font-size:11px;font-weight:800;color:var(--pine)}
+    .players{background:var(--pine);color:var(--cream);overflow:hidden}.players .section-kicker{color:var(--tennis)}.players .section-head p{color:#c3d1ca}.players-wall{display:grid;grid-template-columns:1.38fr .62fr;gap:14px;min-height:330px}.players-stage{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.24);background:#173d31}.players-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:saturate(1.05) contrast(1.04);animation:playersFade 15s infinite}.players-stage img:nth-child(1){animation-delay:0s}.players-stage img:nth-child(2){animation-delay:5s}.players-stage img:nth-child(3){animation-delay:10s}.players-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,25,18,.82),transparent 62%),linear-gradient(90deg,rgba(5,25,18,.38),transparent 55%);pointer-events:none}.players-stage-copy{position:absolute;z-index:1;left:25px;right:25px;bottom:22px}.players-stage-copy b{display:block;font:500 11px var(--mono);letter-spacing:.1em;color:var(--tennis)}.players-stage-copy h3{font-size:30px;letter-spacing:-.07em;line-height:1.05;margin:9px 0 0;max-width:330px}.players-orbit{position:relative;overflow:hidden;background:var(--tennis);color:var(--pine);padding:26px;display:flex;flex-direction:column;justify-content:space-between}.players-orbit:before,.players-orbit:after{content:"";position:absolute;width:300px;height:126px;border:1px solid rgba(16,40,32,.4);border-radius:50%;right:-115px;bottom:38px;transform:rotate(-18deg)}.players-orbit:after{width:260px;height:108px;right:-75px;bottom:50px}.players-orbit b{font:500 11px var(--mono);letter-spacing:.11em}.players-orbit h3{position:relative;z-index:1;font-size:29px;line-height:1.14;letter-spacing:-.08em;margin:22px 0;max-width:190px}.players-orbit p{position:relative;z-index:1;font-size:12px;margin:0;color:#42542f;max-width:210px}.players-ball{position:relative;z-index:1;width:28px;height:28px;border-radius:50%;background:#f7d33c;box-shadow:inset -6px -5px 0 rgba(16,40,32,.15),0 0 0 7px rgba(255,255,255,.36);animation:ballPulse 2.8s ease-in-out infinite}.players-strip{overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.25);margin:13px 0;padding:10px 0;color:var(--tennis);font:500 11px var(--mono);letter-spacing:.1em}.players-strip span{display:inline-block;padding-right:35px;animation:playersMarquee 20s linear infinite}.players-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;gap:14px}.player-card{position:relative;min-height:390px;overflow:hidden;border:1px solid rgba(255,255,255,.24);background:#173d31}.player-card:first-child{min-height:465px}.player-card img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.94) contrast(1.04)}.player-card:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,25,18,.86),transparent 60%)}.player-caption{position:absolute;z-index:1;left:20px;right:20px;bottom:17px}.player-caption small{display:block;color:var(--tennis);font:500 10px var(--mono);letter-spacing:.11em}.player-caption b{display:block;margin-top:7px;font-size:20px;line-height:1.22;letter-spacing:-.05em}@keyframes playersFade{0%,29%{opacity:1;transform:scale(1)}34%,96%{opacity:0;transform:scale(1.07)}100%{opacity:0}}@keyframes playersMarquee{to{transform:translateX(-50%)}}@keyframes ballPulse{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,-8px)}}
+    @media(max-width:900px){.training-map-grid,.players-wall{grid-template-columns:1fr;gap:30px}.training-map-copy{position:static}.players-grid{grid-template-columns:1fr 1fr}.player-card:first-child{grid-column:1/-1;min-height:380px}.player-card{min-height:330px}}
+    @media(max-width:600px){.players-grid{grid-template-columns:1fr}.player-card:first-child,.player-card{grid-column:auto;min-height:340px}.players-wall{min-height:unset}.players-stage{min-height:330px}.players-orbit{min-height:230px}.players-stage-copy h3{font-size:27px}.training-map-copy h2{font-size:53px}}
+    @media(prefers-reduced-motion:reduce){.players-stage img{animation:none}.players-stage img:first-child{opacity:1}.players-stage img:not(:first-child){opacity:0}.players-strip span,.players-ball{animation:none}}
+  
+/* ===== 课程理念整合区（来自源页面5个内容块，v463整合） ===== */
+.pillars{background:var(--paper);padding:104px 0;position:relative}
+.pillars .wrap{position:relative;z-index:1}
+.pillars .section-head h2{color:var(--ink)}
+.pillars .section-head p{color:var(--muted);max-width:560px}
+.pillar{padding:60px 0;border-top:1px solid var(--line)}
+.pillar:first-of-type{border-top:0}
+.pillar-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.pillar.reverse .pillar-media{order:2}
+.pillar-kicker{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--moss);margin-bottom:18px}
+.pillar-title{font-family:var(--display);font-size:clamp(34px,4.4vw,58px);line-height:.98;letter-spacing:-.04em;color:var(--ink);margin:0 0 20px}
+.pillar-body{font-size:16px;line-height:1.72;color:#33433c;max-width:50ch;margin:0}
+.pillar-media img{width:100%;border-radius:14px;display:block;box-shadow:0 18px 42px rgba(16,40,32,.16)}
+.pillar-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pillar-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;box-shadow:0 12px 28px rgba(16,40,32,.12)}
+.pillar-steps{list-style:none;counter-reset:s;padding:0;margin:24px 0 0;display:grid;gap:14px}
+.pillar-steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;font-size:15px;line-height:1.5;color:#33433c}
+.pillar-steps li::before{content:counter(s,decimal-leading-zero);font:600 13px var(--mono);color:var(--moss);border:1px solid var(--line);border-radius:999px;min-width:30px;height:30px;display:grid;place-items:center;flex:none;background:var(--cream)}
+.pillar-steps li span{font-weight:600;color:var(--ink);margin-right:8px}
+.pillar-paths{display:grid;gap:12px;margin:0}
+.pillar-paths .path{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--cream);border:1px solid var(--line);border-radius:12px;font-size:15px;color:#2c3a33}
+.pillar-paths .path b{font-family:var(--display);font-size:19px;letter-spacing:.02em;color:var(--pine);margin-right:auto}
+.pillar-callout{display:grid;place-items:center;aspect-ratio:3/2;background:linear-gradient(160deg,var(--moss),var(--pine));color:var(--cream);border-radius:14px;text-align:center;padding:24px;box-shadow:0 18px 42px rgba(16,40,32,.18)}
+.pillar-callout span{font:500 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ball);opacity:.85}
+.pillar-callout strong{font-family:var(--display);font-size:clamp(28px,3.4vw,42px);letter-spacing:.02em;line-height:1;display:block;margin-top:8px;color:var(--ball)}
+@media(max-width:760px){
+  .pillars{padding:74px 0}
+  .pillar{padding:46px 0}
+  .pillar-grid{grid-template-columns:1fr;gap:26px}
+  .pillar.reverse .pillar-media{order:0}
+  .pillar-gallery{grid-template-columns:1fr 1fr}
+}
+
+/* ===== 学员成长路径 - 真实案例卡片 ===== */
+.case-studies{margin-top:64px}
+.case-studies-title{font-family:var(--display);font-size:clamp(28px,3.2vw,40px);letter-spacing:-.06em;color:var(--ink);margin:0 0 26px}
+.case-study-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.case-study{background:var(--cream);border:1px solid rgba(16,48,36,.08);border-radius:16px;padding:28px 30px;box-shadow:0 10px 28px rgba(16,48,36,.06)}
+.case-study-meta{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.case-study-meta strong{font-family:var(--display);font-size:24px;letter-spacing:-.04em;color:var(--ink)}
+.case-study-meta span{font:500 12px var(--mono);letter-spacing:.08em;color:var(--moss);text-transform:uppercase}
+.case-study p{margin:0;font-size:15px;line-height:1.7;color:#3d4f46}
+@media(max-width:760px){
+  .case-studies{margin-top:42px}
+  .case-study-grid{grid-template-columns:1fr}
+  .case-study{padding:22px}
+}
+
+/* ============================================================
+   V3 改造新增样式（HY4）— 追加区块，不改动任何既有规则
+   ============================================================ */
+:root{--v3-pine:#0a261e;--v3-moss:#285445;--v3-tennis:#d9f53a;--v3-ball:#e8ff45;
+      --v3-coral:#ff725e;--v3-paper:#f5f0e6;--v3-cream:#fffdf7;--v3-line:#d7d0c2;--v3-muted:#65736c;
+      --v3-ink:#102820;--v3-display:"Bebas Neue","Noto Sans SC",sans-serif;--v3-mono:"DM Mono",monospace}
+/* Hero 右侧卡片标题：与主文案同套浅色底板语言 */
+.t-hero-card-title{color:var(--pine)!important;font-size:22px!important;line-height:1.14;letter-spacing:-.06em}
+.card-title{display:block;max-width:100%;font:900 clamp(24px,2.6vw,28px) var(--display);line-height:1.06;letter-spacing:-.01em;margin:0 0 .25em;color:var(--pine);background:transparent;padding:0;border:0;box-shadow:none}
+.card-sub{display:block;max-width:100%;font-size:15.5px;line-height:1.55;color:var(--pine);margin:.45em 0 0;font-weight:500;background:transparent;padding:0;border:0;box-shadow:none}
+.t-method-title{color:var(--pine)!important;font-size:clamp(40px,5vw,64px)!important;line-height:1.06;letter-spacing:-.02em;font-weight:400;font-family:"Ma Shan Zheng","Noto Sans SC",sans-serif}
+.t-coach-title{color:var(--v3-cream)!important;font-size:46px!important;line-height:.94;letter-spacing:-.075em}
+.t-price-note{color:var(--v3-pine)!important;font-size:15px!important;font-weight:700}
+
+/* 1. Live 记分牌（V3 方案 A 核心组件） */
+.sb-rail{position:sticky;top:64px;z-index:40;background:var(--v3-pine);color:var(--v3-cream);
+  border-bottom:2px solid var(--v3-tennis);box-shadow:0 6px 18px rgba(10,38,30,.18)}
+.sb-rail .wrap{display:flex;align-items:center;gap:14px;min-height:46px;flex-wrap:nowrap;overflow:hidden}
+.sb-game{font:500 11px var(--v3-mono);letter-spacing:.13em;color:var(--v3-tennis);white-space:nowrap;flex:none}
+.sb-list{display:flex;gap:0;flex:1;min-width:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.sb-list::-webkit-scrollbar{display:none}
+.sb-list a{flex:none;padding:0 14px;font:500 11px var(--v3-mono);letter-spacing:.08em;color:#9fb3a8;
+  white-space:nowrap;line-height:46px;border-bottom:2px solid transparent;transition:color .18s,border-color .18s}
+.sb-list a:hover{color:var(--v3-cream)}
+.sb-list a.is-active{color:var(--v3-tennis);border-bottom-color:var(--v3-tennis)}
+.sb-jump{flex:none;font:500 10px var(--v3-mono);letter-spacing:.1em;color:#7f948a;white-space:nowrap}
+@media(max-width:900px){.sb-rail{top:60px}.sb-jump{display:none}.sb-list a{padding:0 10px}}
+
+/* 2. 15 模块课程地图（V3 V-12） */
+.curriculum{background:var(--v3-paper);padding:104px 0}
+.curriculum .section-head{margin-bottom:36px}
+.mod-map{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:26px}
+.mod{background:var(--v3-cream);border:1px solid var(--v3-line);padding:16px 14px;position:relative;
+  display:flex;flex-direction:column;gap:7px;min-height:118px;transition:transform .18s,background .18s,color .18s}
+.mod:hover{transform:translateY(-4px);background:var(--v3-pine);color:var(--v3-cream);border-color:var(--v3-pine)}
+.mod-no{font:400 26px var(--v3-display);color:var(--v3-moss)}
+.mod:hover .mod-no{color:var(--v3-tennis)}
+.mod b{font-size:14px;letter-spacing:-.03em;line-height:1.25}
+.mod span{font-size:11px;color:var(--v3-muted);line-height:1.45;margin-top:auto}
+.mod:hover span{color:#b8c9c0}
+.mod.is-core:after{content:"基础";position:absolute;top:9px;right:9px;font:500 9px var(--v3-mono);
+  letter-spacing:.08em;background:var(--v3-tennis);color:var(--v3-pine);padding:2px 5px}
+.mod-note{margin-top:16px;font-size:12px;color:var(--v3-muted)}
+@media(max-width:1000px){.mod-map{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.mod-map{grid-template-columns:repeat(2,1fr)}.curriculum{padding:67px 0}.mod{min-height:104px}}
+
+/* 3. 时长 → 水平曲线（V3 V-14） */
+.hour-curve{margin-top:34px;border:1px solid var(--v3-line);background:var(--v3-cream);padding:28px}
+.hour-track{position:relative;height:76px;background:#e6e0d1;border-radius:99px;overflow:hidden;margin:22px 0 14px}
+.hour-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--v3-moss),var(--v3-tennis));transition:width 1.2s cubic-bezier(.22,.9,.3,1)}
+.hour-node{position:absolute;top:50%;transform:translate(-50%,-50%);text-align:center;white-space:nowrap;z-index:2}
+.hour-node b{display:block;font:400 24px var(--v3-display);color:var(--v3-pine);line-height:1.1}
+.hour-node span{font:500 12px var(--v3-mono);letter-spacing:.06em;color:#3f5130}
+.hour-node:after{display:none}
+.hour-legend{display:flex;justify-content:space-between;font:500 10px var(--v3-mono);letter-spacing:.08em;color:var(--v3-muted)}
+.hour-caption{margin:0 0 8px;font-size:13px;color:var(--v3-muted)}
+@media(max-width:600px){.hour-curve{padding:20px}.hour-node b{font-size:20px}.hour-track{margin-top:52px}}
+
+/* 4. 动作风格选择器（V3 V-15） */
+.stylepick{background:#e4e9df;padding:104px 0}
+.style-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+.style-steps{list-style:none;counter-reset:sp;padding:0;margin:0;display:grid;gap:13px}
+.style-steps li{counter-increment:sp;display:flex;gap:13px;align-items:flex-start;font-size:14px;line-height:1.6;color:#33433c}
+.style-steps li:before{content:counter(sp,decimal-leading-zero);font:600 12px var(--v3-mono);color:var(--v3-moss);
+  border:1px solid var(--v3-moss);border-radius:99px;min-width:27px;height:27px;display:grid;place-items:center;flex:none;background:var(--v3-cream)}
+.style-steps li b{color:var(--v3-ink);margin-right:7px}
+.style-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.style-card{background:var(--v3-cream);border:1px solid var(--v3-line);padding:18px;cursor:pointer;
+  transition:transform .18s,background .18s,color .18s}
+.style-card:hover,.style-card.is-on{background:var(--v3-pine);color:var(--v3-cream);border-color:var(--v3-pine)}
+.style-card b{display:block;font-size:15px;letter-spacing:-.03em;margin-bottom:5px}
+.style-card span{font-size:12px;color:var(--v3-muted);line-height:1.5}
+.style-card:hover span,.style-card.is-on span{color:#b8c9c0}
+.style-proof{margin-top:16px;border-left:4px solid var(--v3-moss);background:var(--v3-cream);padding:18px 20px}
+.style-proof b{display:block;font:500 10px var(--v3-mono);letter-spacing:.1em;color:var(--v3-moss);margin-bottom:8px}
+.style-proof p{margin:0;font-size:13px;line-height:1.7;color:#3d4f46}
+.style-foot{margin-top:14px;font-size:12px;color:var(--v3-muted)}
+@media(max-width:900px){.style-grid{grid-template-columns:1fr;gap:26px}}
+@media(max-width:600px){.stylepick{padding:67px 0}.style-cards{grid-template-columns:1fr}}
+
+/* 5. 双向约定对照表（V3 V-13） */
+.promise{background:var(--v3-pine);color:var(--v3-cream);padding:104px 0}
+.promise .section-kicker{color:var(--v3-tennis)}
+.promise .section-head p{color:#b7c9bf}
+.p-table{border:1px solid rgba(255,255,255,.22);display:grid;grid-template-columns:1fr 1fr 1fr}
+.p-cell{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.16);border-right:1px solid rgba(255,255,255,.16);font-size:13px}
+.p-cell:nth-child(3n){border-right:0}
+.p-head{background:rgba(217,245,58,.1);font:500 10px var(--v3-mono);letter-spacing:.12em;color:var(--v3-tennis);padding:13px 20px;border-bottom:1px solid rgba(255,255,255,.22);border-right:1px solid rgba(255,255,255,.16)}
+.p-head:nth-child(3n){border-right:0}
+.p-cell b{display:block;font-size:14px;letter-spacing:-.02em;margin-bottom:4px}
+.p-cell span{color:#b7c9bf;font-size:12px;line-height:1.5}
+.p-cell.p-you b{color:var(--v3-cream)}
+.p-cell.p-coach b{color:var(--v3-tennis)}
+.p-highlight{grid-column:1/-1;background:var(--v3-tennis);color:var(--v3-pine);padding:22px 20px;
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap;border-bottom:0}
+.p-highlight b{font-family:var(--v3-display);font-size:26px;letter-spacing:.01em;flex:none}
+.p-highlight p{margin:0;font-size:13px;max-width:640px;line-height:1.6;color:#3f5130}
+@media(max-width:760px){
+  .p-table{grid-template-columns:1fr}
+  .p-head{display:none}
+  .p-cell{border-right:0}
+  .p-cell.p-you:before{content:"学员侧 · ";color:var(--v3-tennis);font:500 10px var(--v3-mono)}
+  .p-cell.p-coach:before{content:"教练侧 · ";color:var(--v3-tennis);font:500 10px var(--v3-mono)}
+  .promise{padding:67px 0}
+}
+
+/* 6. 特别福利（V3 N16） */
+.benefits{background:var(--v3-cream);padding:92px 0}
+.ben-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.ben{border:1px solid var(--v3-line);padding:26px;background:var(--v3-paper);display:flex;flex-direction:column}
+.ben-no{font:400 36px var(--v3-display);color:var(--v3-moss)}
+.ben b{display:block;font-size:18px;letter-spacing:-.04em;margin:14px 0 8px}
+.ben p{margin:0 0 12px;font-size:13px;color:var(--v3-muted);line-height:1.6}
+.ben small{font-size:11px;color:var(--v3-moss);margin-top:auto;padding-top:12px;border-top:1px solid var(--v3-line)}
+@media(max-width:900px){.ben-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.benefits{padding:62px 0}}
+
+/* 7. L2 折叠收纳（V3 §5.4） */
+.v3-fold{margin-top:22px;border:1px solid var(--v3-line);background:var(--v3-cream)}
+.v3-fold>summary{cursor:pointer;list-style:none;padding:17px 22px;font-size:15px;font-weight:800;
+  display:flex;justify-content:space-between;gap:16px;align-items:center}
+.v3-fold>summary::-webkit-details-marker{display:none}
+.v3-fold>summary:after{content:"＋";color:var(--v3-moss);font:400 22px var(--v3-display);line-height:.75}
+.v3-fold[open]>summary:after{content:"—"}
+.v3-fold>summary:hover{background:#f7f3e9}
+.v3-fold-body{padding:4px 22px 22px;font-size:13px;color:var(--v3-muted);line-height:1.75}
+.v3-fold-body ol,.v3-fold-body ul{padding-left:20px;margin:10px 0}
+.v3-fold-body li{margin-bottom:8px}
+.v3-fold-body b{color:var(--v3-ink)}
+
+/* 8. 移动端悬浮 CTA（V3 T2） */
+.cta-dock{position:fixed;left:0;right:0;bottom:0;z-index:60;display:none;
+  background:var(--v3-pine);border-top:2px solid var(--v3-tennis);padding:10px 16px;
+  box-shadow:0 -6px 20px rgba(10,38,30,.25)}
+.cta-dock .wrap{display:flex;gap:12px;align-items:center;justify-content:space-between}
+.cta-dock span{font-size:11px;color:#b7c9bf;line-height:1.3}
+.cta-dock a{background:var(--v3-tennis);color:var(--v3-pine);font-weight:900;font-size:13px;
+  padding:0 16px;min-height:40px;display:inline-flex;align-items:center;white-space:nowrap}
+@media(max-width:900px){.cta-dock{display:block}body{padding-bottom:64px}}
+
+/* 9. 时段优先级徽标（V3 §6.4 方案 1，纯 UI，不改字段） */
+.time-row{position:relative}
+.pri-tag{position:absolute;left:0;top:-9px;font:500 9px var(--v3-mono);letter-spacing:.1em;
+  background:var(--v3-tennis);color:var(--v3-pine);padding:1px 6px;z-index:1;pointer-events:none}
+.pri-hint{font-size:11px;color:var(--v3-moss);margin-top:7px;line-height:1.5}
+
+@media(prefers-reduced-motion:reduce){
+  .hour-fill{transition:none}
+  .mod:hover,.style-card:hover{transform:none}
+}
+
+    @media(min-width:901px){.price-grid{grid-template-columns:repeat(4,1fr)}}
+    .price-cta{margin-top:auto;align-self:flex-start;width:100%}
+    .price.recommended .price-cta{background:var(--tennis);color:var(--pine)}
+    /* 删除 .story-side 占位卡后，story-grid 改单列 */
+    .story-grid{grid-template-columns:1fr}
+    /* 删除 players-stage / players-strip 后，players-wall 改单列 */
+    .players-wall{grid-template-columns:1fr}
+    .players-orbit{min-height:260px}
+    .v3-on-dark{color:#b7c9bf}
+    /* ===== V4 反馈修正 ===== */
+    /* 反馈2：只保留 Live 记分牌一层导航；原 .site-nav 视觉隐藏（DOM 保留——
+       提交脚本第一行绑定 .menu-toggle，删除元素会使脚本抛错、表单失效） */
+    .site-nav,.menu-toggle{display:none!important}
+    .site-header{gap:12px}
+    .header-cta{margin-left:auto}
+    /* 反馈5：教练独立页 */
+    .coach-sec{background:var(--pine);color:var(--cream);padding:110px 0}
+    .coach-sec .section-kicker{color:var(--tennis)}
+    .coach-sec .section-head h2{color:var(--cream)}
+    .coach-sec .section-head p{color:#b7c9bf}
+    .coach-panel.coach-hero{background:transparent;padding:0;box-shadow:none}
+    .coach-panel.coach-hero:after{display:none}
+    .coach-panel.coach-hero h3{font-size:clamp(40px,5.4vw,68px)}
+    .coach-photo{margin:26px 0 0;padding:0;border:0}
+    .coach-photo img{width:100%;max-height:460px;object-fit:cover;object-position:center 22%;
+      border-radius:16px;display:block;box-shadow:0 22px 52px rgba(0,0,0,.34)}
+    .coach-panel.coach-hero .coach-facts{flex-wrap:wrap;gap:26px}
+    /* 反馈5：场地独立页 */
+    .venue-sec{background:var(--cream);padding:96px 0}
+    .venue-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+    @media(max-width:900px){.venue-grid{grid-template-columns:1fr}.coach-sec{padding:74px 0}.venue-sec{padding:66px 0}
+      .coach-photo img{max-height:320px}}
+    /* ===== 第二批修复样式 ===== */
+    .rules-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:26px}
+    .rule-card{background:#fff;border:1px solid var(--line);border-left:4px solid var(--moss);
+      padding:18px 20px;display:flex;flex-direction:column;gap:8px}
+    .rule-card b{font-size:14px;letter-spacing:-.02em;color:var(--ink)}
+    .rule-card p{margin:0;font-size:12px;line-height:1.65;color:var(--muted)}
+    .rules-fine{margin:18px 0 0;font-size:12px;line-height:1.7;color:var(--muted);max-width:860px}
+    @media(max-width:1000px){.rules-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:600px){.rules-grid{grid-template-columns:1fr}}
+    .field-hint{font-size:11px;color:var(--v3-moss);line-height:1.5}
+    /* 仅供搜索引擎与读屏软件识别的主标题，视觉不可见 */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:900px){
+      .t-hero-lede{font-size:24px!important;line-height:1.85}
+      .lede-sub{font-size:16.5px;line-height:1.9}
+      .lede-value{font-size:15.5px}
+      .hour-track{height:80px}
+      .hour-node b{font-size:22px}
+    }
+    @media(max-width:600px){
+      .t-hero-lede{font-size:22px!important;line-height:1.82;max-width:100%;padding:22px 18px 20px}
+      .lede-sub{font-size:15.5px;line-height:1.85}
+      .lede-value{font-size:14.5px}
+      .lede-title{letter-spacing:0}
+      .hour-track{height:84px}
+      .hour-node{white-space:normal;width:46%}
+      .hour-node b{font-size:20px}
+      .hour-node span{font-size:11px}
+    }
+
+    /* ===== 顶部浮动导航：第一行滚动收起，第二行常驻吸顶（HY4 · 2026-08-31） =====
+       实现：两行都保持 position:sticky（占据原有文档流高度，不改布局）；
+       收起时给两行施加**完全相同**的 translateY，第二行补位到视口顶部，
+       因此不会出现内容跳动或布局抖动，也不会在两行之间露出缝隙。 */
+    :root{--nav-h:64px;--nav-dur:.3s;--nav-ease:cubic-bezier(.22,.61,.36,1)}
+    @media(max-width:600px){:root{--nav-h:60px}}
+    .sb-rail{top:var(--nav-h)}
+    .site-header,.sb-rail{transition:transform var(--nav-dur) var(--nav-ease)}
+    body.nav-tucked .site-header{transform:translateY(calc(-1 * var(--nav-h)))}
+    body.nav-tucked .sb-rail{transform:translateY(calc(-1 * var(--nav-h)))}
+    @media(prefers-reduced-motion:reduce){.site-header,.sb-rail{transition:none}}
+
+    /* ===== 移动端底部 CTA：展开预约弹层时收起，关闭后复现（HY4 · 2026-08-31） ===== */
+    .cta-dock{transition:transform .18s var(--nav-ease),opacity .16s linear}
+    .cta-dock.is-hidden{transform:translateY(140%);opacity:0;pointer-events:none}
+    .bk-sheet{position:fixed;inset:0;z-index:200;display:none}
+    .bk-sheet.is-mounted{display:block}
+    .bk-sheet__scrim{position:absolute;inset:0;background:rgba(10,38,30,.58);opacity:0;
+      transition:opacity .24s linear;-webkit-tap-highlight-color:transparent}
+    .bk-sheet__panel{position:absolute;left:0;right:0;bottom:0;max-height:88vh;
+      display:flex;flex-direction:column;background:var(--v3-pine);color:var(--v3-cream);
+      border-top:2px solid var(--v3-tennis);border-radius:16px 16px 0 0;
+      box-shadow:0 -14px 40px rgba(10,38,30,.4);
+      transform:translateY(100%);transition:transform .3s var(--nav-ease)}
+    .bk-sheet.is-open .bk-sheet__scrim{opacity:1}
+    .bk-sheet.is-open .bk-sheet__panel{transform:translateY(0)}
+    .bk-sheet__bar{display:flex;align-items:center;gap:12px;flex:none;
+      padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.16)}
+    .bk-sheet__title{margin:0;flex:1;font:500 11px var(--v3-mono);letter-spacing:.12em;color:var(--v3-tennis)}
+    .bk-sheet__close{flex:none;width:34px;height:34px;border:1px solid rgba(255,255,255,.3);
+      background:transparent;color:var(--v3-cream);border-radius:9px;font-size:16px;line-height:1;
+      display:inline-flex;align-items:center;justify-content:center;transition:background .18s,color .18s,border-color .18s}
+    .bk-sheet__close:hover{background:var(--v3-tennis);border-color:var(--v3-tennis);color:var(--v3-pine)}
+    .bk-sheet__grip{position:absolute;top:6px;left:50%;transform:translateX(-50%);
+      width:38px;height:4px;border-radius:99px;background:rgba(255,255,255,.28)}
+    .bk-sheet__body{overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+      padding:14px 14px calc(18px + env(safe-area-inset-bottom))}
+    .bk-sheet__body .booking-form{margin:0;width:100%;padding:18px}
+    .bk-sheet__body{color:var(--v3-ink)}
+    .bk-sheet__body .booking-form{color:var(--v3-ink)}
+    .bk-sheet__body .booking-form h3,
+    .bk-sheet__body .booking-form label,
+    .bk-sheet__body .booking-form .choice-label{color:var(--v3-ink)}
+    .bk-sheet__body .booking-form input,
+    .bk-sheet__body .booking-form select,
+    .bk-sheet__body .booking-form textarea{color:var(--v3-ink);background:#fffefa}
+    .bk-sheet__body .booking-form .form-title span{color:var(--v3-moss)}
+    .bk-sheet__body .booking-form .form-message{display:block;padding:10px 12px;margin:0 0 14px;
+      font-size:12px;background:var(--v3-paper);border-left:3px solid var(--v3-moss);color:var(--v3-ink)}
+    .bk-sheet__body .booking-form .form-message strong{display:block;font-size:12px;margin-bottom:2px}
+    .bk-sheet__body .booking-form .form-message span{display:block;font-size:11px;color:var(--v3-muted);margin-top:2px}
+    .bk-sheet__body .booking-form .form-message.error{border-left-color:#c2410c;background:#fff1e8}
+    .bk-sheet__body .booking-form .form-message.success{border-left-color:var(--v3-moss);background:#f0f5ec}
+    .bk-sheet__body .booking-form .form-message.info{border-left-color:#2563eb;background:#eef2ff}
+    .bk-sheet__foot{margin:10px 2px 0;font-size:11px;line-height:1.5;color:#b7c9bf}
+    @media(prefers-reduced-motion:reduce){.bk-sheet__scrim,.bk-sheet__panel{transition:none}}
+
+    /* ===== 移动端底部常驻 CTA 行：整行隐藏（HY4 · 2026-08-31 · 用户要求） =====
+       原 .cta-dock 在 <=900px 常驻底部，现整行不显示；
+       同时撤掉为它预留的 body 底部 64px 内边距，避免页面尾部多出空白。
+       预约弹层（.bk-sheet）与其 JS 保留但不再有触发入口，处于休眠状态。 */
+    @media(max-width:900px){
+      .cta-dock{display:none!important}
+      body{padding-bottom:0!important}
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* ===== 05 课程地图 · 模块卡通图标（HY4 · 2026-08-31） =====
+       图标行插在编号与标题之间；等比 contain，不变形不溢出；
+       高度按用户视觉微调：单图 200px / 双图 132px（≤900 单 182 / 双 120，≤600 单 164 / 双 108）。
+
+       ★ 两个关键约束（都实测过，改数值时必须一起考虑）：
+       1) .mod-icon 必须带 width:0 + min-width:0，否则 img 的 min-content 贡献
+          （= 高 × 宽高比 = 200px）会把 grid-template-columns:repeat(N,1fr) 的
+          auto 最小轨道撑开，整行横向溢出（实测 desktop 溢出 96px、mobile 142px）。
+       2) 双图格并排放不下 132×2+8=272px（框内容区只有 ~198px），
+          因此给双图标 baseline 132px + flex-wrap:wrap：
+          宽度够就并排等宽，不够就自动换成上下两行、每行仍 132px 高。 */
+    .mod-icons{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin:1px 0 2px}
+    .mod-icon{flex:1 1 0;width:0;min-width:0;height:200px;object-fit:contain;object-position:center center}
+    .mod-icons.is-pair .mod-icon{flex:1 1 132px;width:auto;min-width:132px;height:132px}
+    .mod-icon--missing{flex:1 1 0;width:0;min-width:0;height:200px;display:flex;align-items:center;
+      justify-content:center;border:1px dashed var(--v3-line);border-radius:8px;
+      font:500 9px var(--v3-mono);letter-spacing:.06em;color:var(--v3-muted);text-align:center;padding:0 4px}
+    .mod-icons.is-pair .mod-icon--missing{flex:1 1 132px;width:auto;min-width:132px;height:132px}
+    @media(max-width:900px){
+      .mod-icon,.mod-icon--missing{height:182px}
+      .mod-icons.is-pair .mod-icon,.mod-icons.is-pair .mod-icon--missing{height:120px;flex-basis:120px;min-width:120px}
+    }
+    @media(max-width:600px){
+      .mod-icons{gap:7px}
+      .mod-icon,.mod-icon--missing{height:164px}
+      .mod-icons.is-pair .mod-icon,.mod-icons.is-pair .mod-icon--missing{height:108px;flex-basis:108px;min-width:108px}
+    }
+</style>
 </head>
-<body>
-  <header class="wrap topbar"><a class="brand" href="#top"><span class="brand-mark"></span><span>万次迭代网球课</span></a><nav><a href="#goals">适合谁</a><a href="#routes">课程路线</a><a href="#coach-venue">教练与场地</a><a href="#pricing">价格</a><a href="#faq">FAQ</a></nav><a class="btn ghost" href="#booking">预约体验课</a></header>
-  <main id="top">
-    <section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow">Tsinghua campus · tennis coaching</div><h1>从第一次挥拍，<br>到<em>能够稳定对打</em>。</h1><p>面向清华本科生、研究生和零基础成年人。根据你的真实水平、身体条件与目标，找到一条可以坚持、看得见进步的网球训练路径。</p><div class="actions"><a class="btn primary" href="#booking">预约一次体验课 →</a><a class="btn ghost" href="#path">看看如何进步</a></div></div><aside class="hero-card"><div>FIRST SESSION / 首次评估</div><h3>一节课，先找到<br>最值得练的下一步。</h3><ul><li>了解目标与训练时间 <span>01</span></li><li>观察移动与击球 <span>02</span></li><li>体验针对性训练 <span>03</span></li><li>拿到个人训练建议 <span>04</span></li></ul><div class="note">不需要先成为“有天赋的人”，才值得开始。</div></aside></div></section>
-    <div class="strip"><div class="wrap"><span>一对一 / 一对二</span><span>零基础入门</span><span>稳定对打</span><span>分级赛进阶</span><span>视频复盘（经同意）</span></div></div>
-    <section id="goals"><div class="wrap"><div class="section-head"><div><div class="section-kicker">01 / FIND YOUR STARTING POINT</div><h2>你想从网球里<br>得到什么？</h2></div><p>第一节课，我们会先问你的目标，而不是把所有人塞进同一套动作和节奏。</p></div><div class="cards"><article class="card"><div class="card-num">01 / START</div><h3>我想先把球打起来</h3><p>从零基础开始，建立安全、轻松的击球感觉，逐步完成基本对拉。</p><small>适合：第一次拿球拍、想锻炼身体</small></article><article class="card"><div class="card-num">02 / RALLY</div><h3>我想打得更稳定</h3><p>解决“平时能打、回合不稳”的问题，让正反手、移动和击球点更可靠。</p><small>适合：已有基础、想提升对打</small></article><article class="card"><div class="card-num">03 / MATCH</div><h3>我想参加比赛</h3><p>从技术、战术到赛后复盘，建立真正能在比赛里使用的训练计划。</p><small>适合：有比赛目标、想提升级别</small></article></div></div></section>
-    <section class="experience" id="book"><div class="wrap"><div class="section-head"><div><div class="section-kicker">02 / FIRST SESSION</div><h2>先体验，再决定<br>要不要长期学习。</h2></div><p>体验课不是把内容讲完，而是让你清楚知道自己的起点、问题和下一步。</p></div><div class="steps"><div class="step"><b>01</b><h3>聊目标</h3><p>了解你的运动经历、时间安排和想达到的状态。</p></div><div class="step"><b>02</b><h3>看基础</h3><p>观察移动、握拍、击球点和身体协调方式。</p></div><div class="step"><b>03</b><h3>做训练</h3><p>现场解决一个最值得优先改善的问题。</p></div><div class="step"><b>04</b><h3>定方向</h3><p>给出适合你的频率、路线和课后练习建议。</p></div></div></div></section>
-    <section class="path" id="path"><div class="wrap path-grid"><div class="path-visual"><div class="path-title">THE ITERATION PATH</div><h3>每一次训练，<br>都更接近你的目标。</h3><div class="vertical"></div></div><div><div class="section-kicker">03 / TRAINING PATH</div><h2>四个阶段，<br>把进步变得具体。</h2><div class="timeline"><div class="timeline-item"><div class="num">01</div><div><h3>先把球打起来</h3><p>安全常识、握拍、准备姿势、正反手基础和简单移动。</p></div></div><div class="timeline-item"><div class="num">02</div><div><h3>再把回合打稳定</h3><p>击球点、方向控制、连续对拉和课后自主练习。</p></div></div><div class="timeline-item"><div class="num">03</div><div><h3>学会打完整比赛</h3><p>发球、接发球、单打/双打规则和基础战术。</p></div></div><div class="timeline-item"><div class="num">04</div><div><h3>用比赛推动下一次迭代</h3><p>赛前准备、比赛观察、视频复盘和下一阶段训练计划。</p></div></div></div></div></div></section>
-    <section class="visuals" id="visuals"><div class="wrap"><div class="section-head"><div><div class="section-kicker">04 / PLAYERS IN MOTION</div><h2>不同年龄，<br>都能找到自己的球场。</h2></div><p>从校园里的第一次挥拍，到更有目标的训练，网球可以成为一项长期而酷的运动。</p></div><div aria-label="不同年龄学员的动态网球训练影像" class="motion-wall"><div class="motion-stage"><img alt="大学生女生在校园网球场进行正手击球" src="assets/tennis/university-woman.jpg"><img alt="中学生男生和女生在灯光网球场进行双打训练" src="assets/tennis/middle-school-doubles.jpg"><img alt="小学生男生和女生在教练指导下学习网球" src="assets/tennis/primary-beginners.jpg"><div class="motion-copy"><span>PLAYERS IN MOTION / 01—03</span><h3>一张张照片，<br>连成你的进步轨迹。</h3></div></div><div class="motion-orbit"><small>TRAIN · REVIEW · ITERATE</small><h3>让每一次击球，都留下下一步。</h3><div aria-hidden="true" class="orbit-ball"></div><div class="motion-note">动态切换展示不同年龄段训练场景；正式上线可替换为真实训练视频。</div></div></div><div aria-hidden="true" class="motion-marquee"><span>大学生 / UNIVERSITY　✦　中学生 / MIDDLE SCHOOL　✦　小学生 / PRIMARY　✦　男生 / GIRLS & BOYS　✦　大学生 / UNIVERSITY　✦　中学生 / MIDDLE SCHOOL　✦　小学生 / PRIMARY　✦　</span><span>大学生 / UNIVERSITY　✦　中学生 / MIDDLE SCHOOL　✦　小学生 / PRIMARY　✦　男生 / GIRLS & BOYS　✦　大学生 / UNIVERSITY　✦　中学生 / MIDDLE SCHOOL　✦　小学生 / PRIMARY　✦　</span></div><div class="image-grid"><figure class="image-tile"><img alt="大学生女生在校园网球场进行正手击球" src="assets/tennis/university-woman.jpg"><figcaption class="image-label"><span>UNIVERSITY / CAMPUS</span><b>把兴趣，打成稳定的回合。</b></figcaption></figure><figure class="image-tile"><img alt="中学生男生和女生在灯光网球场进行双打训练" src="assets/tennis/middle-school-doubles.jpg"><figcaption class="image-label"><span>MIDDLE SCHOOL / MATCH</span><b>在对抗里学会判断。</b></figcaption></figure><figure class="image-tile"><img alt="小学生男生和女生在教练指导下学习网球" src="assets/tennis/primary-beginners.jpg"><figcaption class="image-label"><span>PRIMARY / START</span><b>先喜欢上，再持续进步。</b></figcaption></figure></div></div></section>
-    <section id="routes"><div class="wrap"><div class="section-head"><div><div class="section-kicker">05 / COURSE ROUTES</div><h2>三条路线，<br>对应三种进步方式。</h2></div><p>你不需要现在就选定终点。首次评估后，可以随时调整训练目标。</p></div><div class="route-grid"><article class="route"><div class="card-num">ROUTE 01 / START</div><h3>零基础入门</h3><p>从第一次握拍开始，先建立安全感和击球兴趣。</p><ul><li><strong>适合：</strong>没有基础、每周想锻炼1次</li><li><strong>重点：</strong>握拍、正反手、移动、基本对拉</li><li><strong>投入：</strong>每周1节课；课后可加练</li></ul></article><article class="route"><div class="card-num">ROUTE 02 / RALLY</div><h3>稳定对打</h3><p>解决“会打但回合不稳”，把感觉变成可重复的能力。</p><ul><li><strong>适合：</strong>已会基本击球、想持续对拉</li><li><strong>重点：</strong>击球点、方向、发接球与自主练习</li><li><strong>投入：</strong>建议每周课外练习2—3小时</li></ul></article><article class="route"><div class="card-num">ROUTE 03 / MATCH</div><h3>比赛进阶</h3><p>让技术、战术和复盘真正服务于比赛表现。</p><ul><li><strong>适合：</strong>准备参加分级赛的学员</li><li><strong>重点：</strong>战术、赛前训练、赛后视频与数据复盘</li><li><strong>投入：</strong>通常每周训练3—7小时并持续参赛</li></ul></article></div></div></section>
-    <section id="coach-venue"><div class="wrap venue-grid"><div><div class="section-kicker">05 / COACH & VENUES</div><h2>清楚知道，<br>谁教你、在哪里练。</h2><div class="venue-list"><div class="venue-card"><div class="pin">01</div><div><h3>Kaiwen Chen｜主教练</h3><p>教龄12年；清北校园网球赛创办人；USPTA、PTR国际认证职业网球教练。课程强调安全、稳定、可重复和服务个人打法。</p></div></div><div class="venue-card"><div class="pin">02</div><div><h3>清华综合体育馆东侧网球场</h3><p>周一至周日可预约；部分时段免场地费，其余时段约30—45元/小时，最终以预约确认时的场地政策为准。</p></div></div><div class="venue-card"><div class="pin">03</div><div><h3>气象台 / 新林院 / 附小北网球场</h3><p>场地费由学员承担，白天约20元/小时，18点后约30元/小时；预约时会提前确认。</p></div></div></div><div class="rules-box"><h3>场地与入校说明</h3><p>目前暂不提供紫荆网球场以及校外授课服务；校外学员入校需提前报备。场地政策、开放时间和费用可能变化，以教练最终确认信息为准。</p></div></div><aside class="trust-box"><h3>为什么可以放心先来体验？</h3><p>专业不是把所有人教成同一个样子，而是能看懂你的起点，并清楚解释下一步。</p><ul><li>首次课先评估，不要求当场购买长期课程</li><li>视频复盘完全自愿，需单独征得同意</li><li>可免费借用教练球拍和课堂训练用球</li><li>不满意可按约定申请未使用课时退款</li></ul></aside></div></section>
-    <section id="cases"><div class="wrap"><div class="section-head"><div><div class="section-kicker">06 / REAL TRAINING STORIES</div><h2>案例看路径，<br>不只看结果。</h2></div><p>案例结果依赖出勤、课外练习和实际参赛，不代表所有学员都会达到相同成绩。</p></div><div class="case-list"><div class="case"><strong>清华博士生<br><b>4个月</b></strong><p>完成25节教练课，并持续进行课外训练和比赛，获得清北星空网球赛2.5级冠军，完成3.0级升级。</p></div><div class="case"><strong>青少年学员<br><b>长期训练</b></strong><p>围绕个人身体条件和比赛目标调整技术路线，建立训练、参赛、复盘的长期节奏。</p></div><div class="case"><strong>清华校园<br><b>真实场景</b></strong><p>课程在清华校园网球场进行，适合把教练课和日常自主练习连接起来。正式发布案例前，应补充学员授权和可核验的赛事信息。</p></div></div></div></section>
-    <section class="pricing" id="pricing"><div class="wrap"><div class="section-head"><div><div class="section-kicker">07 / SIMPLE PRICING</div><h2>先看适合你的课程，<br>再看价格。</h2></div><p>以下为常用固定时间课程价格。非固定时间、场地费和特殊课程会在预约时提前说明。</p></div><div class="price-grid"><article class="price"><h3>一对一 · 清华学生</h3><div class="who">本科生 / 硕士生 / 博士生</div><div class="amount">¥200 <small>/ 小时</small></div><ul><li>每周固定时间</li><li>适合零基础与个性化训练</li><li>可预约一次体验课</li></ul></article><article class="price featured"><h3>一对一 · 其他学员</h3><div class="who">零基础成年人 / 教职工 / 职场人士</div><div class="amount">¥260 <small>/ 小时</small></div><ul><li>每周固定时间</li><li>按目标制定训练路线</li><li>可预约一次体验课</li></ul></article><article class="price"><h3>一对二 · 固定时间</h3><div class="who">和朋友一起学习</div><div class="amount">¥300 <small>/ 小时</small></div><ul><li>清华学生两人合计</li><li>适合朋友或同水平搭档</li><li>其他学员价格另行说明</li></ul></article></div><p class="fine">长期课程通常预付5节以锁定固定课位；首次体验后再决定是否继续。场地费按实际场地规则由学员承担，预约时会提前确认。</p></div></section>
-    <section id="faq"><div class="wrap"><div class="section-head"><div><div class="section-kicker">06 / QUESTIONS</div><h2>报名之前，<br>你可能还想知道。</h2></div><p>如果你的问题没有出现在这里，欢迎直接预约咨询。</p></div><div class="faq-grid"><details class="faq"><summary>完全没有基础，可以报名吗？</summary><p>可以。课程会从安全、握拍、准备姿势和基本击球开始，不要求你提前会打。</p></details><details class="faq"><summary>需要自己带球拍吗？</summary><p>不需要。提前告知后，可以免费借用教练提供的球拍；课堂训练用球由教练提供。</p></details><details class="faq"><summary>每周必须固定上课吗？</summary><p>固定时间更有利于形成训练习惯，也更适合锁定课位。如果时间不稳定，也可以咨询非固定时间课程。</p></details><details class="faq"><summary>体验课后不想继续怎么办？</summary><p>体验课结束后自主决定，不要求现场购买长期课程。长期课程未使用的课时可按约定申请原路退还。</p></details><details class="faq"><summary>可以使用视频教学吗？</summary><p>可以，但完全自愿。经你同意后，课堂可用慢动作、截帧和关键片段帮助你看清击球问题。</p></details><details class="faq"><summary>需要每周练很多小时吗？</summary><p>取决于目标。以锻炼和入门为主，每周1节课即可；如果目标是稳定对打或参加比赛，建议增加课外练习。</p></details></div></div></section>
-    <section class="booking" id="booking"><div class="wrap booking-grid"><div class="booking-intro"><div class="section-kicker">07 / BOOK A FIRST SESSION</div><h2>把你的目标，<br>告诉教练。</h2><p>提交后只是预约意向，尚未锁定课位。教练会按你填写的时间优先级人工确认，再说明体验课与场地费用。</p><p><strong>预约流程：</strong><br>选择目标 → 填写基础与时间 → 教练确认 → 支付体验课 → 课后获得个人建议</p></div><form class="booking-form" onsubmit="submitBooking(event)"><div class="form-row"><div class="field"><label for="name">姓名</label><input id="name" name="name" placeholder="怎么称呼你？" required></div><div class="field"><label for="contact">微信 / 手机</label><input id="contact" name="contact" placeholder="用于确认预约" required></div></div><div class="field"><label>你想先解决什么？</label><div class="choice-group"><label><input name="goal" required type="radio">从零入门</label><label><input name="goal" type="radio">稳定对打</label><label><input name="goal" type="radio">参加比赛</label><label><input name="goal" type="radio">还不确定</label></div></div><div class="form-row"><div class="field"><label for="identity">你的身份</label><select id="identity" name="identity" required><option value>请选择</option><option>清华本科生</option><option>清华硕士/博士</option><option>清华教职工</option><option>校外成年人</option><option>其他</option></select></div><div class="field"><label for="level">目前水平</label><select id="level" name="level" required><option value>请选择</option><option>完全零基础</option><option>会基本击球</option><option>可以对拉</option><option>有比赛经验</option></select></div></div><div class="field"><label for="time">可上课时间（可填写多个，并按优先级排列）</label><textarea id="time" name="time" placeholder="例如：周三18:00-20:00（优先）；周六上午（其次）" required></textarea></div><div class="field"><label><input name="agreed" required type="checkbox"> 我已了解：提交后等待教练确认，未确认前不会锁定课位。</label></div><p class="form-note">视频记录完全自愿；如需录像，会在上课前单独征得同意。当前联系方式和可预约时段以教练最终确认回复为准。</p><button class="btn primary" type="submit">提交预约意向 →</button><p class="form-success" hidden role="status" style="color:var(--court);font-weight:700;margin:14px 0 0">预约意向已提交！教练会尽快通过微信或邮件联系你确认课位。</p></form></div></section>
-    <section class="cta" id="contact-note"><div class="wrap cta-grid"><div><div class="section-kicker">READY WHEN YOU ARE</div><h2>从一次真实的体验，<br>开始你的网球进步。</h2></div><div><p>告诉我你的基础、目标和可上课时间，我会先帮你判断适合哪条课程路线。</p><a class="btn primary" href="#contact-note">预约体验课 →</a><p style="font-size:12px;margin-top:13px">预约方式：请补充教练微信号或二维码后上线。</p></div></div></section>
+<body data-page-node-id="BtRktWa1Rds6BcGNy8nPxH">
+<!--pnid:KvbNlU5maGuoHyRLSbd8ga--><!-- ==========================================================================
+     D-13 校名口径开关（待确认项）
+     本报告默认采用【中性表述】，原因：公网页面此前既定约定为「规避强限定校名」。
+     以下为本页已中性化处理的位置，若您确认可以使用原校名，逐项替换即可：
+       在校本硕博生        -> 清华本硕博生
+       综合体育馆东侧网球场 -> 清华综合体育馆东侧网球场
+       气象台/新林院/附小北 -> 清华气象台 / 新林院 / 附小北
+       紫荆网球墙          -> 清华紫荆网球墙
+       校园网球赛          -> 清北星空网球赛（案例区）/ 清北校园网球赛（福利区）
+       在校博士生（案例1）  -> 清华博士生
+     未处理（保留原样，人名/非校名，无风险）：
+       杨超（国家青少年网球队原主教练）
+       全国高中女子团体冠军
+     ⚠️ 另：assets/tennis/federer-volley-logo.png 为第三方球员形象，
+        当前仍作 Hero 背景使用，建议替换为自有素材（V3 待替换项）。
+     ========================================================================== -->
+
+  <a data-page-node-id="cFf50hlJ7I2DJZvelQz0nX" class="skip" href="#content"><!--pnid:hJwbAjjhgez15kehJOzW3s-->跳到主要内容</a>
+  <header data-page-node-id="zPGvnuF22eivIBAvWLFvr3" class="wrap site-header">
+    <a data-page-node-id="kFzR63defXQFKEjMf4A3FW" aria-label="万次迭代网球课首页" class="brand" href="#top"><span data-page-node-id="EUsx065Jk4fL5Kbww0GiCT" aria-hidden="true" class="brand-mark"></span><span data-page-node-id="5OgztQ5HMwp4rG24Eje9SR"><!--pnid:N91EjrO1bKcRd9rqUxTe5V-->万次迭代 <small data-page-node-id="OScCX0ZbWfv55EEqMZVe90"><!--pnid:tPlphF9wBULeLdCiNG9xcF-->· 网球</small></span></a>
+    <a data-page-node-id="tjLiq4wTYjziGOFgsi1HM7" class="button header-cta" href="#booking"><!--pnid:dYKZZCmdZXaAQshn1fc6DF-->预约体验课</a>
+    <button data-page-node-id="rRC980EeLbrYwUPni7DCVU" aria-controls="main-nav" aria-expanded="false" aria-label="打开导航" class="menu-toggle" type="button"><span data-page-node-id="tXwWP3y9j1AyqMW5CiBQ2e"></span><span data-page-node-id="FpPcl7I8yKjM0KIKdMcm6d"></span><span data-page-node-id="hGpsWMqxl2dFpYeVGxtLT7"></span></button>
+    <nav data-page-node-id="RnXWzcFJ9jPRVa9NoPL8Hf" aria-label="主要导航" class="site-nav" id="main-nav"><a data-page-node-id="NocRoU2uDLyarT2bI7ZCQF" aria-current="page" href="#top"><!--pnid:tpHh8za7osskaBnlZFvRXF-->万次迭代</a><a data-page-node-id="bpXhlgwnWqcI18t8ildo8t" href="#start"><!--pnid:AEoUvBjUD7vVfeCyv0LXaj-->课程介绍</a><a data-page-node-id="4EZYUOulrGkOg2preZx4lB" href="#coach"><!--pnid:yWs7rA5bdsYiUTiOAAS37Q-->教练与场地</a><a data-page-node-id="7Ilqr8YfZQ2XSw1PApkV8f" href="#stories"><!--pnid:u9julLNO8kBqG8fAeUSSEL-->学员案例</a><a data-page-node-id="TmMb0K7MxrFq3URIk48hAY" href="#pricing"><!--pnid:N41Z8pPTCvsvzQrGIzCmp2-->课程价格</a><a data-page-node-id="8X9cBvzfD75uPBG18QLAvU" href="#faq"><!--pnid:mV6nsTI72Sn6hDiE6gUQVk-->常见问答</a><a data-page-node-id="lKQ5qDG1my9K2ShW1CuzI0" class="nav-cta" href="#booking"><!--pnid:0mXxWZTc6HQq5yKpgJMS4t-->预约体验课</a><a data-page-node-id="q6vwWmG8A1e5iy8eVpxo9V" href="#rules"><!--pnid:m7tXytHfigJh7vO8hl2VwN-->学员共同约定</a></nav>
+  </header>
+  <main data-page-node-id="Nf3swXrUwggNYCqDijZhNd" id="content">
+    <h1 data-page-node-id="wuAezGZuSE31fx2CJ9Jpdn" class="sr-only"><!--pnid:E6bPeMZdeD3R3EiFJKxlof-->校园网球私教课｜面向在校本硕博生、教职工与青少年，先评估再训练</h1>
+    <div data-page-node-id="6xnYtzR543l5sCijpfZW9O" class="sb-rail" id="sbRail"><div data-page-node-id="S03rnVlgaQVEG8qkU0lVV3" class="wrap">
+      <span data-page-node-id="0BpZ0IrhmjF5sZRDWRw7Vo" class="sb-game" id="sbGame"><!--pnid:GA7MNuMdJLfEIz1hQVvukB-->首页</span>
+      <nav data-page-node-id="OATnq3gIE5Ec1o2P4jaJn0" aria-label="页面进度导航" class="sb-list" id="sbList">
+        <a data-page-node-id="soX06ETvG6ylvwES3Fg8sD" href="#top"><!--pnid:XpfXRcBkn6i4x3WazqTIjK-->开场</a><a data-page-node-id="lnSuK8g35V82t0ezmthKUf" data-no="01" href="#start"><!--pnid:QNVTg7ep8zsLrihaJeXFo3-->找起点</a><a data-page-node-id="5Nh22mrDIUKVEvmRITxXgf" data-no="02" href="#method"><!--pnid:qZX8TJ2KWBQGwN5lfv7B1L-->方法</a><a data-page-node-id="cVwMOyTmS1HRcDHhPg6WOq" data-no="03" href="#experience"><!--pnid:mtYpQepAuoNuypiIamCRNj-->体验课</a>
+        <a data-page-node-id="4Dt4JoRe0Bw795ri2YdPsM" data-no="04" href="#training-map"><!--pnid:wn5LCrrzLmmbqPGEtWwdDW-->四阶段</a><a data-page-node-id="wOB789UgOYG44nZX3e3ptS" data-no="05" href="#curriculum"><!--pnid:bwGICpyp78sbFG22PdrmKg-->课程地图</a><a data-page-node-id="JP4kd9in1zVoDfmRd6TDlE" data-no="06" href="#routes"><!--pnid:uG2ljWarDi9oDa3ZyugOxe-->路线</a>
+        <a data-page-node-id="knRp9v2qKF0eNA7B4rjjXS" data-no="07" href="#style-choice"><!--pnid:DfncxqMW7doKumjqnNkMYy-->动作风格</a><a data-page-node-id="Sr4XSEzNMQ7P5IfqTSCuba" data-no="08" href="#players"><!--pnid:gVb60otzmDVRpGhmg6Jwqe-->人群</a><a data-page-node-id="pxLEd5LyXO6psWaMWGuvin" data-no="09" href="#coach"><!--pnid:FOVqqVMEwqnvLaLpdFcFNc-->教练</a><a data-page-node-id="DUub5BFMWWcY8ZkA5fpWk4" data-no="10" href="#venues"><!--pnid:2GsZCh19Dp0Ywj8IPEBNF1-->场地</a>
+        <a data-page-node-id="rsbJDDXijOlxePfDnnmQ05" data-no="11" href="#stories"><!--pnid:BjuAZr3ZDAIcWUBqbiv9d8-->案例</a><a data-page-node-id="zUaak0FP8c83nEuMAilE5d" data-no="12" href="#pricing"><!--pnid:ZShKLSNQjnYyR7y7ZEnn6j-->价格</a><a data-page-node-id="84ivfYSkxXgT3llL5vQ5I6" data-no="13" href="#promise"><!--pnid:Lk7zZU5CdeMeayQXKk5BFz-->双向约定</a>
+        <a data-page-node-id="vb98xb0iddau5qsaTSyBZn" data-no="14" href="#faq"><!--pnid:ylemNMxeTOqn85AdHIpAWp-->问答</a><a data-page-node-id="AxL17dj5KUMY5p2pksy2oF" data-no="15" href="#benefits"><!--pnid:ALp7gW5tOhYaFXSYW1qsrW-->福利</a><a data-page-node-id="yqc0A3MkQG263cO8GHGKmj" data-no="16" href="#booking"><!--pnid:zKh47CWAMZnukhPBihltOu-->预约</a><a data-page-node-id="6qF8VeJAkXxpi2fQHukFUB" href="#rules"><!--pnid:oV1rjWIS6fKCNEzb9X5icw-->规则</a>
+      </nav>
+      <span data-page-node-id="hyoSlyItpFpt94OuPkUIwG" class="sb-jump"><!--pnid:snlcfKJZyMQCVlSK4kwIv9-->共 16 节</span>
+    </div></div>
+
+    <section data-page-node-id="0kU7pwlKqrlnVbCvDwlPG1" class="hero" id="top"><div data-page-node-id="khaCPLfcIsM2yRp6eGX6n0" class="wrap">
+      <div data-page-node-id="18rKQNoWQrp5EMhN16Kcwv" class="hero-main"><div data-page-node-id="hkbV9F074As5Bw1zRlnhOY">
+        <div data-page-node-id="4vGZfZLSALGfP5CI7hcZSM" class="eyebrow"><span data-page-node-id="LegdnmNyVg0C3foKgYa3wB" class="dot"></span><!--pnid:DpvnM3xlIDOH2SQzwp5611--> 校园网球训练 / 面向青少年、本硕博生、教职工等职业人士</div>
+        
+        <div data-page-node-id="TNGGOJtBGKDAmeVgxUOCQy" class="hero-lede t-hero-lede">
+          <div data-page-node-id="u8XjPn7Ky8xMH8txhfHMfL" aria-hidden="true" class="lede-deco">
+            <svg data-page-node-id="EO07FhW4rvjjaawpJ9iqeH" fill="none" viewBox="0 0 240 200" xmlns="http://www.w3.org/2000/svg">
+              <path data-page-node-id="PjVn4zfx9MRmSLidSNIvX2" d="M8 172 Q72 38 232 58" opacity=".35" stroke="#285445" stroke-dasharray="3 7" stroke-width="2"/>
+              <path data-page-node-id="WoVennJr8bCPcDt4RM61Hc" d="M18 150 Q92 28 222 92" opacity=".3" stroke="#ff725e" stroke-dasharray="2 8" stroke-width="2"/>
+              <circle data-page-node-id="zQlVYd1KAvO1zf4LSDwC9O" cx="232" cy="58" fill="#d9f53a" opacity=".5" r="6"/>
+              <circle data-page-node-id="tlPu6CXSp4SOfCsJkNzE5r" cx="222" cy="92" fill="#ff725e" opacity=".4" r="5"/>
+            </svg>
+          </div>
+          <span data-page-node-id="zZeAVTPFbIL3ruB8Bz5zcK" class="lede-title"><!--pnid:pWGXHZgWEgvv5wYVVi8DEh-->万次迭代网球</span>
+          <p data-page-node-id="qVmf2yggJCKVvkezYql0wK" class="lede-sub"><!--pnid:8aSoTeMzgPDUiiVAyTyjDY-->帮助您把<span data-page-node-id="58awx5XVLb9kSVDmdbQUk6" class="hl"><!--pnid:56usLG2BboOzSXp6uUcvlX-->一闪而过的念头</span><!--pnid:CpCfrIVtz7HDRkSsWl5eQT-->或经常拖延的想法，变成落实到<span data-page-node-id="rXokY7w5WD4sbpGhjFjNn8" class="hl"><!--pnid:CYWwq7v1xN9dUgfFEPuqGG-->每周日程</span><!--pnid:fW9zFJQYST6DKeEijKVsKH-->的目标。</p>
+          <p data-page-node-id="D4VJDBY57B8zHSDnM914K4" class="lede-sub"><!--pnid:JTmRariCA1yumdTutO2YUH-->通过个性化的科学训练与<span data-page-node-id="PN6D8VNkiaLWTqfMH1oWjd" class="hl"><!--pnid:h30mEHJKVaPHBQRWM6Go9t-->赛练合一</span><!--pnid:5e1O1tFdicsdSBhW1w15WK-->，持续迭代，在<span data-page-node-id="xWzJ63aNUAxjwiaahMKdqL" class="hl"><!--pnid:SZAKtHp8uUJwrgZbb8U1uX-->一万次微进步</span><!--pnid:HA6tFVT8etzl9FgFtCN2Nk-->中看见希望、树立信心，最终实现目标。</p>
+          <p data-page-node-id="6ryy321wkkWWtQwF6aDvKl" class="lede-value"><!--pnid:SvAJgAhKSBdQwdAzZAmDIt-->您获得的不只是网球技术，更是一次<span data-page-node-id="uEFE8miRvevQKuKGZ8GDBn" class="lede-badge"><!--pnid:SLaHLYFhfNWnR1RkbXhaqk-->我真的做到了</span><!--pnid:d922paZCpfrE1iSbI1G90u-->的生命成就体验。</p>
+          
+        </div>
+        <script data-page-node-id="XUaOB72hCxFWLE5giVP2Mp" data-pnid-children="MVWkE92LItcLcTvwZP6Qrs">
+        (function(){
+          var lede=document.querySelector('.t-hero-lede'); if(!lede) return;
+          var fill=lede.querySelector('.lede-progress-fill'); if(!fill) return;
+          if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){fill.style.width='100%';return;}
+          var ticking=false;
+          function update(){
+            var r=lede.getBoundingClientRect(), vh=window.innerHeight||document.documentElement.clientHeight;
+            var total=r.height+vh*0.6, passed=(vh*0.7)-r.top;
+            var p=Math.max(0,Math.min(1,passed/total));
+            fill.style.width=(p*100)+'%';
+          }
+          function onScroll(){ if(!ticking){requestAnimationFrame(function(){update();ticking=false});ticking=true;} }
+          window.addEventListener('scroll',onScroll,{passive:true});
+          window.addEventListener('resize',onScroll);
+          update();
+        })();
+        </script>
+        <div data-page-node-id="4kEs95lgDSk8pNeiN5XqHM" class="hero-actions"><a data-page-node-id="BaVz0tpbUwqIyT3XjtTOgR" class="button" href="#booking"><!--pnid:T8jgXBcfAkndZWBEv2jRWY-->预约一次评估体验 <span data-page-node-id="xtmbou88ULpuWspIERR4k6"><!--pnid:3FU2NC2cGCQwJKP2SGQvHa-->→</span></a><a data-page-node-id="O1EpGJcfkZMnSSiOFckh5S" class="button secondary" href="#method"><!--pnid:vbjyqayBYtoIJWPz6tYdHC-->看看怎么练 <span data-page-node-id="CXMityR5liYC0EKhfELF2q"><!--pnid:nvXcqhRQZ67gI2jG1wBspx-->↓</span></a></div>
+      </div><aside data-page-node-id="o961syFhVXzdkwcLvpdnDd" aria-label="首次评估体验课概要" class="hero-card"><div data-page-node-id="vKnKXhXvEsBmazVPativDq" class="card-label"><!--pnid:bzgspNXBEJDvETyRqPGrbP-->首次评估 / 60 分钟</div><h2 data-page-node-id="blZLHWwvS65RvTXQd3irSj" class="t-hero-card-title"><span data-page-node-id="PGQJXXL3W9KTL8CanHQAje" class="card-title"><!--pnid:j3oIsm7MiKw2HnLUvNuBwM-->第一节课</span><br data-page-node-id="ZGfdyEhsF8GppPwVWdX1ld"><span data-page-node-id="LlegzAB9T8Pw8T01KzYQx4" class="card-sub"><!--pnid:CgqbR1ZamRVWkYok0ZVQW5-->了解您的网球真实水平、身体条件与长期目标，找到一条可持续、看得见进步的高效成长路径。</span></h2><p data-page-node-id="cz1Fa0fjb6bP16u1ntsFoC"><!--pnid:cJDUZvFCMd2D26RaG0yMV9-->不是试试动作就结束。您会带走一份清楚的训练建议，再决定要不要继续。</p><div data-page-node-id="4upO2s4XlaWYoAPg7xRGAA" class="scoreboard"><div data-page-node-id="Azik3yL5rLa5DLraSvQ4hi"><span data-page-node-id="MZFo7VrtojiNAEEy4y0azj"><!--pnid:7pL1Y8xvHBS3yvqKCWui4B-->目标与运动经历</span><b data-page-node-id="wEl7CTFYPuRLtwnIk1Jo8x"><!--pnid:59NZbizpgA3uEX9qnNMrXm-->01</b></div><div data-page-node-id="FYSunRIL97MqxtmHbS7ony"><span data-page-node-id="OMRQUbbQvkorXJjdXjw2V5"><!--pnid:pFUD5uTEcXSfuiFKQQhX6y-->移动与击球观察</span><b data-page-node-id="SlSVAH05Xe7l76jjVJyew1"><!--pnid:V3Unqr2cAxn74lHl9b5hXI-->02</b></div><div data-page-node-id="eWP1NOUjekAVASbpGPmrpO"><span data-page-node-id="xvFuQSuzhA1vR5wUcrNv8J"><!--pnid:CB1t4wVczjrZdYn7UsSQIw-->针对性训练体验</span><b data-page-node-id="KZjFZ4oEpPtkWoEi13L11E"><!--pnid:jYmLg0O0YACaWaGIPcJ7Gi-->03</b></div><div data-page-node-id="qWl5mwqzLnvMTc0b98duTl"><span data-page-node-id="weTYow0dNip7sHePrTLiIp"><!--pnid:8mvYRZr00bJffQQm5XLd42-->个人下一步建议</span><b data-page-node-id="B3I9VB90eUxCCrhWTatETL"><!--pnid:6lmrygKFUPMHTCtWHpKxQ5-->04</b></div></div></aside></div>
+      <div data-page-node-id="qCMx1YHwujAFxslMhagBT1" class="hero-footer"><span data-page-node-id="6vBdhar1O8UC4dhSE78F0P"><strong data-page-node-id="z2ruP8ktbKU1KvmK20lF1m"><!--pnid:fEHe4C4LxEa392Aa3TQ9D8-->01</strong><!--pnid:JMV7375aBfMrweCCdWcxC5--> 先评估，再决定是否报课</span><span data-page-node-id="XROtl0JA17USyo0ONKvEp2"><strong data-page-node-id="z1VAIA3Za7ukHwCulPObXu"><!--pnid:RkONekZqmOvZmaAv0cQwdu-->02</strong><!--pnid:AmdOSkaYhwjc1xQv85GY7A--> 零基础也可以开始</span><span data-page-node-id="qMVrUvhcGdyiTCKM5rs34g"><strong data-page-node-id="pset6igGeT8g2Yzeeca0m7"><!--pnid:seFqElZx69RRgPOMAkiHsd-->03</strong><!--pnid:cWYzZnLXdXVuxusHOzh2h1--> 比赛目标可以进阶</span></div>
+    </div></section>
+
+
+    <div data-page-node-id="EDlZQjKfqchX9FvNxJn6Jz" aria-hidden="true" class="marquee"><div data-page-node-id="K5k6ADrdEICFzJqLazvESt"><!--pnid:1A2ILYk8PdTNh6kse4N3CQ-->零基础可学　✦　稳定对打　✦　分级赛进阶　✦　视频复盘自愿　✦　场地提前确认　✦　一对一 / 一对二　✦　零基础可学　✦　稳定对打　✦　分级赛进阶　✦　视频复盘自愿　✦　场地提前确认　✦　一对一 / 一对二　✦　</div></div>
+    <section data-page-node-id="kYfjoIQ95p5yTtqQMbJL84" class="section start" id="start"><div data-page-node-id="729LjWVsnhr83lcWDODfbQ" class="wrap"><div data-page-node-id="YuprcoQ6TTX752W31Y5vex" class="section-head"><div data-page-node-id="zjBiheTVMyYdkwluXnOfKJ"><div data-page-node-id="IDRmdFdX0ov4anyUzKIDWo" class="section-kicker"><!--pnid:vnMxbBdpAgS6hsIG2UJBug-->01 / 找到您的起点</div><h2 data-page-node-id="xlACRNRGaZRsZ5ItcmaW2A" class="start-title"><span data-page-node-id="lxdveWgzgYxJNK1ynCJoGo" class="start-title-line" style="font-size:48px"><!--pnid:H3Rf2Al8vjnkj7zgN5o03x-->先制定您的目标</span><br data-page-node-id="NPZbQi8haWWLffBS6OdDKT"><span data-page-node-id="0Eyi3EPU0bViV7oJqjZxCl" class="start-title-line" style="font-size:48px"><!--pnid:fihrCDn3Sy7A2hzleIBW5p-->·再找到适合自己的网球成长之路</span><br data-page-node-id="iT4OldAKxdkLL7Jo4xMjQJ"></h2></div><p data-page-node-id="mtomSe3TSUap6OGEl3XDB7"><!--pnid:Ll4gLsbcpsthHDlh1f5Ncg-->·····🎾第 一节课不急着给您贴标签。先看您想从网球里得到什么，再确定您现在最值得投入的训练。</p><img data-page-node-id="WmVM6Yp2B6WBNX2uWGW9vM" alt aria-hidden="true" class="start-deco start-deco-boy" src="assets/tennis/Chibi_anime_tennis_boy__oversi_2026-08-29T20-58-29.png"><img data-page-node-id="37U1JJeHaJtYyI4x9GLh73" alt aria-hidden="true" class="start-deco start-deco-girl" src="assets/tennis/Chibi_anime_tennis_girl__overs_2026-08-29T20-58-29.png"></div><div data-page-node-id="Jnd5I5EpCqrTs3OSUcNIxj" class="goal-grid">
+      <article data-page-node-id="vUgJd4GaV79GJC8RH6S9sy" class="goal-card"><div data-page-node-id="7ewxaXZfDfyhAG0nwFHMqW" class="goal-number"><!--pnid:lKaDmlki99JRHVHZSJGm2b-->01</div><h3 data-page-node-id="V7YxvcTVUbqWdQkqt4wvSK"><!--pnid:VWboUKV1KU2YZTVNirYOKf-->我想先<br data-page-node-id="BRRq6xn8tyv3gIHOdLtNnV"><!--pnid:DBIzc7Vun2uQNTOBCyGTTC-->把球打起来</h3><p data-page-node-id="0sdWkq6BCOdaj5pYM0vJwP"><!--pnid:zLcQ7MgnOeq88ZHxPO3wFY-->从零开始建立安全感、击球兴趣和最基本的身体协调。</p><div data-page-node-id="4YQrwE0vR6QmrYquEklYM1" class="goal-note"><!--pnid:ByeyjcPuZjvbSqJw5KcrtU-->适合：第一次拿拍 / 想开始一项长期运动</div><div data-page-node-id="cUdMAPAvZxvhz7XZJ55Gj1" aria-hidden="true" class="goal-orbit"></div></article>
+      <article data-page-node-id="h7ceaE6NbymJt8lHe4DBMN" class="goal-card"><div data-page-node-id="b1X9NP2c3JVZpHh5qESZb8" class="goal-number"><!--pnid:6cYtzi7bxYJxfyR7cwa2Ul-->02</div><h3 data-page-node-id="o2piHQ5byBAx4DS5sOFWcJ"><!--pnid:JV0t5Vibpa19BklPgngHt7-->我想打得<br data-page-node-id="IM5Dtg9tdHZ6Bm9f2uWjOt"><!--pnid:S7qNOtQdRePGLYGdakL078-->更稳定</h3><p data-page-node-id="OkOi2fA9iy46F1w5YGMwMC"><!--pnid:tdJqKlfUc7ginZJfeaqsXT-->解决“偶尔能打、回合不稳”，让动作、移动和击球点更可重复。</p><div data-page-node-id="z3vtHEfWRkXkdYFePZqauw" class="goal-note"><!--pnid:y8A3hlVHog9iXh4U7mMvoY-->适合：会基本击球 / 想有持续对打能力</div><div data-page-node-id="LawIOuik5HjjTIVINPgj64" aria-hidden="true" class="goal-orbit"></div></article>
+      <article data-page-node-id="tiv8PG730DzMJKPbH9VRzg" class="goal-card"><div data-page-node-id="BNrgYL2wohHYBh8Bp4IcTR" class="goal-number"><!--pnid:6aIT31DRdSjpRXWFG3mPwy-->03</div><h3 data-page-node-id="bbb2viEL3vSDbAsNaRuWs1" style="white-space:pre-wrap"><!--pnid:kX6VO4e5xvuNUTc1ABptD7-->我想赢
+得更多比赛<br data-page-node-id="9Zqh1OPefUigYUcofrKqwY"></h3><p data-page-node-id="hhX2xq31qIDuDgCrLRPnNu"><!--pnid:y5hvHjacSwCMMwwVvK0PNf-->把技术、战术、实战和复盘连接成真正能在场上使用的方案。</p><div data-page-node-id="AvVgH006UhcHzQ4rx1exVF" class="goal-note"><!--pnid:YigAegIMs3haM7lcNTGJbp-->适合：有比赛目标 / 想提升级别</div><div data-page-node-id="m20gmdzlbbb0ZQ8cAvWgdT" aria-hidden="true" class="goal-orbit"></div></article>
+    </div></div></section>
+    <section data-page-node-id="dHgqb5OcDu4AZwpL3HeL1w" class="section method" id="method"><div data-page-node-id="5KDVYBaHE6LysYAsZG3aYP" class="wrap method-grid"><div data-page-node-id="lktqdCb28N0wk1EcdWVx1r" class="method-copy"><img data-page-node-id="qgTB8fcjjrlNToeEuuEK4g" alt aria-hidden="true" class="method-deco method-deco-boy" src="assets/tennis/Chibi_anime_tennis_boy__oversi_2026-08-30T04-19-42.png"><img data-page-node-id="v8cKMMeMW2dwsaE80mlmTj" alt aria-hidden="true" class="method-deco method-deco-girl" src="assets/tennis/Chibi_anime_tennis_girl__overs_2026-08-30T04-19-40.png"><div data-page-node-id="UWSvWUY6siBYm9CqdLXuHV" class="section-kicker"><!--pnid:VdXCViivDZ2Z8oYEgYbINE-->02 / 万次迭代方法</div><h2 data-page-node-id="pdpdRiyd7aCLKA99QGEpwT" class="t-method-title" style="font-size:20px; font-weight:700"><!--pnid:ANvFpHAIciVKvoZW6mIEHX-->不是重复一万次<br data-page-node-id="fnGgH795D7LGAkfEOn6KDd"><!--pnid:wlbVbO9WCEd1NhZmnEoeGq-->是每一次都迭代一点点</h2><p data-page-node-id="26QM8BVo7lFGzKpABZ90zX"><!--pnid:JVmorqdjeIHOcOJxR1FGzd-->网球进步没有唯一正确公式，但有一个经得起实际对抗检验的循环：发现问题、补强问题、验证改变。</p></div><div data-page-node-id="NCO2VAhVWuNxFiPmZRU92F" class="principles">
+      <article data-page-node-id="I0ZsH6GDpA4uQF0OvpnfAI" class="principle"><div data-page-node-id="BlnGO0mRlHIsCO06JwqStj" class="principle-no"><!--pnid:ENPabkqFOw72LnnLDNQ2EF-->01</div><div data-page-node-id="dVSITCxzIRWT1eqEezG0Zo"><h3 data-page-node-id="KBVbUVteUJ5ZuuQZarLwf5"><!--pnid:U7HcvbdjEu4JpuGspgNPJU-->用对抗，发现真实问题。</h3><p data-page-node-id="UvKurSReeJBuAty6CAxW3T"><!--pnid:6mEqvIxlG8N3DqZ9uZRUKO-->从合作对拉到练习赛，到真正的赛场，真实情境会暴露平时看不见的短板。</p></div><div data-page-node-id="23ddMKGGLF5awH3PTrd1G7" class="principle-icon"><!--pnid:A7TJwYiiBgbBcNEifEFUKj-->↗</div></article>
+      <article data-page-node-id="d3mFItVNaAWFNsXLXRb2pD" class="principle"><div data-page-node-id="Erk4RYNjpAmKRm6Warg6hh" class="principle-no"><!--pnid:8e5oqsOg28f2WeTMQBQhs2-->02</div><div data-page-node-id="llBIRhacqpfmcDmCeMhKal"><h3 data-page-node-id="hiHQ2MBkB89z0mbNFtiFDQ"><!--pnid:MgmLdveKZNuri1MPPNTMv8-->用训练，补强主要失分项。</h3><p data-page-node-id="xWY0EbTmEGXkBVKnRQUAFv"><!--pnid:55QkTxXBEsW3nCyjWp8RkY-->围绕最影响您的一个问题练，而不是堆叠看起来很努力的动作。</p></div><div data-page-node-id="LWNgfnNxPGZfJNmBIKt3rM" class="principle-icon"><!--pnid:Jw2JwK8Go2WedYKyDmtgWq-->＋</div></article>
+      <article data-page-node-id="Lv3CSSFQZjoSM9ud4Wxf7Y" class="principle"><div data-page-node-id="h40NMDtg4pE5lezOUOo42a" class="principle-no"><!--pnid:uCnATl3WbAImTI49TCM0uZ-->03</div><div data-page-node-id="uOPyVb67rW5nAsJxzfM35S"><h3 data-page-node-id="PTyoiLPxLfxt8If0X4qjqe"><!--pnid:XjkHjWO4PbXlCPO80DBl5I-->用复盘，决定下一次训练。</h3><p data-page-node-id="cyIppqJJovrCfrgS2rPAKU"><!--pnid:SnGXVlKqNFUg4kD3qvGW7v-->每一节课都留下一步；新能力通过自主练习，变成稳定表现。</p></div><div data-page-node-id="VxQxq0DRlYgVyEAIBu1MKR" class="principle-icon"><!--pnid:YFy87nZjmvSRiUCNWAIA7g-->↻</div></article>
+    </div></div></section>
+    <section data-page-node-id="HGYKeMwenkqn0hewWQyMdR" class="section experience" id="experience"><div data-page-node-id="FJ6BrbZmxiNVpIVfWWbOW9" class="wrap"><div data-page-node-id="lmTARFyWuKZIwo3pE7lsCT" class="section-head"><div data-page-node-id="x61elqwbsDN9AfFxBTienG"><div data-page-node-id="YyQYU1DRVdX8wJOh3qaLH4" class="section-kicker"><!--pnid:HcZa7sGItQ3HP6aTIUjOSj-->03 / 首次评估体验</div></div><p data-page-node-id="VQKxnwTG5L3XZc5Rg64chW"><!--pnid:yilgaKYjL0q1OV0R8qKdsn-->体验课不是销售前奏，而是一节完整的训练诊断。您可以在体验结束后，自主决定是否继续。</p></div><div data-page-node-id="elxFfF7rlDShHkWRFxhT3C" class="session-board"><div data-page-node-id="JlAUrsc6Q6Sd88DoxEv9A2" class="session-intro"><div data-page-node-id="8WJ95IrP2axRA7Af19jJd0" class="eyebrow"><!--pnid:94EggVK2tmGBsfWcfJauOU-->首次评估体验</div><h3 data-page-node-id="5IIcWGUmM5FaTC1BbtO5sj"><!--pnid:hLTKSGKCQYwrPUE5GinNzZ-->一小时，给您一个能继续练下去的方向。</h3><p data-page-node-id="zCHw8ZzO3dwRAmw3nPJlZ3"><!--pnid:XQYYgNDLcUXgI0SBpzsSmV-->适合零基础、想稳定对打，或准备重新开始训练的人。<b data-page-node-id="bKJKTptxG7blQUt4xr37PY"><!--pnid:51jDXf7GWei1182NcYmwV8-->体验课按正式课标准收费</b><!--pnid:sIZZgayMc7JbyjcvSKGfPs-->：在校本硕博生 200 元/小时，其他学员 260 元/小时，另加场地费（按所选场地与时段计）。</p><div data-page-node-id="oYokEQlAmwxn9hVyRuRJml" class="session-price"><b data-page-node-id="0zug8VmV60t3kdPBQZImql"><!--pnid:QVzIgzYWFTuH2KvYcQQrML-->60</b><span data-page-node-id="LNRcOCsQRd7AQ6KWEOZuNC"><!--pnid:A7zio6HrEAC3tuMsm3qqvX-->分钟<br data-page-node-id="67Y6kqtoFaleSGTm2EJjGg"><!--pnid:3WVNWbTj7wl24exVDoVKnn-->首次评估体验</span></div></div><div data-page-node-id="XqA59Uw0ACpq5TrELF9MSJ" class="session-details"><div data-page-node-id="pQEksPcC9VH4bIfApWFkUa" class="session-detail"><b data-page-node-id="9UFJ2TdLNfzY46lYLdmdNj"><!--pnid:g2kAeXt25cua1KJDEKZ9Gz-->您会做什么 / 01</b><strong data-page-node-id="8O75x5IWFTjPHVlGZWmoKw"><!--pnid:gB1IRg0twi49lUlYuHdn10-->聊目标与身体情况</strong><p data-page-node-id="FWRPXBpRKvV2kwK4pQZvrQ"><!--pnid:SvOSovK8kT7jQTYLtr7Sru-->训练经历、时间、伤病/疼痛和想达到的状态。</p></div><div data-page-node-id="9ov7890pNRVerO9wjuyAeu" class="session-detail"><b data-page-node-id="tQAfSjk5gJ5FW8zJhadYob"><!--pnid:xRrPxiolt3VQ7ucMdi9hay-->您会做什么 / 02</b><strong data-page-node-id="9bsSrXqbrzmO6RDMOqLFN6"><!--pnid:q2AXMPtqSO4WS4ephYHeaX-->观察移动与击球</strong><p data-page-node-id="OEYwSs32bpSp4pF0c5Ee4j"><!--pnid:6WgKZTdPlPi5K9qRRL9MCD-->不需要表现好，真实起点才是训练依据。</p></div><div data-page-node-id="3wMzTVgT8j0lHD2pHKaJgd" class="session-detail"><b data-page-node-id="KOeMnwFFdohk00CVVOgWvm"><!--pnid:Mnuh8gyoLU61Uc4JYJ6Ndo-->您会得到什么 / 03</b><strong data-page-node-id="DPV50qmIub6vzmzdcpScTu"><!--pnid:THVkW2g4p5bvUM4cuysfMt-->体验一次针对训练</strong><p data-page-node-id="G3Xo5DxdZnOohz7JtYKE0Q"><!--pnid:ffNBs8TOyz47nkCz6Pvttl-->现场先解决一个最值得优先改善的问题。</p></div><div data-page-node-id="oj4GIiSvSaJy9eBKhmbFR3" class="session-detail"><b data-page-node-id="CiI7ugdsXC5lPMQy5wQHsx"><!--pnid:UlufVLBT2FEuKBnSbyzToX-->您会带走什么 / 04</b><strong data-page-node-id="v6WcNFS7W4KapVDtdjxCKD"><!--pnid:q6mMwPB6Lm4xfHCP5ED2C0-->一份个人下一步建议</strong><p data-page-node-id="AqEdxOqpJlY1FAlus6kfSF"><!--pnid:Ma3MQoZf8ysO4TdhPNfexm-->包括路线、建议频率和可执行的课后练习方向。</p></div><div data-page-node-id="bHEFYgpxZ9NXrT87Vn4DHI" class="session-note"><!--pnid:CB9j6knrt5GLHBzRp4E0YS-->费用透明原则：提交预约意向时，未确认前不锁定课位、也不产生付款义务；教练确认时间与场地后，费用即时支付并锁定课时与场地。若上完体验课后觉得不合适，可无条件申请退课，未上过的课时原路退还、无任何扣除。</div></div></div></div></section>
+    <section data-page-node-id="2SfNQtLw4tYVnXu4092Bhw" class="section training-map" id="training-map"><div data-page-node-id="P7H4TQpWJhqY29ckOz9hZJ" class="wrap training-map-grid"><div data-page-node-id="Kyk4KkA2TCGRyalj6D3dF3" class="training-map-copy"><div data-page-node-id="9nMqxUU4c8DbeuQwDnlXd2" class="section-kicker"><!--pnid:nFEDZorKI75G3HmQaxFUxm-->04 / 四阶段成长路径</div><h2 data-page-node-id="iLLVM78KhUDbtsLQWaeMqs"><!--pnid:Vwkodv4rYVoMok30nlL38s-->把进步<br data-page-node-id="kty0LVcK0SPTw6gaXAZt3l"><!--pnid:6b6uwkeDdIkGarqh3lFbA4-->练得具体</h2><p data-page-node-id="KUrQzTOjPd7Q0PBpdjGlvD"><!--pnid:pyQePGMGDBeexDhnAfhtsm-->不同人的速度不同，但每一阶段都应该有看得见的训练重点和可观察的下一步。达标不是考试，而是决定下一阶段该练什么的依据。</p></div><div data-page-node-id="vz1Oe0Q8pCIkgRX808yuAG" class="phase-list"><article data-page-node-id="BMtbQYERs4NBnF72eij1Se" class="phase"><div data-page-node-id="efCy4d5GWm7btQuuX9OszT" class="phase-no"><!--pnid:tP4GT8SUBsZdCfCfUmcGY2-->01</div><div data-page-node-id="TpJ1ovOz2UKfqcuMljk41L"><h3 data-page-node-id="Hz6OUiULrxFFAUZKOR0mWF"><!--pnid:Cq0YY8KJSnjwWB546ElkjI-->先把球打起来</h3><p data-page-node-id="GH8oeGtrFffc7Ltqm7vk3g"><!--pnid:VlNxZkB2IWF71JZHRbqCYM-->安全常识、握拍、准备姿势、正反手基础和简单移动。</p><small data-page-node-id="ifwPJSjEp2VYqRdFxSbnrF"><!--pnid:DhLLQ7SnfTpRh7oGmpq9t2-->阶段参考：能与教练完成连续 15 拍合作对拉</small></div></article><article data-page-node-id="BczjybJmLpD5d04hQjjpr8" class="phase"><div data-page-node-id="X7ZeUT1dnpBkEKq5MaSpNw" class="phase-no"><!--pnid:BPOREJPMLQzXyyfBbWhe2t-->02</div><div data-page-node-id="tCu7d5vCttLK9pZd2Urkjt"><h3 data-page-node-id="tarZuHiaoJrYULc1qyA0QA"><!--pnid:vCpUuNy2P7sm8CmSExRzKZ-->再把回合打稳定</h3><p data-page-node-id="8pgXUL0EfKAjq1RVCs30gb"><!--pnid:EAklkOGmkm5E3Z6UgkObP0-->练击球点、方向控制、连续对拉和自主练习，让感觉变成能力。</p><small data-page-node-id="PUMGknGW1Y5lmefuiJEWE4"><!--pnid:bBQGjXqmEukJHBohmtAEoJ-->阶段参考：10 球中有 7 球落到目标区域</small></div></article><article data-page-node-id="sASFpSZ36rkZv82Cou2ElZ" class="phase"><div data-page-node-id="onC6t6lBgQj5MMu9TTpILW" class="phase-no"><!--pnid:5PWwnQtN66GabPMr0Jjre5-->03</div><div data-page-node-id="6obtnibKl0m6qbIXsOE1vo"><h3 data-page-node-id="K11v6b2dw5LohXDok1N8JN"><!--pnid:4QSNtqRvYkqjkQjIYD9LTR-->学会打完整比赛</h3><p data-page-node-id="UvopBRo6y5CpjitfNp3OGL"><!--pnid:fiiDM5uBnjWKvVEH4kg1AS-->发球、接发球、单打和双打规则，以及基础战术选择。</p><small data-page-node-id="wC4Oe6DCrZ2gr6PJZt3Q1t"><!--pnid:dwY6k5wePimY07eqejYzfV-->阶段参考：能完成发球与接发球的完整一局</small></div></article><article data-page-node-id="VQQneeQsuM8K0gcQPB8d4S" class="phase"><div data-page-node-id="fvu3apb5BjCFYmihhWiQ2s" class="phase-no"><!--pnid:sN2s2cpv94V5GSHFHnImrj-->04</div><div data-page-node-id="Swkl8t5CUyTKHsYa7Byr9k"><h3 data-page-node-id="dRDCD2JOJ91CUQYRwvFSKW"><!--pnid:8x2QHpBrgBgd5MM289moSj-->用比赛推动下一次迭代</h3><p data-page-node-id="Sl9kQCiZyasWfODzGVE2nf"><!--pnid:2yjs764Y5LHDbO02CEVdlZ-->进行赛前准备、比赛观察、视频复盘，并据此调整下一阶段计划。</p><small data-page-node-id="1GR7cydKozmh9cftHP0pFP"><!--pnid:DjdfunUMvF28oqagieYwzK-->阶段参考：能执行预设策略并完成赛后复盘</small></div></article></div></div></section>
+    
+    <section data-page-node-id="2xnxSDKkJw5t75kXbm1LaS" class="curriculum" id="curriculum"><div data-page-node-id="k6DX5utWp8uiSXcNrvOkJo" class="wrap">
+      <header data-page-node-id="0BwNPN5vlGoBq5YLWTThRZ" class="section-head"><div data-page-node-id="RG5sU2ddl393r12KKMUgWl">
+        <div data-page-node-id="Q9QxPkYdfuraTb1OXv2TiF" class="section-kicker"><!--pnid:y5u5rR8gxyQXVzJ7xGy21k-->05 / 课程地图</div>
+        <h2 data-page-node-id="If8frpxvuii5uK27cZlGK8"><!--pnid:tvDsmkHp7s20kstfR74lVw-->先看清教什么<br data-page-node-id="r0G3wjzY4snNlftHFIPeQl"><!--pnid:5WvefDQXpJ36pWyLmtoCPO-->再决定学多少</h2>
+      </div><p data-page-node-id="rEQpPDiFdhzCTGtOnTUzvR"><!--pnid:QtthRMbECkWUxa3mJzgcGh-->零基础教学拆成 15 个模块。您可以按兴趣选学其中 2–15 个，不一定要按顺序——教练会根据您的目标和身体条件，帮您排优先级。</p></header>
+      <div data-page-node-id="VN9kqlHvsX9qrPau32iEm0" class="mod-map">
+        <div data-page-node-id="i0kFv5lWnVfCTJpeDE2ZO7" class="mod is-core"><div data-page-node-id="aBj2GGTMMPOUx6pdZvzoAB" class="mod-no"><!--pnid:nH32RAvpm12LrdCIdrYQTg-->01</div><div data-page-node-id="HY4modIcons000000000000000001" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000011" alt="网球礼仪与安全常识" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/01-礼仪.png"></div><b data-page-node-id="XXUysfoi0P3tm4aqjf5Mmr"><!--pnid:bTlS9MHEKlfBdfysGhs0o8-->网球礼仪与安全常识</b><span data-page-node-id="PliOCQtfgXxHmGjA1Zq8xN"><!--pnid:WmvY11MXgmMhOAV407BIs8-->上场前先学会保护自己和对手</span></div>
+        <div data-page-node-id="El0eqpo1Atn9HDDO4tjF6j" class="mod is-core"><div data-page-node-id="cDTTVKpAk55UDO9Fk1yDzF" class="mod-no"><!--pnid:2arbzmUzSUTDNIxlWQyckS-->02</div><div data-page-node-id="HY4modIcons000000000000000002" class="mod-icons is-pair"><img data-page-node-id="HY4modIcon000000000000000021" alt="握拍 / 正手" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/02-握拍.png"><img data-page-node-id="HY4modIcon000000000000000022" alt="握拍 / 正手" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/02-正手.png"></div><b data-page-node-id="J695Xc5Q3R0rpNmQRdoiAS"><!--pnid:wb63fCWZ9EDQ0SaSgYQsFB-->握拍 / 正手</b><span data-page-node-id="MRtKtBTl6tL5xs1pBKRuy9"><!--pnid:gYI8UUC6eFSBhkAgGG1YlJ-->握拍方式与正手击球的基本结构</span></div>
+        <div data-page-node-id="4WiP5GMCF4xIdrWviJQVgu" class="mod is-core"><div data-page-node-id="7oS5xycovMs0vMAGmQZ7Kx" class="mod-no"><!--pnid:NhKugK3P4OxDCpHWdeSSVz-->03</div><div data-page-node-id="HY4modIcons000000000000000003" class="mod-icons is-pair"><img data-page-node-id="HY4modIcon000000000000000031" alt="反手：双反 / 单反" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/03-双反.png"><img data-page-node-id="HY4modIcon000000000000000032" alt="反手：双反 / 单反" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/03-单反.png"></div><b data-page-node-id="u0beXnUzwXNjcSg9Te0ZTj"><!--pnid:Y0IJ049HjiwaKY8uZEc6Gq-->反手：双反 / 单反</b><span data-page-node-id="2422FZk28gC7AuHjSYawq5"><!--pnid:7KkblgklDsfbH6sXYdKa4J-->按身体条件与偏好选择</span></div>
+        <div data-page-node-id="gmrEnJQmEIBTrtmAfPCcQc" class="mod is-core"><div data-page-node-id="oD2d9cO6qo3pZx6OvNd5UY" class="mod-no"><!--pnid:ZQDnkdgR7KJRqbyU2WzXtn-->04</div><div data-page-node-id="HY4modIcons000000000000000004" class="mod-icons is-pair"><img data-page-node-id="HY4modIcon000000000000000041" alt="发球 / 接发球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/04-发球.png"><img data-page-node-id="HY4modIcon000000000000000042" alt="发球 / 接发球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/04-接发球.png"></div><b data-page-node-id="XBi41iR1WsqS5NSFlSQUlK"><!--pnid:Aeehqz2MioLE0gYf8hxTRb-->发球 / 接发球</b><span data-page-node-id="l3azWoHdhbihynN3Wz4RHL"><!--pnid:dTroC9m4ufbeYeBhpylax0-->完整发球动作与接发准备</span></div>
+        <div data-page-node-id="IeYMekGnwmY9PQu0vOmHKa" class="mod"><div data-page-node-id="6qhJvp3xHYSkyco0PYppWE" class="mod-no"><!--pnid:FvqZGcUoFqtzFbdILo22lF-->05</div><div data-page-node-id="HY4modIcons000000000000000005" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000051" alt="网前截击 / 发球上网" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/05-截击.png"></div><b data-page-node-id="S7Mme8xk1k9uSQz78IXhzM"><!--pnid:aO41ItTFxJY97OGZuCoj3t-->网前截击 / 发球上网</b><span data-page-node-id="eKpUfi8yLGSmJDjZ8wMVJK"><!--pnid:jS4Ccf7j3UEEuDkxFOGqJG-->向前压迫的基本技术</span></div>
+        <div data-page-node-id="CNKL5sZSCBDoTLkJWKr7AV" class="mod"><div data-page-node-id="B9OMCdxTPMg0LPiV2F8R9v" class="mod-no"><!--pnid:7RZxKCSRlevfXMfq8uizHd-->06</div><div data-page-node-id="HY4modIcons000000000000000006" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000061" alt="削球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/06-削球.png"></div><b data-page-node-id="T63bbuj2QrTRR5O6JElDBh"><!--pnid:TFVK0Mt1TzuPKMwuHKIhTz-->削球</b><span data-page-node-id="DAl8fFDREHmrpoono2r3rO"><!--pnid:huXHljcOweP7qgRsYHLWTM-->变化节奏与防守过渡</span></div>
+        <div data-page-node-id="1fKJeqvKSHRewjmoxozPnZ" class="mod"><div data-page-node-id="RZVVj30AHrVQ18BysFCdap" class="mod-no"><!--pnid:CMx8iShqetYYoqPXipWbHL-->07</div><div data-page-node-id="HY4modIcons000000000000000007" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000071" alt="放小球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/07-放小球.png"></div><b data-page-node-id="VDwm1DFIZj6bbVC2Qqi9XX"><!--pnid:7lAFggnORyKrqD9IetauNF-->放小球</b><span data-page-node-id="O0mJZRUCoIhDYGADXOd3Sr"><!--pnid:LRDOPlNE2mxJz0KaECDHfM-->调动对手、打乱站位</span></div>
+        <div data-page-node-id="5OHokCrk5qzDW8J9Q5wNTp" class="mod"><div data-page-node-id="BIt5Jz2xUO4xPTEckp0EX8" class="mod-no"><!--pnid:ZnFjAK4t0tI9HNGwO7QTLs-->08</div><div data-page-node-id="HY4modIcons000000000000000008" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000081" alt="挑高球 / 过顶球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/08-挑高球.png"></div><b data-page-node-id="j7pCe5CqXWGVuFwwjSSYSg"><!--pnid:oYAL4gdklJPOzUdFgdbfP0-->挑高球 / 过顶球</b><span data-page-node-id="QCuljm09RFXqMoNVKOQAr8"><!--pnid:TBkPcwsbHFLdzvVqvtUp97-->破解网前压制</span></div>
+        <div data-page-node-id="XZRMR4zLEzhB0S7piHzEre" class="mod"><div data-page-node-id="jHXe2ZYA6U5VJwjDY5NxvO" class="mod-no"><!--pnid:OiiWDOCtHmG1cLRpnflViK-->09</div><div data-page-node-id="HY4modIcons000000000000000009" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000091" alt="高压球" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/09-高压球.png"></div><b data-page-node-id="tmreDhwY7Txg9CbMEc7Tmv"><!--pnid:rQLSn6KxY1dbdRkQ1Hkm5E-->高压球</b><span data-page-node-id="jtJvvH5H6tiRWyIoDxc8fY"><!--pnid:c94FubrrcGDBOOpZ6lnwNy-->处理高球的得分手段</span></div>
+        <div data-page-node-id="kx2XZSo2CiJz4LXylyMQx0" class="mod"><div data-page-node-id="FMfLEe2CcRLc69sclmQcgy" class="mod-no"><!--pnid:O5ZFjVCDJ5dv7sjN8vnQ4x-->10</div><div data-page-node-id="HY4modIcons000000000000000010" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000101" alt="反弹球 / 半截击" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/10-半截击.png"></div><b data-page-node-id="nXsLgAUYBA5O8xAuTrBWm0"><!--pnid:HP7Bgk5klXNuHWYXKh0p9R-->反弹球 / 半截击</b><span data-page-node-id="AjG8TUV9m4CyTE7M8Dm73I"><!--pnid:afPsIH2gc3unaV7EkYDuNL-->中场的实用处理</span></div>
+        <div data-page-node-id="WYSf6LA5KgqvHIyUNwaSUK" class="mod is-core"><div data-page-node-id="yj7KEpjCzaTQianGRFjfwE" class="mod-no"><!--pnid:mUxiTpU8C34rSSCsUgB95g-->11</div><div data-page-node-id="HY4modIcons000000000000000011" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000111" alt="单打练习及比赛规则" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/11-单打.png"></div><b data-page-node-id="ipUWKbjIRzfSEA22vgjSTf"><!--pnid:A8BxlyPRGFgAePYTJbJLn7-->单打练习及比赛规则</b><span data-page-node-id="UMkqpQMFqwPWr9km2aayi4"><!--pnid:8zFnPGyNTcbsikKHcxtscq-->计分、站位与基本战术</span></div>
+        <div data-page-node-id="QqtYNVQGgIDzxadzsgXMur" class="mod"><div data-page-node-id="iNt4WLLoRZ6yNb0wnEeAtj" class="mod-no"><!--pnid:ByqF54BY7sxPXcWlOFOlTh-->12</div><div data-page-node-id="HY4modIcons000000000000000012" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000121" alt="双打练习及比赛规则" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/12-双打.png"></div><b data-page-node-id="eGkpyLrxuc737bAaJXo9Qv"><!--pnid:W7rbE0YHag5ybwg8qa0qDp-->双打练习及比赛规则</b><span data-page-node-id="nvRKMOYQvg3ybFUSjYx45Y"><!--pnid:HUw0QowPhCXfQVuZ9zRvyL-->配合、轮转与发接发站位</span></div>
+        <div data-page-node-id="qkJSuCsKWoAdaaTN872dxn" class="mod"><div data-page-node-id="l1AUmwDyBTVDS9LxwZkU4h" class="mod-no"><!--pnid:kbAEFFpBLng5nd0UYhbqb6-->13</div><div data-page-node-id="HY4modIcons000000000000000013" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000131" alt="实战战术与深度练习" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/13-战术.png"></div><b data-page-node-id="3mpzEDa2TppseMAFvlS0XB"><!--pnid:z8Pgk2Sgh8iHK8whr1S6dq-->实战战术与深度练习</b><span data-page-node-id="LtkOVa7qOQiyGamJFszsGY"><!--pnid:UMw6gQP6xD7fsNRyRsL5Q3-->围绕一个问题的刻意练习</span></div>
+        <div data-page-node-id="aMu42thCJ7v80GCThfS1Sm" class="mod"><div data-page-node-id="7XByYwZmeYtFFZ6SWs0izc" class="mod-no"><!--pnid:XqIjuS5FthFhya6ihRsh5C-->14</div><div data-page-node-id="HY4modIcons000000000000000014" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000141" alt="参与比赛" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/14-比赛.png"></div><b data-page-node-id="Y8T5vq0mfXblJzTdg5ixda"><!--pnid:fTkHflR66dAqnh1RFNoSVK-->参与比赛</b><span data-page-node-id="pWhcKPmJvNBCB7XAFQx19i"><!--pnid:ZO6SAMmUyb18MQsQj6a8hp-->校园网球赛、Tennis123 分级赛等</span></div>
+        <div data-page-node-id="6OPQct3Kx3u4sbTAwu41o8" class="mod"><div data-page-node-id="7nycUa3u8kCLg0nhpHyn5t" class="mod-no"><!--pnid:d4lF4ULjzrS2rIFze51fox-->15</div><div data-page-node-id="HY4modIcons000000000000000015" class="mod-icons"><img data-page-node-id="HY4modIcon000000000000000151" alt="赛后视频回顾与复盘" class="mod-icon" decoding="async" loading="lazy" src="assets/curriculum-icons/15-赛后复盘.png"></div><b data-page-node-id="UBuv79puMSG7C26u48UajH"><!--pnid:j9ce14BM0Ul0Pa3i6SjoWJ-->赛后视频回顾与复盘</b><span data-page-node-id="ntvVk5i9PKcZMVvdXVNLvx"><!--pnid:Yz6qYEDxBrDEFgLkiEwiqs-->回看录像、总结、制定下一阶段方案</span></div>
+      </div>
+      <p data-page-node-id="YbAO4klyTEjBlwEOnrhora" class="mod-note"><!--pnid:xkSqOJAKPx58wPzklWfYCU-->标注「基础」的是多数人建议先学的模块；其余按需选择。模块进度会记在您的训练记录里，每次课都能看到下一步。</p>
+      <div data-page-node-id="D1shCl71RuI0EJ59xGTXCG" class="hour-curve">
+        <p data-page-node-id="JxKMCpYhvfKdNC5ctZix4N" class="hour-caption"><!--pnid:GjFjLgISV3zYUsC446WWxD-->把「万次迭代」翻译成时间账——累计练习小时（含上课 + 自主练习）与水平的大致对应关系：</p>
+        <div data-page-node-id="LJDMOMsxz3waqPlIueWhUn" class="hour-track" id="hourTrack">
+          <div data-page-node-id="yRfw3lPY3FtA9gE7vSlqs7" class="hour-fill" id="hourFill"></div>
+          <div data-page-node-id="UTIjkI6z37eQxcNInJ7h9n" class="hour-node" style="left:22%"><b data-page-node-id="xNt1uKU6y0trJLGljTfwnw"><!--pnid:PJMGPB1RUQoJxQZUWhiqcj-->50–100</b><span data-page-node-id="FoalSreYHAfmwefuFt83Tq"><!--pnid:NZgxlYXw8sQSllIOMF5EGF-->小时 → 2.5 级</span></div>
+          <div data-page-node-id="1Oogem5Zm0yw9aucKOs9hM" class="hour-node" style="left:78%"><b data-page-node-id="GoKhHPMAFi1GNVFZC1KREi"><!--pnid:fWu6vD5nmDgwNmbmc90CPJ-->约 300</b><span data-page-node-id="ZnEmNr7rvHjNo6oiVG1GJr"><!--pnid:H5HKOMBsjY9ENY8L3XtDah-->小时 → 3.0 级</span></div>
+        </div>
+        <div data-page-node-id="inpFspCMlq2vhXvRnftNXW" class="hour-legend"><span data-page-node-id="DYrOq1eZl2SUSKdcFAd3Cu"><!--pnid:SREMcLOr7CEi0g2r5PMES5-->0h</span><span data-page-node-id="qhdkaLSkJW3sSpFvo4jkao"><!--pnid:LSEtCSF1frw9dIXSBKZqSm-->深度练习累计</span><span data-page-node-id="HaTJvuUq0n03mUGA8WyuUN"><!--pnid:Xy0Nl3Knc8Db0hCGImy4KV-->300h+</span></div>
+      </div>
+    </div></section>
+<section data-page-node-id="7TGEnIzz1hDdFBsvW2mQKG" class="section routes" id="routes"><div data-page-node-id="cCcblAUd4h4BBUbmLsXLqU" class="wrap"><div data-page-node-id="YekpqhgEJyWVWXvKN91eBi" class="section-head"><div data-page-node-id="935gG4fOq1y1HpSa048Ca0"><div data-page-node-id="WAVizxO4cEilda2ybcsIXf" class="section-kicker"><!--pnid:RqYlF6B1Zb1Jef5Bgt75UC-->06 / 训练路线</div><h2 data-page-node-id="S6BW8OFbZQKXqy6icFhzAN"><!--pnid:t9mfadOsBy9QlRAUXgIV4c-->三条路线<br data-page-node-id="2ewvzOfLY3jpZvBQRAbgu4"><!--pnid:1GHFnYT2n64m1IFFQysKzb-->三种进步方式</h2></div><p data-page-node-id="b460Uk76gkpJLFtzROQ5L9"><!--pnid:c7Ba08j3QcQ5bgjsdGhz6u-->您不必在第一天选定终点。首次评估之后，路线可以随着身体、时间与目标变化调整。</p></div><div data-page-node-id="i0DOVavBTtY65JnCx3EhNI" class="route-grid">
+      <article data-page-node-id="lQgwDhSOiLXbCipaLQCUIK" class="route"><div data-page-node-id="82LBe3Z3Kk8npX7lCoGa9D" class="route-tag"><!--pnid:kWDP5VL8DcGiKTjTYhq4rA-->路线 01 / 入门</div><h3 data-page-node-id="5Ay01OaRXqLQgekx3mFdls"><!--pnid:bEdLiTl5bPUn3Yu88Hj75f-->零基础<br data-page-node-id="gL05PrI0mUxvje3BVDEsqm"><!--pnid:yB5srYSULlQa4C1ZNIXpHS-->入门</h3><p data-page-node-id="14dGGI2QlADqJuKO9RQaPR"><!--pnid:XBYy8Kt7sU8ob90SAShecx-->从握拍、安全移动和基本击球开始，先建立“我能打起来”的感觉。</p><ul data-page-node-id="CO7U6sQ5kiAzZS2MJ1sm8W"><li data-page-node-id="iZUJ4Wt34S24ac0PYBdjnL"><span data-page-node-id="LXtP0Lu7poS9yldeBLaJUl"><!--pnid:fcJagBYUifZXVSRAbgurfj-->适合</span><b data-page-node-id="7wUqK4CuCD9fbszQ4JgIPv"><!--pnid:cs0sjTDN37md2ZsF40Dhxa-->零基础 / 每周想练 1 次</b></li><li data-page-node-id="OIT7PBTVypL6VMUGaPzlIQ"><span data-page-node-id="IBz9MS9fwO8Xc3Bi2gNOnU"><!--pnid:3Bkhm9cX656AsIcWh3W9Gs-->重点</span><b data-page-node-id="OMSLmTod2jlGi8g6CM3qJq"><!--pnid:PrfOj3q0ddLdR6eEUerRD1-->握拍、正反手、移动</b></li><li data-page-node-id="DAr69HgisZl4pqLSD6BVQU"><span data-page-node-id="wUlCQVQusV5l6dHkQxM3A5"><!--pnid:NPHRXPFMBkQADbO0RNwK7e-->阶段目标</span><b data-page-node-id="aACvphgH2JLhrD1ngai9PF"><!--pnid:O6UO1pnz6f4ELh92MqwQID-->能完成基本合作对拉</b></li></ul><a data-page-node-id="aYnIdx4FEB8LyWxYWrACUV" class="button" href="#booking"><!--pnid:PjpnV3EmdaiWa5e4uXHmax-->从评估开始 →</a></article>
+      <article data-page-node-id="tibyedmlt4pX4tVLGW3Hw2" class="route featured"><div data-page-node-id="W7pWskDMHerKOGbMCaukAO" class="route-tag"><!--pnid:vLK4imFRP3Fqt7fcnXoYTJ-->路线 02 / 对打</div><h3 data-page-node-id="DiRhmA78XNGskvuru7YKdK"><!--pnid:0gaROPoLFMJ18QK0UtEYaQ-->稳定<br data-page-node-id="U3vr33FyNYP23gXKPggv3x"><!--pnid:jsLxuPTRyjZ9zhU3kXA1Mj-->对打</h3><p data-page-node-id="rnhGm4yRvtpPdkNpCS1NHr"><!--pnid:QlOnf8nSBQV6WZ577E8zna-->把“偶尔打到”的感觉，变成更稳定的动作、回合和判断。</p><ul data-page-node-id="pVFyiq211P5aUOfodabacj"><li data-page-node-id="pXtkQSTIL43Qfad70lXZu4"><span data-page-node-id="3ECcXM6N1zjpKZo5O5v5mB"><!--pnid:FyDAkJS9NPe7NQJdrhHUvZ-->适合</span><b data-page-node-id="wv9GZ9QgsuNrUIRr2mSVTE"><!--pnid:w3RDr6YgjlHSoideiRp0Gb-->会基本击球 / 想持续对拉</b></li><li data-page-node-id="7SOFQFuYExcapR1D6vndLP"><span data-page-node-id="nYchZYSDzNK7Gb7ZgCOOBJ"><!--pnid:WTrIy0sirCEfo8o0BfIK0b-->重点</span><b data-page-node-id="RPtWUoS1AnhZm4VqKb0BwC"><!--pnid:2767veD1nJhCdIWdGWVVSV-->击球点、方向、发接球</b></li><li data-page-node-id="knfD8S7pmM124PfK4Of2mO"><span data-page-node-id="QAuP68RnyWggPiwsSr7Iv7"><!--pnid:1GiMGyYdjGXjCjWSpsT2KR-->建议投入</span><b data-page-node-id="YEFcQK8VPOnwsLtTXF39xO"><!--pnid:NG9cO3k73NV7u424b3NsRy-->课外练习 2–3 小时</b></li></ul><a data-page-node-id="Ha8PeK6bF1yPGntxoBhpEM" class="button" href="#booking"><!--pnid:vWGsoUeSm3WlUz4IPvLkjZ-->评估我的起点 →</a></article>
+      <article data-page-node-id="vlnscdy7zLAwtqLeY6tcLw" class="route"><div data-page-node-id="ZSS8TcF6jwmGlpjhYeCvjQ" class="route-tag"><!--pnid:8FF6gCZ4ZNh7A8Qo1Gg15y-->路线 03 / 比赛</div><h3 data-page-node-id="J6BxuUElhYekqKKU9LJsFe"><!--pnid:tMf0Um84mVmClCdQufpPc5-->比赛<br data-page-node-id="p4Oa2qw8IQLxJsfslX3hRL"><!--pnid:VCN2mTLCIW0XKquImqeqRC-->进阶</h3><p data-page-node-id="tu6eBTGpIZygYl9JolvwY9"><!--pnid:8djpTktI1KzXk0qJL18mpS-->让技术、战术和复盘真正服务于比赛。是否参赛、参多少场，会按基础和目标调整。</p><ul data-page-node-id="sHizP4MrcBEkDP7u3oAKbd"><li data-page-node-id="pB1UhO48aG8Wf2TaDm8zCb"><span data-page-node-id="hsyEl27K9slcy0XuSQZtlC"><!--pnid:BSmMjoOS7bqx9HnEvlPpo9-->适合</span><b data-page-node-id="7ou3lcRtWrr03k9sNyuuNn"><!--pnid:gFEAB2WRhNybejq3hU5iFD-->准备参加分级赛</b></li><li data-page-node-id="M4hWASxXxgfZz4qXk2ewcd"><span data-page-node-id="r2ctPww1XZHd0qBToqRQAG"><!--pnid:6rzc4vrYqrr9VfdOXgNtOU-->重点</span><b data-page-node-id="blomk1qglSFdSWoGVhgZbP"><!--pnid:fbC2n6sL0iQpZ5XXCmHmq6-->战术、赛前训练、复盘</b></li><li data-page-node-id="kLIhDfTjPVo6d5sSJIBzny"><span data-page-node-id="8gBUDMxAcf7pS6Y09Q3cz2"><!--pnid:5tWiVDbrQDhZxg0G76wBai-->阶段方式</span><b data-page-node-id="OVrYq4v3halqupsKP8ZJMu"><!--pnid:StENgRtK65WwSn7izlPHnI-->练习赛 → 分级赛</b></li></ul><a data-page-node-id="4REf2Ru0F98U3AH7lgKyH9" class="button" href="#booking"><!--pnid:7s0E3vSMzqqBLvMMhZtzKw-->制定比赛路线 →</a></article>
+    </div></div></section>
+    
+    <section data-page-node-id="eCI7TizIqq9Uc0huoLVxMB" class="stylepick" id="style-choice"><div data-page-node-id="ooQ1BbrDAirh6TkhbxAQ0g" class="wrap">
+      <header data-page-node-id="6j2v6Xp1ZghLEnqaihIxNx" class="section-head"><div data-page-node-id="SzWycx1gQvfKVAtwbO7N2k">
+        <div data-page-node-id="6uuhfP6GxQkkb3rtogquTS" class="section-kicker"><!--pnid:qkNO2xEpqOVF8uXSOJ9PCb-->07 / 动作风格自由选择</div>
+        <h2 data-page-node-id="ggkaFMFkQr0hybgzb9VCIw"><!--pnid:n1j6Fij0ZRCQMZib7RrmRX-->没有唯一正确的动作<br data-page-node-id="HcRYjFJno7FNqKxKRvNz1N"><!--pnid:U8OJlXXD7Lve8b1CgvNtRx-->只有适合您的动作风格</h2>
+      </div><p data-page-node-id="Tm6FNPsmJfSjBddrFtNFCR"><!--pnid:N0ryeauHCnIFPbntpzNB9F-->只要不打成容易受伤的动作、还能大概率把球打到目标区域，那就是合适的动作之一。您可以先看、再选、随时改。</p></header>
+      <div data-page-node-id="kumcSR1VRMgyygD1RvXr9n" class="style-grid">
+        <ol data-page-node-id="2YKDIfLXzuW1cprqoOMOYJ" class="style-steps">
+          <li data-page-node-id="nT9PIdayZd4lrPj8VKZEwC"><b data-page-node-id="LSHmHMnyjgoL3rYA2cwtF3"><!--pnid:8QUXP0X441sP7qpfhvPb3I-->先问您有没有喜欢的球星</b><!--pnid:RCdkNiw9oCGqxoGjqGbD21-->想学谁的动作，我们就拿谁的视频来参考。</li>
+          <li data-page-node-id="mItuEx4i9k1HuiBIO3oCq2"><b data-page-node-id="GY26oULu6FgYXu1Q7DxeoD"><!--pnid:Owgd5lyUcJotYGOLO81JEc-->没有也没关系</b><!--pnid:ga4Kh5A0Zh77ObnkwyZMNi-->教练会准备正反手与发球的集锦，让您挑一套顺眼的。</li>
+          <li data-page-node-id="Rbf2I66EggcuPsDpPRP4zc"><b data-page-node-id="J97ubvHt8YdE8gSTkByieS"><!--pnid:kQUKuJXgW8cSoWvaZS6ViZ-->选定后开始模仿训练</b><!--pnid:OtXbFYy4WMvQBzaGV2E27B-->用录像、慢动作回放、逐帧对比模板，逐步达成一致。</li>
+          <li data-page-node-id="Nhwv18HLJJgPizL0BZ3k1Q"><b data-page-node-id="N6VoIREIJ3eEw5PqxYwTGm"><!--pnid:Vbjqfl4Fi4Oa3gBU0cxUyE-->随时可以换</b><!--pnid:x2OKhqG5EbDkIpq9wz2Bkw-->学到一半想换一套风格？可以，教练配合您调整。</li>
+          <li data-page-node-id="p6bbxe1olMTno8jqWKMCSr"><b data-page-node-id="AQdkSIbNb7kdlHrAxFfSF8"><!--pnid:R7fwItQMUQijeStEeuRTYc-->青少年先激发兴趣</b><!--pnid:dFnHwuIqs8AYFVTEGVJ5xB-->先让孩子觉得网球是好玩的游戏，再谈动作规范。</li>
+        </ol>
+        <div data-page-node-id="ZYrJISPnqCdHSv17ZCqWsb">
+          <div data-page-node-id="Bh9Vo0UoDk9KJ9uu9n3JD2" class="style-cards" id="styleCards">
+            <div data-page-node-id="yJOSmuzVKejTBCqJCDIWRu" class="style-card is-on" data-note="正手舒展、引拍简洁，单反优雅。适合喜欢节奏流畅、追求击球舒展度的学员。"><b data-page-node-id="Ig13bHjgbWhVEjiqAVUeTv"><!--pnid:bPYkUhZzLLZAqZ0mJWaVbN-->经典全能型</b><span data-page-node-id="wlY1kfX1T0LZPOo6q4Ur34"><!--pnid:gg11UYzkrfwja9FS1o57gi-->正手 / 单反 / 发球</span></div>
+            <div data-page-node-id="4aIFzS4wcAOZu3Z9QhlOMT" class="style-card" data-note="双反稳定、接发扎实、底线相持能力强。适合追求稳定性与回合数的学员。"><b data-page-node-id="04HP0g3vZ21gL6Qp6FZwJH"><!--pnid:eMFRhsZOVuUqhQ4e2AXZnQ-->底线相持型</b><span data-page-node-id="2wYo1bTQNh3vJnNCSqPiCk"><!--pnid:n2bVEPGVSHEeOy9xPFDDsv-->双反 / 接发球</span></div>
+            <div data-page-node-id="9Iz6Ln0EQ31R1LCCBPl3nh" class="style-card" data-note="发球与正手爆发力强，上旋充分。适合力量好、愿意主动进攻的学员。"><b data-page-node-id="Qyy8SJ5ioC9zMM2duZuFHQ"><!--pnid:jQZvPTdCbkrsI8PDrKkIxD-->强力上旋型</b><span data-page-node-id="1dVr0Kz2qP53agE1nOdvRj"><!--pnid:zT5bBbjb1dcCT3qtiYKncZ-->发球 / 正手</span></div>
+            <div data-page-node-id="tcMeH2AvBII9qdTqDPqxB7" class="style-card" data-note="动作紧凑、出手快、还原迅速。适合反应快、喜欢快节奏的学员。"><b data-page-node-id="iMDIHUJLUziBnl6S43EcA1"><!--pnid:2YdDwW0qWSYjQAzvzcbxpl-->快节奏型</b><span data-page-node-id="WSHTaKsCY6DF7i4lNeQz0s"><!--pnid:KGAcTMeUB9RBCMzxBjokPV-->平击 / 快节奏</span></div>
+          </div>
+          <div data-page-node-id="wKwCozT6hnNR1OM3qvgiQw" class="style-proof" id="styleNote"><b data-page-node-id="uiyPUqjo0WJw36s4ERWB0E"><!--pnid:21ol8FRrSxlUgRgGcAMvLY-->为什么这样教</b><p data-page-node-id="3QH0NJL9pRG2qtYgy8OYN8"><!--pnid:slJTx17hG71plidt8hbHvk-->正手舒展、引拍简洁，单反优雅。适合喜欢节奏流畅、追求击球舒展度的学员。选好一套之后，我们用录像慢动作逐帧对比，逐步形成您自己的风格。</p></div>
+          <p data-page-node-id="8uiF3loBYHJ2KBiUzSlpGP" class="style-foot"><!--pnid:h2HhrtiWjHte0vuY7BANzK-->教练的导师杨超（国家青少年网球队原主教练）曾带队参加中美大学生对抗：赛前队员看对手训练觉得「姿势乱打」，正式比赛却一场未赢。他此后的反思是——网球教育过度强调动作标准化，反而会在竞技中失去灵性。所以我们尊重您的选择。</p>
+        </div>
+      </div>
+    </div></section>
+<section data-page-node-id="h8q8xclYK7Df1FS7xxqt2Q" class="section players" id="players"><div data-page-node-id="c1scIL4mj4FOZVhguh5yFY" class="wrap"><div data-page-node-id="nzcCzt1p6VZmXs46udSBBM" class="section-head"><div data-page-node-id="UL3cNlfOT3zqFg7OVSA5tb"><div data-page-node-id="SIhwbqcaCqYLmeoIFThgLB" class="section-kicker"><!--pnid:tLdXjWji94h7cw4A7HoImt-->08 / 不同年龄的球场</div><h2 data-page-node-id="d4Dge35En4kZWhN7gt1reE"><!--pnid:RnJYRM1lOA3MGODg7IM1To-->不同年龄<br data-page-node-id="lSsOeHXEp29coPQTEz0HzL"><!--pnid:UATpodEryrW1AHqX1oeeaV-->都能找到属于自己的球场</h2></div><p data-page-node-id="huV4jQMyC1Lj1NKFDYuAiw"><!--pnid:ATZe9A6HfRwXMdttzeSlCP-->从校园里的第一次挥拍，到更有目标的训练，网球可以成为一项长期、酷且可持续的运动。</p></div><div data-page-node-id="vYCzseH4l2LKPPKMulq1FW" class="players-wall"><aside data-page-node-id="oq5zUfHBKXSnZtYQc0ZClf" class="players-orbit"><b data-page-node-id="8WuJCpPC7Ws55ixvnoL6YA"><!--pnid:J4LK39Un3x5Czx6514H6st-->训练 · 复盘 · 迭代</b><h3 data-page-node-id="WDOz9ewbSc1yMNDKzfKa4D"><!--pnid:KIHROaOLAU6l1AvMas0YW7-->让每一次击球，<br data-page-node-id="bQwCCD8g1nJq1CGTVMRAth"><!--pnid:IcnpxE5tbliUqawwSO533q-->都留下下一步。</h3><div data-page-node-id="7kWq2onLHRxv2g0zP2CldC" aria-hidden="true" class="players-ball"></div><p data-page-node-id="4UqMtbWkHKp6XD9AZWQBL9"><!--pnid:hzQWH6Dh2rwqfxNIcvmeLH-->从校园里的第一次挥拍，到能打完整局、能上场比赛。不同年龄、不同起点，都能在球场上找到自己的节奏。</p></aside></div><div data-page-node-id="SezoxB2g3ARsdiBBqC0FMK" class="players-grid"><figure data-page-node-id="SdBGxqjzhKc98dlfJwjQBb" class="player-card"><img data-page-node-id="lRKPJMimvIaZhg13Pc6xoE" alt="大学生女生在校园网球场练习正手" height="900" loading="lazy" src="assets/tennis/university-woman.jpg" width="1200"><figcaption data-page-node-id="XsevrNtIOJNnR2LiBQJ3qG" class="player-caption"><small data-page-node-id="fzYcA8KLGcbDedCwhBo4f3"><!--pnid:U3PdC0PJLG68HWIUePttY2-->大学生 / 校园训练</small><b data-page-node-id="8Tg87OZLJLHkoGb6z1OGR7"><!--pnid:yEGsXF3QI3R4z3qVOn0jtK-->把兴趣，打成稳定的回合。</b></figcaption></figure><figure data-page-node-id="6fyGYAnofK71RGbV0CfhlF" class="player-card"><img data-page-node-id="oID5guqF1AYyC58c0SzPsC" alt="中学生男生和女生进行双打训练" height="1200" loading="lazy" src="assets/tennis/middle-school-doubles.jpg" width="900"><figcaption data-page-node-id="iftmVbfR5qUeMcmAqzomFN" class="player-caption"><small data-page-node-id="EfGXYJyCtlTET0WelA05uh"><!--pnid:Se6ARvX4QX0eUCxHZdpHcr-->中学生 / 对抗训练</small><b data-page-node-id="zr8HldmTHMbfg5zvBDv7I0"><!--pnid:qRb4KUkTC8oOp9m7zfgYZy-->在对抗里学会判断。</b></figcaption></figure><figure data-page-node-id="7uKuy1qY111w9EiRFfR2qp" class="player-card"><img data-page-node-id="h1hFtmhNJe0UacGwAFDJuy" alt="小学生男生和女生在教练指导下学习网球" height="1200" loading="lazy" src="assets/tennis/primary-beginners.jpg" width="900"><figcaption data-page-node-id="kxYFpe9fjBXkNSy7PkLk1f" class="player-caption"><small data-page-node-id="F9uWJQSnGSfSjwtsnbuPK3"><!--pnid:6qeXclqVRklfVcfGs9VPlo-->小学生 / 启蒙训练</small><b data-page-node-id="LQvFOGQadd3HvfOlyLDs3H"><!--pnid:S9DMKzoepe0vzkmqNq23Tb-->先喜欢上，再持续进步。</b></figcaption></figure></div></div></section>
+    
+    <section data-page-node-id="O3MKAcWMY6HsxmRrmbCuhz" class="section coach-sec" id="coach"><div data-page-node-id="8Rlvgg8LHHwEGW15cGjnrx" class="wrap">
+      <header data-page-node-id="iUS2M1HluWm5Ic1v3ettr7" class="section-head"><div data-page-node-id="kImijbD7UG0IZggcYEtAKr">
+        <div data-page-node-id="lFNFacpp0rm7eVJ4MdKVJK" class="section-kicker"><!--pnid:wShLf9eZQcvkDqOHXK1lan-->09 / 主教练</div>
+        
+      </div></header>
+      <article data-page-node-id="qJ34MO7h8yTMTOGIPU9tnf" class="coach-panel coach-hero"><h3 data-page-node-id="pcTAzLF7BigcVp0WVzkTWT" class="t-coach-title" style="white-space:pre-wrap; font-size:36px"><!--pnid:7UDKCQrOQsmxINyMYKbglc-->主教练 🎾 kaiwen<br data-page-node-id="kUHA4XrZTeNQCce67kW8sI"><!--pnid:5ZCcMN1IqJJiToiCnOroe3-->                                                    教龄 12 年</h3><p data-page-node-id="0FJlZHsetZVEI6y2RYfarl" style="white-space:pre-wrap"><b data-page-node-id="mwWnbs3Fd1vbkju1dF9Y6J"><!--pnid:ehJ5s5ajGqemJsSqNpWkvh-->🎾万次迭代网球教学法开创者</b><!--pnid:QLeL8JLSFaNoe3MY1efjyq-->；
+🎾校园网球赛创始人/ 5年冠军奖金赞助人；
+🎾USPTA 国际认证职业网球教练；
+🎾PTR 国际认证职业<b data-page-node-id="LKyR7S3kZgBrabel7IfI4F"><!--pnid:2fpctw0i8Qnr3WBLQkB8eL-->青少年</b><!--pnid:ii5Vo5M2tFYDoowWkYCD5g-->网球教练
+🎾课程强调安全、可看见点滴进步、赛练合一，并且尊重每个人的身体条件与打法风格。</p><figure data-page-node-id="CjCIPjNfkzyG7zUxyxQhFp" class="coach-photo"><img data-page-node-id="ATKN7R0Y9SPxAZ2vfrFpML" alt="教练在球场上示范正手准备动作" loading="lazy" src="assets/tennis/block5_coach.jpg"></figure>
+      <div data-page-node-id="itdeKzhfNBjgFd8ev3TZDA" class="coach-facts"><div data-page-node-id="Cc2ygeZ2DZxsUSIEzOrPTs"><b data-page-node-id="YkR7XkcC5xG6J7eZMyYBfd"><!--pnid:uwdNi92VR9TuTSNaOPBMBK-->12</b><span data-page-node-id="jk7JSCFfa8bNlYS2kKWiyr"><!--pnid:OxVM23wvxgoIa1TGKbK8lA-->年教学经验</span></div><div data-page-node-id="DqNbkD8MYkgkNIvEPGbTLQ"><b data-page-node-id="893F9NQjiUH1fEfzsXY384"><!--pnid:dU1NtDqh3kYkg0wrWljS16-->1:1</b><span data-page-node-id="NdTGbtyZNniPJHWqgLEBIp"><!--pnid:mOwObJqmPoE0CThuW8XCu2-->一对一评估</span></div><div data-page-node-id="6XqQalVoMjnPS9VV0ZX0CR"><b data-page-node-id="uwtServ2iUkBb6mZCF2WLW"><!--pnid:38slSWIbAQ0X0siSKp2n8u-->USPTA/PTR</b><span data-page-node-id="kmeKMTvBkBPMvkkhZOvv67"><!--pnid:xlw07C30C2FHq56W97zhNc-->国际职业教练认证</span></div><div data-page-node-id="6B6xHHZ8YQIYmiAStBGiUL"><b data-page-node-id="Do1uNRVg6wX9nOHzBBXazf"><!--pnid:haSIY5zqea266D4zETfNfd-->8</b><span data-page-node-id="JZwh31t4PN7ff3AMXM55ff"><!--pnid:E678yjMwa5tohIpnHP6oY2-->位校园网球赛冠军</span></div><div data-page-node-id="W0LzcP1FNk2i5RShFPfx84"><b data-page-node-id="WjVHqvkYea8g2bCOpj1HFe" style="font-size:32px"><!--pnid:eLVuD8DBCFl2VXt5PKaq6m-->2.5→4.0</b><span data-page-node-id="aZxSvW3foqxgd2tUMgAly5"><!--pnid:oLOfg59vln8tAJCxPNHnYf-->两年升级案例</span></div></div></article>
+    </div></section>
+
+    <section data-page-node-id="siBW6MTjADDwmDCpVY524u" class="section venue-sec" id="venues"><div data-page-node-id="tPf0byZQbJPPBhYSxOabjP" class="wrap">
+      <header data-page-node-id="z0WyV59vX7falHBPQEaZIe" class="section-head"><div data-page-node-id="rYCwFMtxngyCflOm5xG3Y3">
+        <div data-page-node-id="o1Ajc5O6yYWX7xipwzht8r" class="section-kicker"><!--pnid:yJ84ircx4e1VHIDPBDINZg-->10 / 场地与到达</div>
+        <h2 data-page-node-id="geH1IDVOU8NYzSMyR9Cbsr"><!--pnid:0JELdm1WSt4oIKRwvZEzuW-->三处场地，费用先说清。<br data-page-node-id="12vAStccicyfXkhbBGsV9B"></h2>
+      </div><p data-page-node-id="6vXSEMEirmhSW7Eqwq7Oic"><!--pnid:JGPTYg46tkPoXoPddgIwjV-->场地费由学员承担、由学员预约。三处场地的费用规则如下，预约时可以说明偏好，教练会结合空闲时段确认。</p></header>
+      <div data-page-node-id="oQNcNdFs93AxNtIUOR9nN6" class="venue-grid">
+        <article data-page-node-id="dRbUCSytVVmKnNqI7eyxtU" class="proof-card"><h4 data-page-node-id="MoLs76f1iuZHDih5NDZJxM"><!--pnid:7TNSQ8bkfU2NVUP8g9Lw1A-->场地与到达</h4><div data-page-node-id="8GsuxwaItFC6uRoHgzwzzn" class="venue-list"><div data-page-node-id="5pb37RDHuo3k97FoqmqJRn" class="venue-item"><b data-page-node-id="Jc2d7no4pne6UJ5wgRTy7e"><!--pnid:Tref1roVtsFr2v84YSQVas-->01</b><div data-page-node-id="DbB0j6amFit8jJGcmPFHea"><strong data-page-node-id="0TL09k0ZF0GXubhQo8pFxs"><!--pnid:etKVXISaGXibPHljo9QWvH-->东网球场</strong><span data-page-node-id="T3PzXj26Gz6XYyrQ4Ur3gK"><!--pnid:OSKujV1xNB5at8mCGui2CP-->场地费由学员承担、由学员预约。周一到五及周六日、节假日 17 点后免场地费；其他时间 15-45 元/小时。</span></div></div><div data-page-node-id="WbYtuTsJzQNlJPFNwn3Te5" class="venue-item"><b data-page-node-id="6O0jHXiVMGnvvOcN7H1s8S"><!--pnid:rhAQLLy2Ad9nh2wXK39r2i-->02</b><div data-page-node-id="IPuUyUNm0JNXPubloIZfDP"><strong data-page-node-id="dQxCPT7w0VuFDeLe5ZtyL9"><!--pnid:InCnSMUQMfnc34BIMSDVMq-->气象台 / 新林院 / 附小北</strong><span data-page-node-id="dz5pWqw6nbN8KCZL5mFGoX"><!--pnid:JvhNB7c9rcgMHYg9QBIY02-->场地费由学员承担、由学员预约。白天 20 元/小时，18 点后 30 元/小时。</span></div></div><div data-page-node-id="Fak5To5RsMOKhzZ5erfnv6" class="venue-item"><b data-page-node-id="jwdmA9Edm8BMfKeWSeAESw"><!--pnid:yGhRNgnVUI2jfzyil0I0td-->03</b><div data-page-node-id="9FKktnP6loJ0nqFzFsAvxj"><strong data-page-node-id="UYcw3VOcjn0EAgOjNvw0H1"><!--pnid:iMvvdh2B0YfrGYjV6gGy6f-->紫荆网球墙</strong><span data-page-node-id="B2zBFo9aw7IpcZJyEzsEp1"><!--pnid:01efwSWLZ38g5knKGHr10D-->免场地费。适合墙打与自主练习，可与教练确认开放时段。</span></div></div></div><a data-page-node-id="Wy7xYu8kyAZXqdEO7YCmd3" href="#booking"><!--pnid:7uZ0xRcLO1vcjL0pXyVxyY-->在预约中说明场地偏好 →</a></article>
+        <article data-page-node-id="rTCVTGgJetsrgdhgZRFVaK" class="proof-card"><h4 data-page-node-id="HTLWj2uWRPeRictXK8HH5c"><!--pnid:XKVOuec0Ph9YnLXCAr9RKM-->信任与影像边界</h4><p data-page-node-id="JgkqOxdv72l4gvcBRN3okB"><!--pnid:NdWeyo85TfksJex8x7aIQR-->首次课先评估，不要求当场购课；可借用球拍和训练用球。视频复盘完全自愿，课前征求您的意见，可以全程、半程、少量或完全不用；正式使用前单独确认，不公开学员影像。未成年人由学员和监护人共同确认。</p><a data-page-node-id="nwbP1dkRrDhyEOjvtWkU7C" href="#rules"><!--pnid:kXnqxeFR1kzBLOYWhfi2JN-->查看报名规则摘要 →</a></article>
+      </div>
+    </div></section>
+
+        <section data-page-node-id="TViaZIgmNdqqWVYRyuW541" class="section stories" id="stories"><div data-page-node-id="zWHD2j1y5m36h84tIDGhGq" class="wrap"><div data-page-node-id="optQoVPBgWpvSp8LrCwvWU" class="section-head"><div data-page-node-id="CvdnkmvEl5c7PhBzTmse0N"><div data-page-node-id="8MTjqMjtZHSi5puGNHJsAz" class="section-kicker"><!--pnid:NrXqKXilwOq8AminYJx40E-->11 / 学员成长路径</div></div><p data-page-node-id="h4eHgbCcf1DS70MoPNIhHV"><!--pnid:e714nR6XrcSx0F0rFS74qR-->成绩依赖出勤、课外练习、身体状态与真实参赛，不代表每位学员的预期结果。所有公开素材都应先取得授权。</p></div><div data-page-node-id="QRF3KOWqzC1Dvtd1CAXnNx" class="story-grid"><article data-page-node-id="0YYjyb0TFAuk08skUShNoO" class="story-main"><img data-page-node-id="fOZn0G4MCnAwvQeMP8JJbO" alt="大学女生在校园网球场练习正手击球" height="900" loading="lazy" src="assets/tennis/female-college-tennis.jpg" width="1200"><div data-page-node-id="Su0Ful6Vn8VmtrjfaAidk0" class="story-caption"><div data-page-node-id="RTj5l2p6EvpaDnpSEC7fIm" class="eyebrow"><!--pnid:HjhqljKKKz4gSevf8LE4uF-->训练路径 / 示意影像</div><h3 data-page-node-id="FVz4GVKkHqKHqJpvdsUK8x"><!--pnid:KhD1kt7wcuDYZB7kE9rKAo-->从“想试试”，<br data-page-node-id="HX6GGaeewE4FeVjlD5kN6J"><!--pnid:SdaNaB2VemUFbMXNDM7kEY-->到乐意持续练下去。</h3></div></article><div data-page-node-id="nL6C9icbi8wc0pEa3Aa4JN" class="case-studies"><h3 data-page-node-id="fbLGhf7eTbI2QppLSYjK9S" class="case-studies-title"><!--pnid:odzH1nCYAXYHa0iNAyXS9m-->真实学员案例</h3><div data-page-node-id="PoRtJEvjzT4ziA2GTV172E" class="case-study-grid"><article data-page-node-id="case-tsinghua" class="case-study"><div data-page-node-id="Q6oaKzBShihHvYUcWailoU" class="case-study-meta"><strong data-page-node-id="W2x6uMUVuTcOiYkqGK2Bne"><!--pnid:3WFEdgX7CAo9Ue0Sb1WyOh-->在校博士生4个月升级3.0</strong><span data-page-node-id="yl4jmYT7WleBjGkiKnmgHY"><!--pnid:xoNYZ7C1uxI04KV3u4obLP-->4 个月 / 25 节课</span></div><p data-page-node-id="9PnyiJfPtgBeGrwuuD87gH"><!--pnid:FOmSRHGEuXJvnF6BO4FV1F-->零基础起步，4 个月内完成 25 节教练课，并坚持课外训练与参赛，夺得校园网球赛 2.5 级冠军、完成 3.0 级升级。培养模式：每周 1–3 次教练课 + 每周 3–7 小时独立训练 + 累计参加 7 次正式比赛 + 赛后万字心得互评。</p></article><article data-page-node-id="case-youth" class="case-study"><div data-page-node-id="fnJXaahYtjygdnTm4BsFtW" class="case-study-meta"><strong data-page-node-id="IBzFJHUzR9xhpasftDHJdQ"><!--pnid:CN1ECnt8q0fcvMlwPLkQE2-->2.5 级学员--2年升级4.0</strong><span data-page-node-id="pCSP80rHP0iCRgUyCkWN59"><!--pnid:N2SAfyrggKzv4uL1FRxG4b-->两年 2.5 → 4.0</span></div><p data-page-node-id="myIk9AsYgNhCGEmKNVhrb0"><!--pnid:bAMYc1vK6cP8GSUi7ahEID-->围绕个人身体条件和比赛目标调整技术路线，建立「训练—参赛—复盘」的长期节奏，两年内从 2.5 级升级到 4.0 级。成果依赖出勤、课外练习与真实参赛，不代表每位学员的预期结果。</p></article><article data-page-node-id="q4Win9srHkjn2rNSP2jMQU" class="case-study"><div data-page-node-id="5yNAeR2LHfrmLyBKp62WxG" class="case-study-meta"><strong data-page-node-id="dIqU3obMh38zkvzCt9ryEl"><!--pnid:KbxaE6NFWkmmZuDDoHDIrD-->8位学员校园赛2.5/3.0冠军</strong></div><p data-page-node-id="VDxIbZTzfR54PljtjAUco7"><!--pnid:jxKhQ1T0slWA4UXTKTQ3VY-->学员中已有 8位获得校园网球赛 2.5 级与 3.0 级冠军。有多位学员获得校外2.5-3.5冠军🏆成绩依赖出勤、课外练习、身体状态与真实参赛，不代表每位学员的预期结果；公开素材均已取得授权。</p></article><article data-page-node-id="HEvcpwZzP7h23ROC0zSCZ1" class="case-study"><div data-page-node-id="NrZLsFC3hSbWo1H3EE9Czt" class="case-study-meta"><strong data-page-node-id="0nBwZEDZ6YCtrXU0OMzoO9"><!--pnid:P7YWHTaSWlXlD4Dyqs4K1s-->联合培养全国高中女团冠军🏆</strong></div><p data-page-node-id="nzkkDrOWBcBl31ngM56hrO"><!--pnid:4XuCWckaitCHEgWJW7eI2T-->教练参与联合培养的学员曾获全国高中女子团体冠军。高级路线（特长生 / 职业方向）需要专业团队长期指导，会在评估后单独沟通。</p></article></div></div></div></div></section>
+<section data-page-node-id="WmDyfDMwKbmBGDAfNy98fi" class="section pricing" id="pricing" style="background-color:transparent; border-color:#7030A0; border-style:solid; border-width:1px"><div data-page-node-id="8lUh7kcyU0F88gXXA1gPZl" class="wrap"><div data-page-node-id="mTcI2R8F02AdJAMqSV4Mu8" class="section-head"><div data-page-node-id="84x1rcIDYLdnKGs8yFeLAs"><div data-page-node-id="Onc97hWdpmmYLk32x8NqNe" class="section-kicker"><!--pnid:YVvCLUrCSQmI6FfuiqOUX9-->12 / 课程价格</div></div><p data-page-node-id="ylmlmcXUEz6G26OItPN8nl" class="t-price-note" style="white-space:pre-wrap; color:#7030A0"><!--pnid:VlYPRJU6k0rR3L0TCOFvK1-->连续锻炼奖励：连续 5 周每周上课，无课前 48 小时内改期、无迟到，奖励 100 元（相当于9折）。
+本活动时间为：2026.9.1-2026.12.31</p></div><div data-page-node-id="v3w9i37fRDTFPLw7QrSeeB" class="price-grid"><article data-page-node-id="1ZiSGofuoTblnWKOLjhudU" class="price"><span data-page-node-id="ywBbPv8toyd5tqmbIypLtO" class="pill"><!--pnid:s2gkdI3sNmqg2XcI05u6MT-->在校本硕博生</span><h3 data-page-node-id="SYYYMQe7ELwTpzHTNeq8tb"><!--pnid:lpzV3LlaPxjvud71M26LR8-->一对一<br data-page-node-id="uhoV8QaGS2bOWlYmJIEqGf"><!--pnid:iXHmCaXYJREpo27EritDxf-->在校本硕博生</h3><p data-page-node-id="zGYJhsm5dLjiIPePJ34jjK"><!--pnid:u4HecsjVzplxKk6Uh4pNgv-->本科生 / 研究生 / 博士生</p><div data-page-node-id="e768BI8Drx03lemtupo9Da" class="amount"><!--pnid:5KXCXzU14JO7vB3sw7OuBu-->¥200<small data-page-node-id="MShaw7zcwt1ItzIKTrlSYI"><!--pnid:xjIEAhVTtfmcASSMNqDYS2--> / 小时（不含场地费）</small></div><ul data-page-node-id="wd9U7ihzf1JY6EDQROAdHn"><li data-page-node-id="UPGODVXf1e2G6xryU1DubN"><!--pnid:xw5f2zdJt3bUhCpHQaWgYa-->适合零基础与个性化训练</li><li data-page-node-id="cSagcQ5VKu4rIo5pCGriSy"><!--pnid:d0MKPmMU1OP6SPtyWi9m5J-->固定时间更利于锁定课位</li><li data-page-node-id="wO0lsgmhJOb2wGUv1xIoN1"><!--pnid:IvGX6a8ECNfwFDn1kgOb27-->场地费由学员支付，以实际场地为准</li></ul><a data-page-node-id="bMFoycv5EpfC5JHqgHCgmc" class="button price-cta" href="#booking"><!--pnid:ECS61uJX8pyZPGpnZhgYms-->预约这一档 →</a></article><article data-page-node-id="SNgZwSlRdm2iR956vq1Fzt" class="price recommended"><span data-page-node-id="0WSJlU0iLcxZIyu23IrsAd" class="pill"><!--pnid:M34VkHFOHucEk626TWD6fd-->其他学员</span><h3 data-page-node-id="Bguz59IosIXzwkAEjABmCW"><!--pnid:skoUnt7jD427gMHcLnmUmK-->一对一<br data-page-node-id="62LBE5Xl2YsvSPZJocLQ7O"><!--pnid:ekNwGMSdO6KiamGwYDhD4f-->其他学员</h3><p data-page-node-id="hJFFt66wkbL00CQnWjzqEE"><!--pnid:CNzB0uNFbdciMLud0y4lOR-->教职工 / 中小学生 / 职业人士</p><div data-page-node-id="MGje6pOlCwDTnM7Z4iJD9l" class="amount"><!--pnid:NdzqtuPl62Bwz4biakK1pP-->¥260<small data-page-node-id="UK1GqkYKmCF9ZQqyLbKpBH"><!--pnid:GrkKAkc3dxtb86uFewAaif--> / 小时（不含场地费）</small></div><ul data-page-node-id="CX9goPRvE9d2x9JsKHN2Hd"><li data-page-node-id="48J03LjxagaKZLTobODkEH"><!--pnid:Du4ZtZTqXPOtNaeDDkhL94-->根据目标制定训练路线</li><li data-page-node-id="8Xa6ALXaRYjDrGue4OCmwc"><!--pnid:tVkSp74qAms4Eu3VbGuEOD-->可从首次评估体验开始</li><li data-page-node-id="ueEbTVeMcdzWfwbAnc3gVp"><!--pnid:NUT8eA4EhOUTq7HKfXKln6-->场地费由学员支付，以实际场地为准</li></ul><a data-page-node-id="S16kxTlvlHgEj8Qmbuvbdz" class="button price-cta" href="#booking"><!--pnid:rhb0wfctgyRGJpNAkkNrRD-->预约这一档 →</a></article><article data-page-node-id="EYLnBzn0YzxO5Bx2zsn2De" class="price"><span data-page-node-id="gRgpQCENAzHbySkqJS3EYJ" class="pill"><!--pnid:aP9MziThNLAhcUcXtngdJn-->双人训练</span><h3 data-page-node-id="7wG5TSdbGv6N3KryRx9luu"><!--pnid:kKO8q1NCgvP80lgYdgJtDz-->一对二<br data-page-node-id="zH7NYsSg2kwGkNKFh1gVbV"><!--pnid:JzVDEsPIy5kNHBWtdI5TMZ-->固定时间</h3><p data-page-node-id="2jVgeArIVH37r6n9AaFs7T"><!--pnid:JN8U93tVNu98notLJGbwju-->在校本硕博生 300 元/小时；其他学员（教职工 / 中小学生 / 职业人士）350 元/小时。不含场地费。</p><div data-page-node-id="w4ZsZ3CA8Gu0lDnodpr0cm" class="amount"><!--pnid:mgFBrD5TM6mhEtW4riwCM5-->¥300<small data-page-node-id="naXOcCs7Vv0b8GOQwkSED1"><!--pnid:wJnnbaeNReVJ0dv854cgyE--> / 小时（不含场地费）</small></div><ul data-page-node-id="2iWJE9ad8dpdNykgXhc20P"><li data-page-node-id="QDb7x6YFeMGbpaDy0qBzzG"><!--pnid:eYBEztIGD4TNl0dGfCnCem-->适合朋友或同水平搭档</li><li data-page-node-id="QwQWZvIUI1fJQdVw6MHzmC"><!--pnid:eifQ4dJSu5QvbMenzSNXvx-->搭档缺席与特殊时间需确认</li><li data-page-node-id="ujDWCq7AF2wH9JHCyrT0LC"><!--pnid:31KhRENfUyrPjUiw57r2cY-->场地费由学员支付，以实际场地为准</li></ul><a data-page-node-id="DW5zEPSluY7Q6oVOeei4jq" class="button price-cta" href="#booking"><!--pnid:AyYOwAKGMt83wLSfqy5m5H-->约上搭档一起 →</a></article><article data-page-node-id="5lDDJiQCJ4A3yrtfXGV3kh" class="price"><span data-page-node-id="3Ri2lXqJlJ7NInzCx8aaAw" class="pill"><!--pnid:Uuu4ntvP4fQh5P9E2zJXu2-->精英课</span><h3 data-page-node-id="LZ2E0XondMfyynZAJj2Rt8"><!--pnid:QPzEOnqxoXpysh55jVU8Ib-->精英课<br data-page-node-id="DKpFs80VIQDDrB77O3b2oB"><!--pnid:2FVICXO9yAzhYaFCllBwNF-->固定周期</h3><p data-page-node-id="cRSQbjhnsLEfb3PS62aeO0"><!--pnid:4izWl5Pj0tUjH4OARPn3cV-->师生共同编辑《网球笔记》，适合有明确进阶目标的学员</p><div data-page-node-id="AvFpSk1USlQycMjWkuJpgd" class="amount"><!--pnid:C3HU7JLbexUfF0JEyiARva-->¥400<small data-page-node-id="wItKLqyAU2Ok3BTI0Sw1ov"><!--pnid:cCHu6zrUULViGz3kCNPYrR--> / 小时（不含场地费）</small></div><ul data-page-node-id="HHGqhHPKkO1FyOEDcveyGF"><li data-page-node-id="286TuGmWwBsL1Tbvodr8Bb"><!--pnid:TAgZFqMQI5d1mRafDtaZXR-->固定周期，深度陪伴式训练</li><li data-page-node-id="AIAoQKBD5XuX6CgNLQBPbu"><!--pnid:bscioN4XOO5LS3K4US1K9Z-->师生共同维护《网球笔记》训练档案</li><li data-page-node-id="UCbXX0JiXdqvD3T4pVFWBp"><!--pnid:x9DLvssNh9oihnAzC9nVWy-->场地费由学员支付，以实际场地为准</li></ul><a data-page-node-id="Sr5f1ILDVLadfXh2gTZybf" class="button price-cta" href="#booking"><!--pnid:vjKJoXNCTbP6H8V4z7fZqf-->咨询精英课 →</a></article></div><p data-page-node-id="WBJYKA3SAlvyWvxzFeBgBi" class="price-fine"><b data-page-node-id="EnYvowPbSi12bxKp749VXc"><!--pnid:6EHkRXhOr4hQuyOkgNYVlN-->档位说明</b><!--pnid:gFTLapsKrihrY9qTvZ4ZDC-->：学生档适用于在读本硕博生；其他学员（教职工、中小学生、职业人士等）适用「其他学员」档。若对适用档位有疑问，请在预约时说明，具体以《网球课共同约定》为准。<br data-page-node-id="oDVF8PoySdrigDR4rsoK17"><!--pnid:6L8QNho5QNxDYHr2UsmfT4-->预付方式：在校本硕博生每期预交 5 课时；其他学员（教职工 / 中小学生 / 职业人士）每期预交 10 课时，可微信支付宝银行卡等支付。费用确认后即时支付并锁定课时与场地。<br data-page-node-id="3tga5bStPqRjMMQ15HCpRQ"><!--pnid:ige8ol042rIzwn5f0MTLqX-->提交预约意向时未确认前不锁定课位、也不产生付款义务；教练确认时间与场地后即时支付。未使用课时的退款与改期，以预约前确认的规则版本为准。</p></div></section>
+    
+    <section data-page-node-id="jEpQQpBrs7pQhHFh9cHx4n" class="section promise" id="promise"><div data-page-node-id="8rnurmklZvwUelTHaNmUGt" class="wrap">
+      <header data-page-node-id="FoDY6M8Rj6OF3zspf6obzK" class="section-head"><div data-page-node-id="WhRfIDCusYmYtbKfVnbY2R">
+        <div data-page-node-id="4JGf3ShheZuftWNTVDMK2k" class="section-kicker"><!--pnid:YoTmQE0be6XdmBj2qR0bfn-->13 / 双向约定</div>
+        <h2 data-page-node-id="MKT3g4G65mTPuLH8mUj3P4"><!--pnid:ZbmgfvQRKHVPygAnBJrHlO-->规则对学员有效<br data-page-node-id="XaBN73tDu4OOhPMclTiHvJ"><!--pnid:fJPWB84xxrUanvJZnL8ACw-->对教练同样有效</h2>
+      </div><p data-page-node-id="OUB3BF1FINx84CMy1HwwuO"><!--pnid:f1lb0Sv20Wn7cDtQ8YyKXS-->把最容易被含糊带过的部分写清楚：什么时候退多少、谁承担场地费、教练违约怎么赔。下方为摘要，完整版本会在预约确认前提供。</p></header>
+      <div data-page-node-id="rX62xjOkvi72RYxziH3vNK" class="p-table">
+        <div data-page-node-id="Nhss1LvzKCBR2caRzhWQO8" class="p-head"><!--pnid:BBxDxtLVZp5BEC7llGKoPb-->情形</div><div data-page-node-id="MBXqbxR1igiz6wwzpmwsNm" class="p-head"><!--pnid:ZovdTi1yH2FvBIE4m66Pk2-->学员侧</div><div data-page-node-id="qMDTeYK24rgOwuojaBaBEW" class="p-head"><!--pnid:rxiYE2L9DCTIKaPdinSh8u-->教练侧</div>
+
+        <div data-page-node-id="E5JhhL8Lis1JfByWJ6H3Ac" class="p-cell"><b data-page-node-id="QDksB3pr6qd7ZQoKEcatqn"><!--pnid:aGHt0DKAac1tE31JJst97t-->课前 48 小时以外改期</b><span data-page-node-id="Y8i7i2BCYHFdQhadnLJif9"><!--pnid:IGYHyjznJMyPbUN13vp5kA-->不影响连续锻炼奖励</span></div>
+        <div data-page-node-id="gvIpeTB1bMOEXLN1VVU8Mi" class="p-cell p-you"><b data-page-node-id="cbQKoRQgTwKbnahq544ReZ"><!--pnid:trxUdFmVY2EcQhjMj3Cuhz-->退还 100% 课时费</b><span data-page-node-id="tRI5sU3YnI9jNM4zvxrH4j"><!--pnid:hLeZqvshEF4JSYqJjYOD8K-->已产生的场地费不予退还</span></div>
+        <div data-page-node-id="84rPlJOObDKWWCcEcWe56U" class="p-cell p-coach"><b data-page-node-id="xmKeLRm2t7hpiW3UpZ4Ags"><!--pnid:7uee6EjiKLPiSgFp8k1fVI-->按学员规则的 2 倍补偿</b><span data-page-node-id="Dz9fVXO9B4w7VR7rbCTN7y"><!--pnid:RIyE2t5pwVTDeGBu4Sggcn-->并承担场地费用</span></div>
+
+        <div data-page-node-id="YiIZB3YwDbb4JWrZk5uJKx" class="p-cell"><b data-page-node-id="PiS5ieSOH0zyXvMtsFH3bu"><!--pnid:RmWbq04btWZeX6HoT96LP2-->课前 48 小时以内改期</b><span data-page-node-id="2MSlJg10Ck56mi1ZP0Vzit"><!--pnid:qIcS0gGUx8JcP2F5wB6rQ6-->请尽早告知</span></div>
+        <div data-page-node-id="q6YUjUqKmzEBOybPjvRrMj" class="p-cell p-you"><b data-page-node-id="aD1YUCGY6BBtDd4nKaAT3d"><!--pnid:dMlMUDxtPXZonnl4vHz3k8-->退还 80% 课时费</b><span data-page-node-id="OkSPbu59krfCjA0mCgYp5c"><!--pnid:Ekj2Z7Qquutufv3mEOEjkA-->已产生的场地费不予退还</span></div>
+        <div data-page-node-id="OzDhdmgNwAkmENxLkaty8k" class="p-cell p-coach"><b data-page-node-id="vFtCSaE85iifiyEdnc2sFE"><!--pnid:8oWvTqBEcxOtL8uoxdfvH0-->按学员规则的 2 倍补偿</b><span data-page-node-id="tBNZxDjmvWcT8ewSZodMAY"><!--pnid:kmiVv5RBLmptETgqaLEADk-->并承担场地费用</span></div>
+
+        <div data-page-node-id="CCrv960bml6itztz0HzcFd" class="p-cell"><b data-page-node-id="26g898RtZoXbe63Wbr1Jmz"><!--pnid:Cg0Ys2eSDS5UuQ3uBSoii4-->迟到</b><span data-page-node-id="MWuXe16fOYPXmzNQjkAidz"><!--pnid:xAzTpfRCxd2vwbHxBJWrAR-->按实际迟到时长计</span></div>
+        <div data-page-node-id="Ocbqr9TS4cfNgHSCS20BsO" class="p-cell p-you"><b data-page-node-id="sUMbzWiVM19CtGYeyZrZrb"><!--pnid:Im9GWqjidwJG5AaqNGV5U5-->迟到部分课时费不予退还</b><span data-page-node-id="4Ik49RwwzENolLCWC5HgAN"><!--pnid:ySay8a5fbd5xj4YP3RlGQS-->剩余课时照常进行</span></div>
+        <div data-page-node-id="NuygYhFzV2tn4dYEb6MoJa" class="p-cell p-coach"><b data-page-node-id="em27XWgbngpeYNJTq1ftsV"><!--pnid:lJ3qgiTeVe2vF4JDzP8Bto-->支付 100 元补偿</b><span data-page-node-id="4p1e26wGJzwXmrbSRzenSk"><!--pnid:DN9qweJo2Vkeck23o3Ofed-->并补齐未完成课时</span></div>
+
+        <div data-page-node-id="dkxniW7CbUvq3scOMxz4vh" class="p-cell"><b data-page-node-id="G7q89u6gWrZ7bEeQNKMaZf"><!--pnid:iz23gXMjWUivBHrTDc0GOx-->终止整期课程</b><span data-page-node-id="B5gKVFt4zd1kpfb5K5bY5C"><!--pnid:Bvx4iP8JAmvwBazSPRcEf4-->任何原因均可申请</span></div>
+        <div data-page-node-id="HYmXXiOs3N0fY2YAIM7pAy" class="p-cell p-you"><b data-page-node-id="I34fnUaLLcdj1a7fDC78Z7"><!--pnid:Oj4J40Kj0sns1PnKRsHs0u-->无条件退课</b><span data-page-node-id="UxOgvKYcVcn7ACVqSAq7Xl"><!--pnid:49bfmh6iALYkW9qMwRaboq-->未上过的课时原路退还、无任何扣除</span></div>
+        <div data-page-node-id="FSF7Z3PMqT6SA2897vILne" class="p-cell p-coach"><b data-page-node-id="ENOsrERCm3jiS9UbcLyX3P"><!--pnid:8kt1i6dVS5J2yeSnXlmF8Z-->配合办理</b><span data-page-node-id="E4HmCXhPmiup5vsl40bvLy"><!--pnid:k0N9jW1l4rPC26uk51d0aQ-->按原支付路径退回</span></div>
+
+        <div data-page-node-id="7rdX3Y6yZrhWUnhUpVzL9m" class="p-highlight">
+          <b data-page-node-id="ycZ6acf8AJQr3eZJ2NlmY6"><!--pnid:WriMUXgs2eWkm57S5OEMDH-->不满意，可以退。</b>
+          <p data-page-node-id="tsDoSpR1RFGYORKdFsJVnr"><!--pnid:FswKmfA8OwlO4GJEFAux1V-->如果您对教练风格、教学效果或这份约定本身有任何不满意，可以随时无条件申请退课，未上过的课时学费原路退还、无任何扣除。这是降低您决策门槛的承诺，不是客套话。</p>
+        </div>
+      </div>
+      <details data-page-node-id="YNz8YXjcFp6gJMIsWLVlj8" class="v3-fold" style="margin-top:22px; background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.22); color:var(--v3-cream)">
+        <summary data-page-node-id="ikw1cxgYib2LGSQjYbm00P" style="color:var(--v3-cream)"><!--pnid:p9prNeKjkTr8NfwruaYTA1-->展开：付费与确认的完整流程</summary>
+        <div data-page-node-id="Wp5K6EjrL4rCW8VUpk80jI" class="v3-fold-body v3-on-dark">
+          <ol data-page-node-id="44qHTuySxEUHCyGIqnuMc4">
+            <li data-page-node-id="QmwvZNoJ38m7bdDWr4TfvE"><b data-page-node-id="gMTde0FISMhcYYwnp9MPm1"><!--pnid:0Rh5L09XpWJfhF9NRQ39Lk-->提交预约意向</b><!--pnid:AXwaTq0B1OvmbBzsbJ1pyQ-->——此时不锁定课位，也不产生付款义务。</li>
+            <li data-page-node-id="iATLTpIjhY7GEDRwWULsZc"><b data-page-node-id="pXxcdHPwoNZJ9ks7sSkDRK"><!--pnid:hiO7RxftGaKLcBVrkGEL3X-->教练人工确认</b><!--pnid:wZh4c3dzdYMNqZzwEPSvWk-->——按您填写的时段优先级与场地情况确认时间与场地。</li>
+            <li data-page-node-id="Vp9zRSH2Ce0soo8mbPyzTb"><b data-page-node-id="7oMT0gHUF5XDWGVOUOSS4k"><!--pnid:NMVWbuGe0d2badPvdj25ft-->费用即时支付</b><!--pnid:IbBzptFNcUUxnz645umVJt-->——确认后支付并锁定课时与场地；预付标准：在校本硕博生每期 5 课时，其他学员每期 10 课时（微信）。</li>
+            <li data-page-node-id="iaUPpcOppJWZ3PMm5NyUb8"><b data-page-node-id="bRSCsZ3xTUzyv8wcxhhenl"><!--pnid:DZrPiTOgsXCQOAv1WzpF3s-->开课</b><!--pnid:30BIQG3dPa8fS51e1Xf9m5-->——体验课按正式课标准收费；双方认可后再进入长期课程。</li>
+            <li data-page-node-id="UlY90wVMFpi3qMdoKTDUTz"><b data-page-node-id="tTPd4J4nEk2oU4AgwEt3wl"><!--pnid:PKlC2vCyulxtrceIfNG1FE-->随时可退</b><!--pnid:eGFWsWu93IrwaOluYZu8ix-->——未上过的课时无条件原路退还、无任何扣除。</li>
+          </ol>
+        </div>
+      </details>
+    </div></section>
+<section data-page-node-id="hTsRPQX8MfQGQmadkvvAjC" class="section faq" id="faq"><div data-page-node-id="xE1xGeNZqyjhqHOeefokIq" class="wrap"><div data-page-node-id="Un4qCamJQa0P0mt3ToYkh6" class="section-head"><div data-page-node-id="TA02nuqlHTrQRE6THeEyDc"><div data-page-node-id="PjWm1m0piCJLLnjqTiq5jo" class="section-kicker"><!--pnid:8Ncbe1uIbe35431IEai88a-->14 / 常见问题</div><h2 data-page-node-id="wt9uM3fP3D5ZeVILyiD8mk"><!--pnid:vpIzsj5ZwbPetIM5QYkMUx-->报名之前<br data-page-node-id="TsJCO1wSpvJrg1q5S2Iq73"><!--pnid:PzQM5iOZNZ5pw8S4Sdy5CA-->您可能还想知道</h2></div><p data-page-node-id="kcKSjQ4W8iR286UZqez3Ix"><!--pnid:CYQXTabO8ON159nT34LTju-->把第一次课最常见的不确定性提前说清，让您带着轻松的心情到场。</p></div><div data-page-node-id="zpRbfRNeWRTtefIl2Bcb57" class="faq-grid"><details data-page-node-id="Fj6V1pYb7FQxuDinJJc4bo" open><summary data-page-node-id="NLLntv1Gg4x0s2PPG1J5hi"><!--pnid:2QdZKwLTaBL9WuSO9Jrjkr-->完全没有基础，可以报名吗？</summary><p data-page-node-id="KTooezAEr8e8bIv1Afhu3n"><!--pnid:tNNaJTm1qTKucUQGOmwEGP-->可以。课程从安全、握拍、准备姿势和基本击球开始。您不需要提前会打，也不需要先找到搭档。</p></details><details data-page-node-id="A8vS1VxcZ5qfGLGPe6cSWL" open><summary data-page-node-id="yhTHtAWEajmPEYmo90efgo"><!--pnid:ne458wXWpeLwYMEsb1KNUi-->需要自己带球拍吗？</summary><p data-page-node-id="2hcVXwtCWUloEBgT8EyW2O"><!--pnid:POTXdFpLsQqgQ4jyrUf4FN-->不需要。提前说明即可免费借用教练球拍，课堂训练用球由教练提供。</p></details><details data-page-node-id="GPHe3Nm0n4ly1VkYPk3x9C" open><summary data-page-node-id="HWvlW1HJ0FPCqIVWlA0rdd"><!--pnid:3ZRSnF88XMsYufwX94WQTs-->第一次来要穿什么？</summary><p data-page-node-id="KWfUHBZdPofYihI0HkCJPq"><!--pnid:Ep0PlFDHehNWWltm73sGeg-->穿便于运动的衣服和防滑运动鞋即可。若有膝、肩、腕等疼痛或运动禁忌，请预约时主动告知。</p></details><details data-page-node-id="veKckb5Sk8vHbRKHrWGQQD" open><summary data-page-node-id="ZmZm35MiXrsWEchTKN8yYZ"><!--pnid:bJoVHRYMftP4bxWk0kbevr-->下雨或场地临时不可用怎么办？</summary><p data-page-node-id="VAYz7KpuOdFft5K5ml1pX8"><!--pnid:UCRCFJzxVFTAH5P0P381Ms-->场地政策、天气和临时封场会在确认时说明；改期、场地费与补课按双方确认的规则执行。</p></details><details data-page-node-id="Rjh4tzkpFQjgKqetjfIeqi" open><summary data-page-node-id="87uEzpNnDrdtfNx2LLnIRA"><!--pnid:XZXarkO9grslm8Bj4DQhpl-->视频教学会公开吗？</summary><p data-page-node-id="qIVN0elCVXMejKGtIy8NEJ"><!--pnid:2ceKNplYcoG1vKhl3IFbFa-->不会。视频复盘默认不启用，使用前单独征得同意；未经许可不公开学员影像。未成年人由监护人确认。</p></details><details data-page-node-id="hCL7xOBbK5p5ov2CY18z8U" open><summary data-page-node-id="0paIFZqKPvhwTtG6SMn0Gv"><!--pnid:uQuWFexPienNMyRDfkCRzv-->体验课后一定要长期报名吗？</summary><p data-page-node-id="ONVaX8IXKWGL6KmFoRlGOn"><!--pnid:uVHXYYkNrcHOpY8a4AJupz-->不需要。体验课的目的，是帮您看清起点和适合的训练节奏。您可以自主决定是否继续。</p></details></div></div></section>
+    
+    <section data-page-node-id="VZOHtifhggMHaP06Zgsj0O" class="benefits" id="benefits"><div data-page-node-id="J7kiLGiztN65aAr5pkTxbo" class="wrap">
+      <header data-page-node-id="y1gIxnMA4wrlvcmMaWoJUA" class="section-head"><div data-page-node-id="NPHwCzMPW2GLh3NjQXcTZ7">
+        <div data-page-node-id="1aM6sYlvWaLbnzu4uhAIbA" class="section-kicker"><!--pnid:KNpB3VaBwsyQhPEg5IXUfK-->15 / 网球课特别福利</div>
+        <h2 data-page-node-id="4vqvbpbmLmaQ43YSbHByfg"><!--pnid:ortfwhZqesnNVmerw8ViC7-->除了上课<br data-page-node-id="qCy8m4q6vea2xnOOpSWV3J"><!--pnid:zeFmayYQNFDdElUzLGU2ZN-->还有这些</h2>
+      </div><p data-page-node-id="epehWEeJImya0gMqkA1Ez3"><!--pnid:PH1hNAPSLR0oogJdxZzjuG-->上课之外可以顺手用到的三件事，都包含在课程里，不额外收费。</p></header>
+      <div data-page-node-id="I36vqNJgcjkOjh5dAOIulV" class="ben-grid">
+        <article data-page-node-id="guY3r6LNGE5qTfswiGWRsS" class="ben"><div data-page-node-id="mijczDj7UyhrVLkx3n5Tlx" class="ben-no"><!--pnid:M9HGfoquVidyC3eeZCzCeP-->01</div><b data-page-node-id="ylr2j9Df2NewrE6Nz9uZSF"><!--pnid:fOK5pbCpqUAxExGeOHtHeZ-->免费借用球拍与训练用球</b><p data-page-node-id="enWdokJRURbkJUiLq0lGkA"><!--pnid:bUo2JlTm3aclR7XKcb3Mze-->上课可免费借用教练提供的网球拍（请提前告知），课堂训练用球由教练提供。第一次来不用先买装备。</p><small data-page-node-id="tuHNm1xWX8Zfl9u2OQgExX"><!--pnid:8TwdFvmTIVbml1bihKlSTC-->提前告知型号偏好更好安排</small></article>
+        <article data-page-node-id="5AcnmoyzfrXXso3b9QtBbA" class="ben"><div data-page-node-id="0sHxythLdOVhsVTUzB03EC" class="ben-no"><!--pnid:UFQLXTFLB3PyFEcDQtObPk-->02</div><b data-page-node-id="f76kTeu12s1Upk4YxcfJk5"><!--pnid:5pkbwg6pYNVkTgbaVlAzie-->校园网球赛特邀参赛机会</b><p data-page-node-id="rCp9oqemo9HBigmaapbCpb"><!--pnid:JFsjw8wXUlJMUEZgGKAZWb-->课程学员可获得校园网球赛的特邀参赛机会（请提前告知）。才上几小时课就参赛是被鼓励的——真实对抗会暴露平时看不见的问题。</p><small data-page-node-id="ohekRrt1IiWFR6nyHJxyns"><!--pnid:r7wqIlIPgOgT5LDtEdrkpG-->参赛与否按个人意愿与基础安排</small></article>
+        <article data-page-node-id="ztJApiyDtUMIEegJZnQ2jF" class="ben"><div data-page-node-id="h38DY8GLsX7t87qmbDVTBa" class="ben-no"><!--pnid:Z86yLi7CyhB1usXX3s7El0-->03</div><b data-page-node-id="P8H18LGd44AMitJ95oBHMc"><!--pnid:jFBBJEFwlboMJBzs7HWctg-->免费教育咨询</b><p data-page-node-id="M3fjC3GenP7aT1g2uM6rBm"><!--pnid:Hkq87IJV187HW3KbxcMs3t-->教练的另一项工作是教育咨询，涵盖中小幼全人教育、本硕博人生规划、职场人士职业规划与家长家庭教育。学员可在网球课中免费咨询。</p><small data-page-node-id="S1RefSSY1DIzusEhd72evJ"><!--pnid:N4COru6iagGgK8mcNkSjho-->网球课时长内，不额外收费</small></article>
+      </div>
+    </div></section>
+<section data-page-node-id="MN9fPFoLQRWXNSWFolFyTw" class="booking" id="booking"><div data-page-node-id="TsiAUCUKWjsRaMF1Bo6nZg" class="wrap booking-grid"><div data-page-node-id="8FQAQhVhD3WHAfFBwDh2OW" class="booking-copy"><div data-page-node-id="exZbQvNslT43yjqaQDeqmh" class="section-kicker"><!--pnid:0FKLI8gBjZ7ukFOQbtfdMr-->16 / 预约首次评估</div><h2 data-page-node-id="k2wZ8SB2L8yayl994s2ZgO"><!--pnid:dv3RapaA9BMBiRUFPTxaKk-->告诉教练<br data-page-node-id="DaIdfabQtIZWre0DLGh6ci"><!--pnid:W6jEiboz7EXX7ORmbg2omn-->您的起点和目标</h2><p data-page-node-id="flz44q3lKeKiZSom3qkiu0"><!--pnid:q7j2U55RHIe1ZOP1jmdxdC-->提交的是预约意向，不等于锁位。教练会按您的可用时间和场地情况人工确认，再说明体验课与场地费用。</p><div data-page-node-id="O6iflMTXCkOT0umn5OWFR2" class="booking-flow"><div data-page-node-id="90smYikX7aj5zcYZqyT4zB"><b data-page-node-id="KbS9Sbhkcl0VUyMLE3HfOG"><!--pnid:50BCEAmD8JnoVAuMg2yXK9-->01</b><span data-page-node-id="ZpKGkEi1jN9Y5cmxdqYq4a"><!--pnid:oTUzpvZ3lHvUVsgVk6kO7x-->填写基础、目标与可用时间</span></div><div data-page-node-id="LN8uVO5KWCmo5LrwSPiG4G"><b data-page-node-id="Kh64yyNgoMIGbdNxQa4QsG"><!--pnid:2LhQCk5fE3PK8crTP5qUOA-->02</b><span data-page-node-id="i6gKtT6JVeuZv23KVhwXCl"><!--pnid:uXy3unTSCCSQFKGX7Fo7DJ-->教练人工确认时间与场地</span></div><div data-page-node-id="XSOZf4tMb9eAVGDEwD5z1l"><b data-page-node-id="BA37fmmvQSpE5oG8cUYAjg"><!--pnid:4GBRxU0RqPxoEwKzXpWlMl-->03</b><span data-page-node-id="zmt4NzzCwNuO1dZPt0I9G7"><!--pnid:oOi5OcMzXjmyE58gVYMaN3-->确认费用后，再安排体验课</span></div><div data-page-node-id="zEf9CpCV4AP9tSsycfmEDF"><b data-page-node-id="doFuQnETrCml0HRA5omq95"><!--pnid:pEiTz9ejBlsCYbdc3XLuPs-->04</b><span data-page-node-id="Wpino7esOzmzOelk8PzqDz"><!--pnid:GBOpBIQpRlfytDDWNbnj7e-->课后获得个人训练建议</span></div></div>
+      <div data-page-node-id="f7xmaFaPDcSRcAxDKCBmua" class="v3-fold">
+        <summary data-page-node-id="n1wBnKLSlF1TylvwQASzSr"><!--pnid:HnVieDV0vhbU0mWgmQ2v7o-->填表前看一眼：可约时间与优先级怎么排</summary>
+        <div data-page-node-id="rzNU7uObQm6mSCqt2PXFd7" class="v3-fold-body">
+          <p data-page-node-id="c4QGQFfuTZZU6qtWLOqDaO"><b data-page-node-id="hFO9oETi6M7KEIfy3xrybM"><!--pnid:sryN6qNg0fy29ln7FIjbkc-->可预约时间</b><!--pnid:MrWTZH8T5Ni5LM9w2yE05v-->：周一到周日 8:00–22:00。</p>
+          <p data-page-node-id="NZAoTNgmevJyoPSVpx6STD"><b data-page-node-id="PSVxAzsNDIzd0h0FNSv3WC"><!--pnid:oTWmgoCdeNEnoOh28I4rm0-->时段优先级</b><!--pnid:hX7kpzv3gX0iEEcXo2GJzJ-->：表单里第 1 行时段 = 最想要的时段，第 2 行 = 次选，依次类推。教练会按您的优先级顺序，结合自己的空闲与场地情况进行确认。建议至少填 2–3 个时段，确认成功率更高。</p>
+          <p data-page-node-id="Lo8USkVBEW8swHZvss1r4I"><b data-page-node-id="Y1YmAJGtmuVkQRTBj6uvpE"><!--pnid:alcQPiHrhNh9FH7Akp6y13-->付费节奏</b><!--pnid:Uk8Vqerb0LJP9iwAMSKp55-->：提交预约意向后不锁定课位、也不产生付款义务；教练确认时间与场地后即时支付，并锁定课时与场地。</p>
+        </div>
+      </div></div>
+      <form data-page-node-id="6ssrSruf2TJNSKpE8vE5S6" class="booking-form" id="booking-form" novalidate><div data-page-node-id="bFR6CDJVYgWAU9z4iKS4tO" class="form-title"><h3 data-page-node-id="3SDK0lM8TD09Y4tgJalNnk"><!--pnid:L68qTENnayKAkz4x9m0N5n-->预约一次评估体验</h3><span data-page-node-id="MnTtKJs6vT1LEdyTjTXKkc"><!--pnid:dxz70nd4JENfyyUsm6Ut5l-->提交后状态：<br data-page-node-id="UhL8DQ2nEVFmKzfwcAyT85"><!--pnid:wXJTkRGh5xxxLkGFrbpXA8-->待人工确认</span></div><div data-page-node-id="UTZJeCIweL2o4GJR74wp9w" class="form-grid"><div data-page-node-id="rOEZOjX2Nq3FrNyDuNhbZo" class="field"><label data-page-node-id="xTOZv4JNerRnDnTCqAGKYn" for="name"><!--pnid:Jo4odMnOytnrKOrIpBh67b-->姓名 *</label><input data-page-node-id="Cd6tNQdOeDiIreOuQCTbXn" autocomplete="name" id="name" name="name" placeholder="怎么称呼您？" required></div><div data-page-node-id="7XFpqkzvp2Qv7HUMEiWhr6" class="field"><label data-page-node-id="3EO6lJExe3ccHKKg0YmVLq" for="identity"><!--pnid:bTXDoorHyXoJRFBrPOGLVM-->您的身份 *</label><select data-page-node-id="U60vkLCRgiZWb25tC5lf5F" id="identity" name="identity" required><option data-page-node-id="lQQEawhvbvc0Cnbd4SNd5w" value><!--pnid:c112WJqtFpiRHeQaUrhERs-->请选择</option><option data-page-node-id="Cz9jeDGoxMEsHbk8kcX8va" value="undergraduate"><!--pnid:XuzO1c7PRYIFaU7H98fFKJ-->本科生</option><option data-page-node-id="s2WL0qJ4eoqoBnxsgt03Km" value="graduate"><!--pnid:l1CT8ImHfgjuOw4hjJhkrr-->研究生 / 博士生</option><option data-page-node-id="Tp7MrpfP0FVECYeWHRjo8u" value="staff"><!--pnid:lZddAVWZUwfZ6sCHnpF9ZL-->学校教职工</option><option data-page-node-id="ggEH5ney4tdbEh2Pbmat0J" value="adult"><!--pnid:zhzt5wT9SPhEqaC2op1kDP-->校外成年人（需自行解决入校）</option><option data-page-node-id="Hnc0ufeOLyVOxZNF4Pox1d" value="guardian"><!--pnid:zLPb8KvwSNDDo457nth9ZZ-->未成年人家长（需自行解决入校）</option></select></div><div data-page-node-id="HYZHQvKbBYaUWufZysU1PD" class="field"><label data-page-node-id="hgEnZp0kdtKOdY21Nhvm0P" for="phone"><!--pnid:om3UkpNekZgqvKpVT4215P-->手机号</label><input data-page-node-id="qNQUdNLE7tMpJr19mQ9op0" autocomplete="tel" id="phone" inputmode="tel" name="phone" placeholder="至少填一种联系方式" type="tel"></div><div data-page-node-id="4CD6U7t2mTPFnCYYfehP6N" class="field"><label data-page-node-id="gtCSHMruae7Bb5o2p0IBar" for="wechat"><!--pnid:jaEgxSSuV1YlpO9krKaLOp-->微信号</label><input data-page-node-id="cNsOZHD4s177r3DAfaHhJF" autocomplete="username" id="wechat" name="wechat" placeholder="至少填一种联系方式"></div><div data-page-node-id="lR3z7tSoJC2W0k88UbBuWL" class="field full"><span data-page-node-id="7maewyugnPw8t1VjrQ3GcA" class="choice-label"><!--pnid:VnusWdQnozII3IhEraGNfA-->您想先解决什么？ *</span><div data-page-node-id="4axmERu31tvwSKI7WAnKa7" class="choice-row"><label data-page-node-id="2nkNX6uThve44ISoPYgpE2"><input data-page-node-id="YKjfsnddHzbnGtiyAEaVe2" name="goal" required type="radio" value="learn-basics"><!--pnid:4QVvqdKovAldK55nIxWmOn-->从零入门</label><label data-page-node-id="E3kCWJtjvf1MFkg6hjiVNh"><input data-page-node-id="ERKQTDfoXZbqqJVzwrru5Q" name="goal" type="radio" value="rally"><!--pnid:y5qw5W7bdbHBnw7VP8aAxW-->稳定对打</label><label data-page-node-id="0sC4B7lkosYb8Lnfpu7Duw"><input data-page-node-id="yHPwlXCMBcqfmzPRbDYvDX" name="goal" type="radio" value="match"><!--pnid:APIZdRzV80sZGlHLFeWXOn-->参加比赛</label><label data-page-node-id="SEqbtaX1r029aqMDXx6KNp"><input data-page-node-id="8VdTZCUDlGa7dXpGUGctQb" name="goal" type="radio" value="unsure"><!--pnid:C1tUQxuTE3NxcIr8VyMeoG-->还不确定</label></div></div><div data-page-node-id="r42ZqajHbAMDo31dSa06sC" class="field full"><label data-page-node-id="X1h0DCtt13x7Gnp0smPEJS" for="level"><!--pnid:oiVb2EAaeUJmKHiBDU4Qj9-->目前水平 *</label><select data-page-node-id="HgYZLHxsWmOb1uiBOkWVKG" id="level" name="level" required><option data-page-node-id="MsCvDIPep8qMcoqIJtBGGc" value><!--pnid:LmbsMbp9UfBhHNTKs30e6u-->请选择</option><option data-page-node-id="IL290IkF4MJd4zdVb5hvu2" value="new"><!--pnid:bPqp8v1k8Kc3Zcf3GhuoRw-->完全零基础</option><option data-page-node-id="t9upPN16bLnqlnQsuDiiuA" value="basic"><!--pnid:PPnCSGaUH0kjXNnIm2qjRW-->会基本击球</option><option data-page-node-id="5Oz6h3xAURoMHxEmY9PFco" value="rally"><!--pnid:sv2BuEqMrnkXg1EHoZjIih-->可以对拉</option><option data-page-node-id="TtTQNqtKXAPqy0ftq3lGGG" value="match"><!--pnid:adowwJ5oQGCORqDq9nyirz-->有比赛经验</option></select></div><div data-page-node-id="S5RrHfQx0cziRZlkoL421X" class="field full"><span data-page-node-id="BTh0bG4KAzIKhV9ewzHecO" class="choice-label"><!--pnid:0SSQlGCmKL6WR3siim6YZC-->可上课时间（至少填写一组完整时段） *</span><div data-page-node-id="OjU6UwSnKS0ldviOaSF0Dl" id="time-slots"><div data-page-node-id="FfmwzGCmsl6Fy9ivhPwSIO" class="time-row"><select data-page-node-id="vRTvoKcqisHqstPW0a0fzZ" aria-label="星期" name="day"><option data-page-node-id="06uHORNy0MURCXRhzP4m0M" value><!--pnid:0FldYi4lIGXjyAsvnuLlyO-->星期</option><option data-page-node-id="ScOsku8kCvbL2pm4xNc2r1" value="mon"><!--pnid:7lDpQxoxRLS9WVZjeNeOhL-->周一</option><option data-page-node-id="j7bF1fZek2T5HFOY4jSpfB" value="tue"><!--pnid:Od2eu3X6EYmS2HcRvC9eO6-->周二</option><option data-page-node-id="a1BGZL2yIvR35d1AKFSpif" value="wed"><!--pnid:xwJfk3R4bEmIm9oK7TSEhI-->周三</option><option data-page-node-id="9evu6ym8jtO2XiamzOLdR2" value="thu"><!--pnid:5XNNUBvnNZCJr3b1Lw3MiU-->周四</option><option data-page-node-id="6EMCyVpuGmK1Ai2KAd4yCL" value="fri"><!--pnid:9zuTnqKvizjQQIgqhrxx3u-->周五</option><option data-page-node-id="Klkf0EXlFcbDSSZ4toJ5NB" value="sat"><!--pnid:Wvmztv1oVqZvGhHM4nhzqy-->周六</option><option data-page-node-id="vzNTVYBCHQ2B8tXcl0MFi9" value="sun"><!--pnid:P4W0KJRhfQIcKxmD6Osee2-->周日</option></select><select data-page-node-id="sp7k8AbgdQUcKxMvZ2pOCB" aria-label="开始时间" name="start"><option data-page-node-id="pH0qO2KrO99fZjSpAnw8h2" value><!--pnid:vu5HJEarYSTCaHZ68gX2Gj-->开始</option><option data-page-node-id="L1aO3lX1gmdEgx49v4XwOK" value="08:00"><!--pnid:4cKw16agUBBBME3OFdBUma-->08:00</option><option data-page-node-id="W5VVOT6LRafhqeAOwJvTfM" value="09:00"><!--pnid:ZpPUI08s6HCnYrX6ZRn6o5-->09:00</option><option data-page-node-id="gtMDuXD9YDhAUtU0yrWlWK" value="10:00"><!--pnid:7a6pvBj6bjgdlovBwpLSy4-->10:00</option><option data-page-node-id="xVqlXQQk1Sgc0OeijTLMrQ" value="11:00"><!--pnid:kRKWIlaLAi3XL118dQBuab-->11:00</option><option data-page-node-id="pwZ9oNTV6HAdXgm6BNawBl" value="12:00"><!--pnid:7PE97sUY7djHuGgbcua5vm-->12:00</option><option data-page-node-id="xan4FLxbzVwScrzoCiXAsF" value="13:00"><!--pnid:KZP5JxeIHPUCM40IKaz38m-->13:00</option><option data-page-node-id="5Bs6nboN3cPj3ogVh8bOAS" value="14:00"><!--pnid:TSSsL6NxVH5K0QAQ2sj9K3-->14:00</option><option data-page-node-id="Nc8W9mgUV14SQRsQy4gRTa" value="15:00"><!--pnid:YoSIfY9NJAwpHcpaYhBeMH-->15:00</option><option data-page-node-id="0G4ZDt7R9DLO5kawYGpfsu" value="16:00"><!--pnid:OCmbSTXCKA6hcE4oWicDDq-->16:00</option><option data-page-node-id="LWN3XOpGx1zRU3yPkUz7uP" value="17:00"><!--pnid:hAAdUOVdDpjZGe4xR1y4Mi-->17:00</option><option data-page-node-id="C9V5zu1RDf7wKUO7RYztQ1" value="18:00"><!--pnid:K5zBbLc9f26HrJwk6XKQ6O-->18:00</option><option data-page-node-id="CSJ6uVWhAEELoi3lXISXOw" value="19:00"><!--pnid:FLADpZgO10BW0LHQXhrRqD-->19:00</option><option data-page-node-id="AcT7JcHzt6sTyEgX9E27Np" value="20:00"><!--pnid:PWPQq6MEqsjqIcdqGQLlWV-->20:00</option><option data-page-node-id="6uII2ARtg3BJXqMdEPD7eW" value="21:00"><!--pnid:sLujdUvAWAD8Qtz7knhKix-->21:00</option></select><select data-page-node-id="c5Fdac2hPjsbHAE6K5h4S7" aria-label="结束时间" name="end"><option data-page-node-id="fwkS0XXCGZe701RukvLXvo" value><!--pnid:VxWCr4W5Dm1VgiqNI11Mbe-->结束</option><option data-page-node-id="gTzYcxezEvGsdAaESoG0gZ" value="09:00"><!--pnid:W0NQVlFgJ4xIYta1CgzMdq-->09:00</option><option data-page-node-id="BJz6xJaalHgRoi0g1MICVG" value="10:00"><!--pnid:0kTY41p8mhptUTjQAlWIPf-->10:00</option><option data-page-node-id="nKl7XlnvcXxMRMFVdzLrzO" value="11:00"><!--pnid:CyseWHSdamLw9x76Tanu5Q-->11:00</option><option data-page-node-id="oR4DgOIzRecRT9bZ2541Us" value="12:00"><!--pnid:nAb53HbnVK9OFiGrVxoRx7-->12:00</option><option data-page-node-id="tJexPnRCavKlgidwBjPID6" value="13:00"><!--pnid:YzE4Ar0ttjuzdnWdBkoVg0-->13:00</option><option data-page-node-id="dzE3oCaiIQ1mou4QrsB2K3" value="14:00"><!--pnid:0QtF47Dq6Re697ZYBSUM1c-->14:00</option><option data-page-node-id="OFeh2HJfg9tFLywY9NTC7a" value="15:00"><!--pnid:ziOGOXPhQOxioHakSGqcVa-->15:00</option><option data-page-node-id="87zRW8XTheH9NO8l0w2iKT" value="16:00"><!--pnid:BOleIBlwNyoUd7ixXeSn69-->16:00</option><option data-page-node-id="brq10FqZwrNi0XWHf7ClHj" value="17:00"><!--pnid:P5jhrgBnx94eI2C77djf9c-->17:00</option><option data-page-node-id="mbg1usW1yxqo7YiSpXl17W" value="18:00"><!--pnid:JSMq7tj1nN7p6Z0KQIgXzn-->18:00</option><option data-page-node-id="mahkC7IcwWzWbklHHRyK5t" value="19:00"><!--pnid:JazzRO3ztND9HtXsZlluwI-->19:00</option><option data-page-node-id="HOCezTgic1r2IYSVs3X5YN" value="20:00"><!--pnid:nkkChCFixjxAJWL4es8U1X-->20:00</option><option data-page-node-id="AVHoRhKM4AhXzyU6JfvgOS" value="21:00"><!--pnid:RB6AtGc41bOuiNZpO9qGYn-->21:00</option><option data-page-node-id="Y8ZQ2TpI9thJUOOSutol6l" value="22:00"><!--pnid:Ulizmx4sc5fOTcO6CszKyk-->22:00</option></select><button data-page-node-id="qMu9NkHFwlpW5RrH7Ko8C5" aria-label="删除这组时间" class="remove-time" hidden type="button"><!--pnid:bjiQeyb4NgCnt7g9xgd4Ee-->删除</button></div></div><button data-page-node-id="zrAJw6Dtavihzs3htMYWVT" class="add-time" id="add-time" type="button"><!--pnid:XhDU7A1cAk0bjCe3MgqGJd-->＋ 添加另一组时间</button></div><div data-page-node-id="4kD2yX1W42amkhlkWvQwkT" class="field full"><label data-page-node-id="g7ieXVOtn49AgcHHl7QOjW" for="referrer"><!--pnid:Y3RLpFZbSIhzBUmgCH6qX0-->介绍人（选填）</label><input data-page-node-id="dMlhbFNcF00q6r7wd9nDwO" autocomplete="off" id="referrer" maxlength="60" name="referrer" placeholder="谁介绍您来的？"><span data-page-node-id="DcxEdJz7DH5Bduq5LGFdC0" class="field-hint"><!--pnid:ySjnejX1aVCHdC3SYFXxHn-->填写后，您和介绍人都可获赠一份神秘网球礼物 🎁</span></div><div data-page-node-id="uyu8pO7mhm4IRH43gWgeE1" class="field full"><label data-page-node-id="bYuXb3ufZcSqTZV6HlEfgY" for="notes"><!--pnid:1Dg68PJZkylKQhmbVCaSwW-->补充说明（选填）</label><input data-page-node-id="MxxFiJHOZgu5140NwdQvdH" id="notes" maxlength="180" name="notes" placeholder="例如：希望借拍、有伤病/疼痛、偏好场地、与朋友一起上课等"></div></div><label data-page-node-id="E0DCAphQyxBba8V2xXYiRf" class="agree"><input data-page-node-id="MICzmYuBAkv0RBXnR6OhZN" name="rules" required type="checkbox"><span data-page-node-id="xCRkiB1Q0hB0TCxkM0QUle"><!--pnid:m2bd9cejYVrOmsQFx73t53-->我已阅读 <a data-page-node-id="4udKYQOVBq3rLD5Eb4zPBT" href="#rules"><!--pnid:tT8Emk29eOjRnGkrs1k5O6-->预约与改期规则摘要</a><!--pnid:RDcC197AJ9hiWJQAOQGSCM-->，理解提交后为待确认意向，未确认前不锁定课位。</span></label><label data-page-node-id="NT6zUvreyUb7zbdfEUBw6P" class="agree"><input data-page-node-id="zmglUVjfPQnNa3lhaeWuTe" name="privacy" required type="checkbox"><span data-page-node-id="o5cC6N3sSql1lkFWR3xYd6"><!--pnid:oLHH4duQIbmfZUXueRsQ6A-->我同意仅为本次预约目的处理以上信息；视频教学另行确认，可随时不授权。</span></label><button data-page-node-id="QY0ArmV0QSddd6d8nNEmHS" class="button submit" type="submit"><!--pnid:yH1uXLjnchHHDHz9UKrixE-->提交预约意向 →</button><div data-page-node-id="VAgy1FFAMr0Qt7dNxvfQhV" aria-live="polite" class="form-message" id="form-message" role="status"></div></form>
+    </div></section>
+    <section data-page-node-id="KVezF1AD37BY3iVBuEZ57o" aria-label="预约与改期规则摘要" class="agreement" id="rules" style="background:#edf0e8; padding:55px 0"><div data-page-node-id="XTrG9FpSwTPuuELObKhqOB" class="wrap"><div data-page-node-id="pvZVFKV2OXhrQkQqlvF7ue" class="eyebrow"><!--pnid:zIW9XZDiBZKw1SwvngxPzW-->报名规则 / 2026</div><h2 data-page-node-id="h5kFNE0NwZOECCWekYpuJj" style="font-size:clamp(32px,4vw,55px); letter-spacing:-.08em; margin:8px 0 15px"><!--pnid:9xRfLzF6ZihXJaNbc3e70O-->预约前，请您先了解和确认规则。</h2><div data-page-node-id="GWcIwvCGeEmaaoewcolbve" class="rules-grid">
+        <article data-page-node-id="YNVuuer6NVxqGu4FwR5dPO" class="rule-card"><b data-page-node-id="qurNwBsUI9PLXFYgk5xMAm"><!--pnid:0ZOWmJpT0G6HCN9rICNNWL-->01 改期与退费</b><p data-page-node-id="9BRTAY0I7bFKSxvxB4HYID"><!--pnid:lxoHNrDwExs6jbO9oetFMj-->课前 48 小时以外改期，退还 100% 课时费；48 小时以内改期，退还 80%；迟到部分不退。已产生的场地费不予退还。</p></article>
+        <article data-page-node-id="RwXZPuYgdliP1IcFUVA19B" class="rule-card"><b data-page-node-id="JIfpdZLHlud4LCDUk72Xrf"><!--pnid:px9yuWeMPaROLDWw1hEGoA-->02 教练违约补偿</b><p data-page-node-id="KtAWU2CbaI5cqXeN5ahasT"><!--pnid:sakegc4KAxjuyisRZIfMH4-->教练改期按学员规则的 2 倍进行补偿，并承担场地费；教练迟到支付 100 元补偿，并补齐未完成的课时。</p></article>
+        <article data-page-node-id="kaqNCtJRrezIokhlMNvj5R" class="rule-card"><b data-page-node-id="ok5oY9r2aXwnn829vnnlAl"><!--pnid:136tqSevMBRNZMZ3aOgPSE-->03 无条件退课</b><p data-page-node-id="S6awc1loLl9pvdXUYdZ1zh"><!--pnid:dyqBNvnFKfUY2PSthzpMlL-->对教练风格、教学效果或本约定有任何不满意，均可无条件申请退课，未上过的课时原路退还、无任何扣除。</p></article>
+        <article data-page-node-id="9ZupPrTShc3c88pS2QuAvh" class="rule-card"><b data-page-node-id="BKJFYMpZacIJb1F3XCuOwW"><!--pnid:WPOfYsWg7qTNnynBDjdDVW-->04 连续锻炼奖励</b><p data-page-node-id="9jB3k1frzU3tkE3mheKmzg"><!--pnid:y0iFMM4G38JOlVGGdk2Ihf-->连续 5 个自然周上课（含节假日），无课前 48 小时内改期、无迟到早退，奖励 100 元。</p></article>
+      </div>
+      <p data-page-node-id="G3qjtNSMkR6GHnm22EEWpc" class="rules-fine"><!--pnid:GAKioG0IZDcRBnAPC5k2GH-->以上为公开摘要；体验课与长期课程的最终费用、场地费、影像授权等，以教练在人工确认前提供的当前版本为准。正式报名时应确认完整版本、日期与退款计算方式。</p></div></section>
   </main>
-  <section class="agreement" id="rules"><div class="wrap"><details><summary>报名后《学员共同约定》｜2026版</summary><p>正式报名后，我们会向你发送可确认的完整版本。以下为公开摘要，具体执行以双方预约时确认的版本为准。</p><ul><li><strong>付款：</strong>体验课按固定课标准收费；长期课程通常预付5节以锁定固定课位，场地费另行确认。</li><li><strong>改期：</strong>课前48小时以外改期，退还100%课时费；课前48小时内改期，退还80%课时费；场地费按实际规则处理。</li><li><strong>迟到：</strong>学员迟到部分的课时费不予退还；教练迟到会补齐未完成课时，并按约定提供补偿。</li><li><strong>教练变更：</strong>教练改期按学员改期规则的2倍补偿，并承担相关场地费用。</li><li><strong>退款：</strong>学员体验后可自主决定是否继续；对教学风格、效果或约定不满意，可申请退课，未使用课时按确认规则原路退还。</li><li><strong>录像授权：</strong>视频记录完全自愿；每次使用录像前单独征得同意，未经同意不公开学员影像。</li><li><strong>连续训练奖励：</strong>连续5个自然周上课、无课前48小时内改期且无迟到早退，可按当期约定获得奖励。</li></ul><p class="fine">版本日期：2026年｜正式报名时请确认最新版本、退款计算方式和场地政策。</p></details></div></section>
-  <footer class="wrap footer"><span>© 2026 万次迭代网球课</span><span>清华校园｜一对一 / 一对二｜预约制</span></footer>
+  <footer data-page-node-id="DquSq7D2YlO3TSCtBGxUjN" class="footer"><div data-page-node-id="xnIxO6UEjYwq71qDTiE02c" class="wrap"><div data-page-node-id="Pv2fiIlkeYGtbOvx52QO1B" class="footer-top"><div data-page-node-id="jciHI9yHp2qXPeNlwWUG98"><a data-page-node-id="MbhJP4n95s02hZMCLnLXTz" class="brand" href="#top"><span data-page-node-id="KsMujVGz3qMj1JEGH00lM7" aria-hidden="true" class="brand-mark"></span><span data-page-node-id="waH9Y67n4xt58KuIXTpADO"><!--pnid:atgDmsqGSfyOW6W77QwOIv-->万次迭代 <small data-page-node-id="ipxEuo85D2NhXD4H0JRViR"><!--pnid:yixzW8IliMj8E1w0UIbrR2-->· 网球课</small></span></a></div><nav data-page-node-id="lNAWCp05ggAS1MeB5RFIUq" aria-label="页脚导航" class="footer-nav"><a data-page-node-id="YuY9jmTenmK0zX7zCHOMUD" href="#method"><!--pnid:5qWAFUdMJJBmiwNyYLBdAD-->训练方法</a><a data-page-node-id="cfWBDCXvTc6mUhCCHj6ODh" href="#routes"><!--pnid:HSjgyTRqPcctHllVO5ruXg-->课程路线</a><a data-page-node-id="vVQeeN6OLIU6ExzyY0GjsN" href="#pricing"><!--pnid:08LaTmMQ6zkIN8khALq651-->价格</a><a data-page-node-id="LjWnFilfbOXbN7LdIL9J9y" href="#booking"><!--pnid:frkLQKngM3WXcoNCFBTGMQ-->预约体验</a></nav></div><div data-page-node-id="c28f4da2WDMB2DcwwcsLJt" class="footer-bottom">
+        <span data-page-node-id="UDnhNX1Dj77r90wxFO6Vw6"><!--pnid:vKN0wBYUvLjoRS38OvwLfl-->© 2026 万次迭代网球课</span>
+      </div></div></footer>
 
-<script>
-/* 双通道：Server 酱(微信) + Formsubmit(邮件 AJAX，返回 JSON 可确认成败) */
-const FORMSUBMIT_ID="4e66ce129d8ebcb8f87709aee20d573c"; // 已激活，绑定 kaiwen1899@163.com
-const SERVERCHAN_KEY="SCT402824TMWdPt9Bbfe4VRiBC7F0G9S9x";
+  <div data-page-node-id="45hegZTvKG2JpCfzR9Z1tN" class="cta-dock"><div data-page-node-id="bwyYJiYQsaMRmh75Goe7x7" class="wrap">
+    <span data-page-node-id="57YCHat5qkRRHiFjyRDLx5"><!--pnid:lhELxnlJ62FwG1Dzg1dPFq-->体验课按正式课标准收费<br data-page-node-id="dueDkyrDtmMGYLoslSiGaO"><!--pnid:lHOs3YTP7tkeeuj2nfBD7Q-->不满意可无条件退课</span>
+    <a data-page-node-id="slapvT6Zvqpc8Zppwzm0Eo" href="#booking"><!--pnid:zdChBhBMHXvhPmWPZVBE0l-->预约评估体验 →</a>
+  </div></div>
 
-function postToEmail(d){
-  const payload={
-    _subject:'网球课 · 新预约：'+d.name,
-    _captcha:'false',
-    _template:'table',
-    '姓名':d.name,
-    '联系方式':d.contact,
-    '目标':d.goal||'未选',
-    '身份':d.identity||'未选',
-    '水平':d.level||'未选',
-    '可上课时间':d.time,
-    '已了解规则':d.agreed==='on'?'是':'否'
-  };
-  return fetch('https://formsubmit.co/ajax/'+FORMSUBMIT_ID,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(payload)
-  }).then(r=>r.json()).then(j=>{
-    if(j && j.success==='true') return true;
-    throw new Error('邮件通道未送达：'+(j&&j.message||'未知错误'));
-  });
-}
+  <!--pnid:f1axvVQHRhrma4clsa2W04--><!-- 移动端预约弹层：打开时把 #booking-form 整体搬入（DOM 移动，字段与提交逻辑零改动），关闭后归位 -->
+  <div data-page-node-id="HY4bkSheet00000000000001" aria-hidden="true" aria-label="预约首次评估体验" aria-modal="true" class="bk-sheet" id="bookingSheet" role="dialog">
+    <div data-page-node-id="HY4bkSheet00000000000002" class="bk-sheet__scrim" data-bk-close></div>
+    <div data-page-node-id="HY4bkSheet00000000000003" class="bk-sheet__panel">
+      <span data-page-node-id="HY4bkSheet00000000000004" aria-hidden="true" class="bk-sheet__grip"></span>
+      <div data-page-node-id="HY4bkSheet00000000000005" class="bk-sheet__bar">
+        <span data-page-node-id="HY4bkSheet00000000000006" class="bk-sheet__title"><!--pnid:1f9qZBye9ICmQIEzYH2HdH--><!--pnid:HY4bkSheetTitle0001--><!--pnid:xsc94OKU2FfZkxteWSISEU-->16 / 预约首次评估</span>
+        <button data-page-node-id="HY4bkSheet00000000000007" aria-label="关闭预约界面" class="bk-sheet__close" data-bk-close type="button"><!--pnid:0AdAo142Wjrg5C7ATqR00X-->✕</button>
+      </div>
+      <div data-page-node-id="HY4bkSheet00000000000008" class="bk-sheet__body" id="bookingSheetHost"></div>
+    </div>
+  </div>
+  <script data-page-node-id="DfT4o7OlruNq58NXJCCB1O" data-pnid-children="2Lt7Km4eimS5WhERBZUCtl">
+    const menuButton=document.querySelector('.menu-toggle'); const nav=document.querySelector('.site-nav');
+    menuButton.addEventListener('click',()=>{const open=nav.classList.toggle('open');menuButton.setAttribute('aria-expanded',String(open));menuButton.setAttribute('aria-label',open?'关闭导航':'打开导航')});
+    nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{nav.classList.remove('open');menuButton.setAttribute('aria-expanded','false');menuButton.setAttribute('aria-label','打开导航')}));
+    const slots=document.getElementById('time-slots'); const addTime=document.getElementById('add-time');
+    function bindRemove(button){button.addEventListener('click',()=>{button.closest('.time-row').remove();refreshRemoveButtons()})}
+    function refreshRemoveButtons(){slots.querySelectorAll('.remove-time').forEach((button,index)=>{button.hidden=index===0})}
+    slots.querySelectorAll('.remove-time').forEach(bindRemove);
+    addTime.addEventListener('click',()=>{const row=slots.querySelector('.time-row').cloneNode(true);row.querySelectorAll('select').forEach(select=>select.value='');const remove=row.querySelector('.remove-time');remove.hidden=false;bindRemove(remove);slots.append(row);refreshRemoveButtons();row.querySelector('select').focus()});
+    const form=document.getElementById('booking-form'); const message=document.getElementById('form-message'); const submit=form.querySelector('[type="submit"]');
+    function showMessage(type,title,detail){message.className='form-message '+type;message.innerHTML='<strong>'+title+'</strong><span>'+detail+'</span>';message.scrollIntoView({behavior:'smooth',block:'nearest'})}
+    function getTimes(){return [...slots.querySelectorAll('.time-row')].map(row=>({day:row.querySelector('[name="day"]').value,start:row.querySelector('[name="start"]').value,end:row.querySelector('[name="end"]').value})).filter(time=>time.day||time.start||time.end)}
+    const SERVERCHAN_KEY='SCT402824TMWdPt9Bbfe4VRiBC7F0G9S9x'; const FORMSUBMIT_EMAIL='4e66ce129d8ebcb8f87709aee20d573c';
+    form.addEventListener('submit',async event=>{event.preventDefault();message.className='form-message';if(!form.checkValidity()){form.reportValidity();return}const data=Object.fromEntries(new FormData(form).entries());if(!data.phone&&!data.wechat){showMessage('error','还缺少一种联系方式','请填写手机号或微信号中的至少一项，方便教练人工确认。');return}const times=getTimes();if(!times.length||times.some(time=>!time.day||!time.start||!time.end||time.end<=time.start)){showMessage('error','请补全可上课时间','每一组时间都需要填写星期、开始和结束时间，且结束时间要晚于开始时间。');return}data.times=times;data.source='tennis-booking-GPT-5-0825-2226';submit.disabled=true;submit.textContent='正在提交…';const timeText=times.map(t=>t.day+' '+t.start+'-'+t.end).join('；');const fd=new FormData();for(const e of new FormData(form).entries()){if(!String(e[0]).startsWith('_'))fd.append(e[0],e[1])}fd.append('可上课时间',timeText);fd.append('_subject','🎾 万次迭代网球课 · 新预约意向');fd.append('_captcha','false');fd.append('_template','table');const summary='姓名：'+(data.name||'-')+'\n身份：'+(data.identity||'-')+'\n手机：'+(data.phone||'-')+'\n微信：'+(data.wechat||'-')+'\n介绍人：'+(data.referrer||'-')+'\n可上课时间：'+timeText;try{if(location.protocol==='file:'){showMessage('info','本地预览模式不支持提交','请通过 http/https 网页服务器打开本页面后再提交；直接双击 HTML 文件（file://）时，邮件与微信提醒均无法送达。');submit.disabled=false;submit.textContent='提交预约意向 →';return}fetch('https://sctapi.ftqq.com/'+SERVERCHAN_KEY+'.send',{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:'title='+encodeURIComponent('🎾 万次迭代网球课 · 新预约')+'&desp='+encodeURIComponent(summary)}).catch(()=>{});const payload=Object.fromEntries(fd.entries());const res=await fetch('https://formsubmit.co/ajax/'+FORMSUBMIT_EMAIL,{method:'POST',body:JSON.stringify(payload),headers:{'Content-Type':'application/json','Accept':'application/json'}});const fj=await res.json().catch(()=>({}));if(!res.ok||fj.success!=='true')throw new Error('邮件服务暂不可用');showMessage('success','预约意向已登记','提交成功，教练会按您填写的时间和场地情况联系您（状态：待人工确认）。');form.reset();slots.querySelectorAll('.time-row:not(:first-child)').forEach(row=>row.remove());refreshRemoveButtons();submit.textContent='已提交 · 如需再次预约请刷新页面';}catch(error){submit.disabled=false;submit.textContent='提交预约意向 →';showMessage('info','因网络技术问题提交失败，请稍后重试','若多次提交失败，请您直接通过微信来联系教练：max20151')}});
+  </script>
 
-async function submitBooking(e){
-  e.preventDefault();
-  const form=e.target;
-  const fd=new FormData(form);
-  const d=Object.fromEntries(fd.entries());
-  const msg=document.querySelector('.form-success');
-  const btn=form.querySelector('button[type="submit"]');
+  <script data-page-node-id="cFFXjZ0v03fdl0Di2MlEFj" data-pnid-children="BCkdMpRzQFgQXdvS7czwbq">
+  /* ===== V3 新增交互（HY4）· 独立于原提交脚本，不读取也不修改任何表单字段 ===== */
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 重要：Formsubmit 拒绝 file:// 本地文件来源，必须通过 https 网页访问
-  if(location.protocol==='file:'){
-    alert('提示：当前是用本地文件(file://)打开的页面，邮件通道无法发送。\n请通过上线链接(https://...)访问本页面后再提交，微信通道不受影响。');
-    return false;
-  }
+    /* 1) Live 记分牌：滚动跟随 */
+    var links = Array.prototype.slice.call(document.querySelectorAll('#sbList a'));
+    var gameEl = document.getElementById('sbGame');
+    var targets = links.map(function(a){
+      var el = document.querySelector(a.getAttribute('href'));
+      return { a: a, el: el };
+    }).filter(function(t){ return t.el; });
+    function syncRail(){
+      var y = window.scrollY + 140, cur = 0;
+      for (var i = 0; i < targets.length; i++){
+        if (targets[i].el.offsetTop <= y) cur = i;
+      }
+      for (var j = 0; j < targets.length; j++){
+        targets[j].a.classList.toggle('is-active', j === cur);
+      }
+      var noEl = targets[cur] && targets[cur].a;
+      var no = noEl && noEl.getAttribute('data-no');
+      if (gameEl) gameEl.textContent = no ? ('第 ' + no + ' 节') : ((noEl && noEl.textContent.trim()) || '');
+      var act = targets[cur] && targets[cur].a;
+      var list = document.getElementById('sbList');
+      if (act && list && list.scrollWidth > list.clientWidth){
+        var want = act.offsetLeft - list.clientWidth / 2 + act.offsetWidth / 2;
+        list.scrollLeft = Math.max(0, want);
+      }
+    }
+    var raf = null;
+    window.addEventListener('scroll', function(){
+      if (raf) return;
+      raf = requestAnimationFrame(function(){ raf = null; syncRail(); });
+    }, { passive: true });
+    window.addEventListener('resize', syncRail, { passive: true });
+    syncRail();
 
-  const text=`【网球课 · 新预约】
-姓名：${d.name}
-联系方式：${d.contact}
-目标：${d.goal||'未选'}
-身份：${d.identity||'未选'}
-水平：${d.level||'未选'}
-可上课时间：${d.time}
-已了解规则：${d.agreed==='on'?'是':'否'}`;
+    /* 2) 时长 → 水平曲线：进入视口时推进到 300h */
+    var fill = document.getElementById('hourFill');
+    var track = document.getElementById('hourTrack');
+    if (fill && track){
+      var done = false;
+      var run = function(){ if (!done){ done = true; fill.style.width = '100%'; } };
+      if (reduce || !('IntersectionObserver' in window)) { fill.style.width = '100%'; }
+      else {
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if (e.isIntersecting) { run(); io.disconnect(); } });
+        }, { threshold: 0.35 });
+        io.observe(track);
+      }
+    }
 
-  btn.disabled=true;
-  btn.textContent='提交中…';
-  try{
-    const jobs=[];
-    // 微信通道：Server 酱
-    jobs.push(fetch('https://sctapi.ftqq.com/'+SERVERCHAN_KEY+'.send',{
-      method:'POST',
-      headers:{'Content-Type':'application/x-www-form-urlencoded'},
-      body:new URLSearchParams({title:'网球课 · 新预约：'+d.name, desp:text})
-    }).then(r=>r.json()).then(j=>{
-      if(j && j.code!==0) throw new Error('微信通道失败：'+(j&&j.message||'未知错误'));
-    }));
-    // 邮件通道：Formsubmit AJAX（返回 success 才通过）
-    jobs.push(postToEmail(d));
-    await Promise.all(jobs);
-    msg.hidden=false;
-    btn.textContent='已提交，等待教练确认';
-    form.reset();
-  }catch(err){
-    btn.disabled=false;
-    btn.textContent='提交预约意向 →';
-    alert('提交失败：'+err.message);
-  }
-}
-</script>
+    /* 3) 动作风格选择器 */
+    var cards = document.getElementById('styleCards');
+    var note = document.getElementById('styleNote');
+    if (cards && note){
+      cards.addEventListener('click', function(e){
+        var card = e.target.closest ? e.target.closest('.style-card') : null;
+        if (!card) return;
+        var all = cards.querySelectorAll('.style-card');
+        for (var i = 0; i < all.length; i++) all[i].classList.remove('is-on');
+        card.classList.add('is-on');
+        var p = note.querySelector('p');
+        if (p && card.getAttribute('data-note')) p.textContent = card.getAttribute('data-note');
+      });
+    }
 
+    /* 4) 时段优先级徽标（V3 §6.4 方案 1：只加标签，不改任何字段名/值） */
+    var slots = document.getElementById('time-slots');
+    if (slots){
+      function refreshPriority(){
+        var rows = slots.querySelectorAll('.time-row');
+        for (var i = 0; i < rows.length; i++){
+          var tag = rows[i].querySelector('.pri-tag');
+          if (!tag){
+            tag = document.createElement('span');
+            tag.className = 'pri-tag';
+            tag.setAttribute('aria-hidden', 'true');
+            rows[i].appendChild(tag);
+          }
+          tag.textContent = '优先 ' + (i + 1);
+        }
+      }
+      refreshPriority();
+      var addBtn = document.getElementById('add-time');
+      if (addBtn) addBtn.addEventListener('click', function(){ setTimeout(refreshPriority, 0); });
+      slots.addEventListener('click', function(e){
+        if (e.target && e.target.classList && e.target.classList.contains('remove-time')){
+          setTimeout(refreshPriority, 0);
+        }
+      });
+    }
+  })();
+
+  /* ===== HY4 · 2026-08-31 =====
+     A. 顶部浮动导航：第一行（品牌区 + 预约体验课）向下滚动时上滑隐藏，
+        第二行（Live 记分牌栏目导航）常驻吸顶；向上滚动或回到顶部时第一行恢复。
+        两行同幅度 translateY + 原 sticky 布局，不产生任何布局抖动。
+     B. 移动端底部 CTA：点击「预约评估体验」立即收起 CTA，预约界面以底部弹层呈现；
+        关闭（关闭按钮 / 点遮罩 / Esc）后表单归位、CTA 复现。
+     与预约表单字段、提交逻辑完全解耦：只做 DOM 搬迁，不改任何 id/name/value。
+  ==================================================================== */
+  (function(){
+    /* ---------- A. 顶部导航滚动收起 ---------- */
+    var header = document.querySelector('.site-header');
+    var rail = document.getElementById('sbRail');
+    if (header && rail){
+      var THRESH = 96;   // 顶部 96px 内保持两行完整显示
+      var DELTA  = 6;    // 最小触发位移，过滤小幅抖动
+      var lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      var tucked = false, navTick = false;
+      function setTucked(on){
+        if (on === tucked) return;
+        tucked = on;
+        document.body.classList.toggle('nav-tucked', on);
+      }
+      function evaluate(){
+        var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (y < 0) y = 0;
+        if (Math.abs(y - lastY) < DELTA) return;
+        var goingDown = y > lastY;
+        lastY = y;
+        if (y <= THRESH){ setTucked(false); return; }  // 回到顶部：恢复第一行
+        setTucked(goingDown);                          // 向下收起 / 向上恢复
+      }
+      window.addEventListener('scroll', function(){
+        if (navTick) return;
+        navTick = true;
+        requestAnimationFrame(function(){ navTick = false; evaluate(); });
+      }, { passive: true });
+      window.addEventListener('resize', function(){
+        lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
+        if (lastY <= THRESH) setTucked(false);
+      }, { passive: true });
+    }
+
+    /* ---------- B. 移动端底部 CTA + 预约弹层 ---------- */
+    var dock = document.querySelector('.cta-dock');
+    var dockLink = dock ? dock.querySelector('a[href="#booking"]') : null;
+    var form = document.getElementById('booking-form');
+    var grid = form ? form.parentNode : null;
+    var sheet = document.getElementById('bookingSheet');
+    var host = document.getElementById('bookingSheetHost');
+    if (!dock || !dockLink || !form || !grid || !sheet || !host) return;
+
+    var mq = window.matchMedia ? window.matchMedia('(max-width:900px)') : null;
+    var placeholder = document.createElement('div');
+    placeholder.setAttribute('data-bk-placeholder', '');
+    placeholder.style.display = 'none';
+    var sheetOpen = false, bookingInView = false, lastFocus = null, closeTimer = null;
+
+    function updateDock(){ dock.classList.toggle('is-hidden', sheetOpen || bookingInView); }
+
+    function openSheet(){
+      if (sheetOpen) return;
+      if (closeTimer){ clearTimeout(closeTimer); closeTimer = null; }
+      sheetOpen = true;
+      lastFocus = document.activeElement;
+      grid.insertBefore(placeholder, form);   // 记位
+      host.appendChild(form);                 // 整体搬入弹层（DOM 移动，监听与字段不变）
+      sheet.classList.add('is-mounted');
+      void sheet.offsetWidth;                 // 强制回流，保证滑入过渡生效
+      sheet.classList.add('is-open');
+      sheet.setAttribute('aria-hidden', 'false');
+      updateDock();
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeSheet(){
+      if (!sheetOpen) return;
+      sheetOpen = false;
+      sheet.classList.remove('is-open');
+      sheet.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      updateDock();
+      closeTimer = setTimeout(function(){
+        closeTimer = null;
+        if (!sheetOpen && form.parentNode === host){
+          placeholder.parentNode.replaceChild(form, placeholder);  // 归位
+        }
+        sheet.classList.remove('is-mounted');
+      }, 320);
+      if (lastFocus && lastFocus.focus){
+        try { lastFocus.focus({ preventScroll: true }); } catch (err) { lastFocus.focus(); }
+      }
+    }
+
+    dockLink.addEventListener('click', function(e){
+      if (mq && !mq.matches) return;   // 桌面端没有底部 CTA，保持原有锚点跳转
+      e.preventDefault();
+      openSheet();
+    });
+
+    sheet.addEventListener('click', function(e){
+      var t = e.target;
+      if (t && t.closest && t.closest('[data-bk-close]')) closeSheet();
+    });
+
+    document.addEventListener('keydown', function(e){
+      if (sheetOpen && (e.key === 'Escape' || e.keyCode === 27)) closeSheet();
+    });
+
+    if ('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        for (var i = 0; i < entries.length; i++) bookingInView = entries[i].isIntersecting;
+        updateDock();   // 已滚到页面内的预约表单时，底部 CTA 也不再重复占位
+      }, { rootMargin: '-10% 0px -20% 0px', threshold: 0 });
+      io.observe(form);
+    }
+
+    window.addEventListener('resize', function(){
+      if (sheetOpen && mq && !mq.matches) closeSheet();
+    });
+  })();
+  </script>
 </body>
 </html>
